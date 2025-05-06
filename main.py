@@ -35,4 +35,4 @@ class SistemaDeRegistro:
             print(f'id:{i[0]} Nome: {i[1]} | email: {i[2]} | Tel: {i[3]} | Sexo: {i[4]} | Data de nascimento: {i[5]} | Endereço: {i[6]} | Curso: {i[7]} | Imagem: {i[8]}')
 
     def search_studant(self, id):
-        self.c.execute()
+        self.c.execute("SELECT * FROM estudantes WHERE")
