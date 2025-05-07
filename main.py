@@ -3,7 +3,7 @@ from tkinter import messagebox
 
 class SistemaDeRegistro:
     def __init__(self):
-        self.com = sqlite3.connect('estudante.db')
+        self.conn = sqlite3.connect('estudante.db')
         self.c = self.conn.cursor()
         self.create_table()
 
@@ -35,7 +35,7 @@ class SistemaDeRegistro:
             print(f'id:{i[0]} Nome: {i[1]} | email: {i[2]} | Tel: {i[3]} | Sexo: {i[4]} | Data de nascimento: {i[5]} | Endereço: {i[6]} | Curso: {i[7]} | Imagem: {i[8]}')
 
     def search_studant(self, id):
-        self.c.execute("SELECT * FROM estudantes WHERE id=?", (id))
+        self.c.execute("SELECT * FROM estudantes WHERE id=?", (id,))
         dados = self.c.fetchone()
 
         print(f'id:{dados[0]} Nome: {dados[1]} | email: {dados[2]} | Tel: {dados[3]} | Sexo: {dados[4]} | Data de nascimento: {dados[5]} | Endereço: {dados[6]} | Curso: {dados[7]} | Imagem: {dados[8]}')
@@ -43,5 +43,15 @@ class SistemaDeRegistro:
 
     def update_student(self, novo_valores):
         query = "UPDATE estudantes SET nome=?, email=?, tel=?, sexo=?, data_nascimento=?, endereco=?, curso=?, picture=? WHERE id=?"
-        
+        self.c.execute(query,novo_valores)
+        self.conn.commit()
 
+        # mostando mensagem de sucesso
+        messagebox.showinfo('Sucesso', f'Estudante com o ID:{novo_valores[8]} foi atualizado!!')
+
+    def delet_student(self, id):
+        self.c.execute("DELETE FROM estudantes WHERE id=?", (id,))
+        self.conn.commit()
+
+        # mostando mensagem de sucesso
+        messagebox.showinfo('Sucesso', f'Estudante com o ID:{id} foi Deletado!!')
