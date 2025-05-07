@@ -8,7 +8,7 @@ class SistemaDeRegistro:
         self.create_table()
 
     def create_table(self):
-        self.c.execulte('''CREATE TABLE IF NOT EXISTS estudantes (
+        self.c.execute('''CREATE TABLE IF NOT EXISTS estudantes (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
                         nome TEXT NOT NULL,
                         email TEXT NOT NULL,
@@ -55,3 +55,6 @@ class SistemaDeRegistro:
 
         # mostando mensagem de sucesso
         messagebox.showinfo('Sucesso', f'Estudante com o ID:{id} foi Deletado!!')
+
+# Criando uma instancia do sistema do registro
+sistema_de_registro = SistemaDeRegistro()
