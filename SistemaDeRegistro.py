@@ -58,3 +58,13 @@ class SistemaDeRegistro:
 
 # Criando uma instancia do sistema do registro
 sistema_de_registro = SistemaDeRegistro()
+
+# Informacoes
+# estudante = ('Maria', 'Maria@gmail.com', '4321', 'F', '01/08/2005', 'Brasil,Sergipe', 'Administração', 'imagem.png')
+# sistema_de_registro.register_studant(estudante)
+
+# Ver Estudantes
+# todos_alunos = sistema_de_registro.view_all_students()
+
+# procurar aluno
+aluno = sistema_de_registro.search_studant()
