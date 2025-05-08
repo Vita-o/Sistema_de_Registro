@@ -71,7 +71,7 @@ e_email.place(x=7, y=100)
 
 l_tel = Label(frame_details, text="Telefone *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
 l_tel.place(x=4, y=130)
-e_tel = Entry(frame_details, width=7, justify='left', relief='solid')
+e_tel = Entry(frame_details, width=18, justify='left', relief='solid')
 e_tel.place(x=7, y=160)
 
 l_sexo = Label(frame_details, text="Sexo *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
@@ -80,8 +80,29 @@ c_sexo = ttk.Combobox(frame_details, width=7, font=('Ivy 8'),justify='center')
 c_sexo['values'] = ('MASCULINO', 'FEMININO')
 c_sexo.place(x=130, y=160)
 
+l_data_nascimento = Label(frame_details, text="Data De Nascimento *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
+l_data_nascimento.place(x=220, y=10)
+data_nascimento = DateEntry(frame_details, width=11, background='darkblue', foreground='white', borderwidth=2)
+data_nascimento.place(x=224, y=40)
 
+l_endereco = Label(frame_details, text="Endereço *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
+l_endereco.place(x=220, y=70)
+e_endereco = Entry(frame_details, width=30, justify='left', relief='solid')
+e_endereco.place(x=224, y=100)
 
+# Criando Cursos
+cursos = ['Engenharia', 'Medicina', 'Administração']
+
+l_curso = Label(frame_details, text="Cursos *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
+l_curso.place(x=220, y=130)
+c_curso = ttk.Combobox(frame_details, width=20, font=('Ivy 8'),justify='center')
+c_curso['values'] = (cursos)
+c_curso.place(x=224, y=160)
+
+# Função para escolher imagem
+
+def escolher_imagem():
+    global imagem, imagem_string, l_imagem
 
 
 janela.mainloop()
