@@ -67,4 +67,12 @@ sistema_de_registro = SistemaDeRegistro()
 # todos_alunos = sistema_de_registro.view_all_students()
 
 # procurar aluno
-aluno = sistema_de_registro.search_studant()
+# aluno = sistema_de_registro.search_studant(3)
+
+# Atualizar Aluno
+# estudante = ('Maria', 'Maria@gmail.com', '4444', 'F', '01/08/2005', 'Brasil,Sergipe', 'Administração', 'imagem.png', 3)
+# aluno = sistema_de_registro.update_student(estudante)
+
+# Dletar Estudante
+# sistema_de_registro.delet_student(2)
+
