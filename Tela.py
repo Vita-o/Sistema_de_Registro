@@ -35,9 +35,10 @@ janela.resizable(width=FALSE, height=FALSE)
 style = Style(janela)
 style.theme_use("clam")
 
+# Criando Frames
+frame_logo = Frame(janela, width=850, height=52, bg=co6)
+frame_logo.grid(row=0, column=0, padx=0, sticky=NSEW, columnspan=5)
+
+
+
 janela.mainloop()
-
-
-
-
-
