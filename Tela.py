@@ -24,3 +24,20 @@ co7 = "#ef5350"   # vermelha
 co6 = "#146C94"   # azul
 co8 = "#263238"   # + verde
 co9 = "#e9edf5"   # + verde
+
+# Criando Janela
+janela = Tk()
+janela.title("")
+janela.geometry("810x535")
+janela.configure(background=co1)
+janela.resizable(width=FALSE, height=FALSE)
+
+style = Style(janela)
+style.theme_use("clam")
+
+janela.mainloop()
+
+
+
+
+
