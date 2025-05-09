@@ -87,7 +87,7 @@ data_nascimento.place(x=224, y=40)
 
 l_endereco = Label(frame_details, text="Endereço *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
 l_endereco.place(x=220, y=70)
-e_endereco = Entry(frame_details, width=30, justify='left', relief='solid')
+e_endereco = Entry(frame_details, width=20, justify='left', relief='solid')
 e_endereco.place(x=224, y=100)
 
 # Criando Cursos
@@ -103,6 +103,20 @@ c_curso.place(x=224, y=160)
 
 def escolher_imagem():
     global imagem, imagem_string, l_imagem
+
+    imagem = fd.askopenfilename()
+    imagem_string = imagem
+
+    imagem = Image.open(imagem)
+    imagem = imagem.resize((130,130))
+    imagem = ImageTk.PhotoImage(imagem)
+    l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
+    l_imagem.place(x=390, y=10)
+
+
+botao_carregar = Button(frame_details,command=escolher_imagem, text='Carregar Foto'.upper(), width=20, compound=CENTER, anchor=CENTER, overrelief=RIDGE, font=('Ivy 7 bold'), bg=co1, fg=co0)
+botao_carregar.place(x=390, y=160)
+
 
 
 janela.mainloop()
