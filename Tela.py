@@ -113,6 +113,8 @@ def escolher_imagem():
     l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
     l_imagem.place(x=390, y=10)
 
+    botao_carregar['text'] = 'Trocar De Foto'
+
 
 botao_carregar = Button(frame_details,command=escolher_imagem, text='Carregar Foto'.upper(), width=20, compound=CENTER, anchor=CENTER, overrelief=RIDGE, font=('Ivy 7 bold'), bg=co1, fg=co0)
 botao_carregar.place(x=390, y=160)
