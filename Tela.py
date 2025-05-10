@@ -120,5 +120,10 @@ botao_carregar = Button(frame_details,command=escolher_imagem, text='Carregar Fo
 botao_carregar.place(x=390, y=160)
 
 
+# Criando a Pesquisa de Alunos
+
+
+
+
 
 janela.mainloop()
