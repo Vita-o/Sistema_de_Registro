@@ -107,7 +107,7 @@ c_curso = ttk.Combobox(frame_details, width=20, font=('Ivy 8'),justify='center')
 c_curso['values'] = (cursos)
 c_curso.place(x=224, y=160)
 
-# Função para escolher imagem
+#================================== Função para escolher imagem ==================================
 
 def escolher_imagem():
     global imagem, imagem_string, l_imagem
@@ -161,13 +161,16 @@ def mostrar_alunos():
 
         n+=1
 
-    for item in df_list:
-            
+    for item in df_list:           
         # Adicione esta linha para exibir a tabela ao iniciar o programa
         return tree_aluno
 
+# Procurar Aluno
+frame_logo = Frame(janela, width=850, height=52, bg=co6)
+frame_logo.grid(row=0, column=0, pady=0, padx=0, sticky=NSEW, columnspan=5)
+
+
 # Chamando a função para criar e exibir a tabela
 mostrar_alunos()
-
 
 janela.mainloop()
