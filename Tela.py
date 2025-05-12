@@ -166,8 +166,22 @@ def mostrar_alunos():
         return tree_aluno
 
 # Procurar Aluno
-frame_logo = Frame(janela, width=850, height=52, bg=co6)
-frame_logo.grid(row=0, column=0, pady=0, padx=0, sticky=NSEW, columnspan=5)
+frame_procurar = Frame(frame_botoes, width=40, height=55, bg=co1, relief=RAISED)
+frame_procurar.grid(row=0, column=0, pady=10, padx=10, sticky=NSEW)
+
+l_nome = Label(frame_procurar, text="Procurar Aluno [Entra ID] *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
+l_nome.grid(row=0, column=0, pady=10, padx=10, sticky=NSEW)
+
+botao_alterar = Button(frame_procurar,command=escolher_imagem, text='Carregar Foto'.upper(), width=20, compound=CENTER, anchor=CENTER, overrelief=RIDGE, font=('Ivy 7 bold'), bg=co1, fg=co0)
+botao_alterar.place(x=390, y=160)
+
+
+
+
+
+
+
+
 
 
 # Chamando a função para criar e exibir a tabela
