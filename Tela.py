@@ -58,7 +58,15 @@ app_lg = ImageTk.PhotoImage(app_lg)
 app_logo = Label(frame_logo, image=app_lg, text=" Sistema de Registro de Aluno ", width=850, compound=LEFT, anchor=NW, font=('Verdana 15'), bg=co6, fg=co1)
 app_logo.place(x=5, y=0)
 
-# ==================================Campos de Entrada==================================
+
+imagem = Image.open(imagem)
+imagem = imagem.resize((130,130))
+imagem = ImageTk.PhotoImage(imagem)
+l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
+l_imagem.place(x=390, y=10)
+
+
+# ================================== Campos de Entrada ==================================
 l_nome = Label(frame_details, text="Nome *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
 l_nome.place(x=4, y=10)
 e_nome = Entry(frame_details, width=30, justify='left', relief='solid')
@@ -120,11 +128,46 @@ botao_carregar = Button(frame_details,command=escolher_imagem, text='Carregar Fo
 botao_carregar.place(x=390, y=160)
 
 
-# Criando a Pesquisa de Alunos
-# novo teste
+# Criando tabelas de alunos Alunos
+def mostrar_alunos():
 
+    #
+    list_header = ['id', 'Nome', 'Email', 'Telefone', 'Sexo', 'Data', 'Endereço', 'Curso']
 
+    df_list = []
 
+    tree_aluno = ttk.Treeview(frame_tabela, selectmode="extended", columns=list_header, show="headings")
+
+    # Definindo os cabeçalhos das colunas
+    vsb = ttk.Scrollbar(frame_tabela, orient="vertical", command=tree_aluno.yview)
+    hsb = ttk.Scrollbar(frame_tabela, orient="horizontal", command=tree_aluno.xview)
+
+    tree_aluno.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
+    # Posicionando a Treeview e as barras de rolagem
+    tree_aluno.grid(row=0, column=0, sticky="nsew")
+    vsb.grid(row=0, column=1, sticky="ns")
+    hsb.grid(row=1, column=0, sticky="ew")
+
+    # Configurando o peso das linhas e colunas do frame para que a Treeview se expanda
+    frame_tabela.grid_rowconfigure(0, weight=12)
+
+    hd=["nw", "nw", "nw", 'center', 'center', 'center', 'center', 'center']
+    h=[40,150,150,70,70,70,120,100,100]
+    n=0
+
+    for col in list_header:
+        tree_aluno.heading(col, text=col.title(), anchor=NW)
+        tree_aluno.column(col, width=h[n], anchor=hd[n])
+
+        n+=1
+
+    for item in df_list:
+            
+        # Adicione esta linha para exibir a tabela ao iniciar o programa
+        return tree_aluno
+
+# Chamando a função para criar e exibir a tabela
+mostrar_alunos()
 
 
 janela.mainloop()
