@@ -58,8 +58,8 @@ app_lg = ImageTk.PhotoImage(app_lg)
 app_logo = Label(frame_logo, image=app_lg, text=" Sistema de Registro de Aluno ", width=850, compound=LEFT, anchor=NW, font=('Verdana 15'), bg=co6, fg=co1)
 app_logo.place(x=5, y=0)
 
-
-imagem = Image.open(imagem)
+#================================== Abrindo Imagem ==================================
+imagem = Image.open('Icones/Logo.png')
 imagem = imagem.resize((130,130))
 imagem = ImageTk.PhotoImage(imagem)
 l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
