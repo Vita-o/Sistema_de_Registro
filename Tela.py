@@ -167,19 +167,24 @@ def mostrar_alunos():
 
 # Procurar Aluno
 frame_procurar = Frame(frame_botoes, width=40, height=55, bg=co1, relief=RAISED)
-frame_procurar.grid(row=0, column=0, pady=10, padx=10, sticky=NSEW)
+frame_procurar.grid(row=0, column=0, pady=10, padx=0, sticky=NSEW)
 
 l_nome = Label(frame_procurar, text="Procurar Aluno [Entra ID] *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
-l_nome.grid(row=0, column=0, pady=10, padx=10, sticky=NSEW)
+l_nome.grid(row=0, column=0, pady=10, padx=0, sticky=NSEW)
+e_procurar = Entry(frame_procurar, width=5, justify='center', relief='solid', font=('Ivy 7 bold'))
+e_procurar.grid(row=1, column=0, pady=10, padx=0, sticky=NSEW)
 
-botao_alterar = Button(frame_procurar,command=escolher_imagem, text='Carregar Foto'.upper(), width=20, compound=CENTER, anchor=CENTER, overrelief=RIDGE, font=('Ivy 7 bold'), bg=co1, fg=co0)
-botao_alterar.place(x=390, y=160)
-
-
-
-
+botao_alterar = Button(frame_procurar, text='Procurar', width=9, anchor=CENTER, overrelief=RIDGE, font=('Ivy 7 bold'), bg=co1, fg=co0)
+botao_alterar.grid(row=0, column=0, pady=10, padx=0, sticky=NSEW)
 
 
+#================================== Botoes =================================
+
+app_img_adicionar = Image.open('Icones/Add.png')
+app_img_adicionar = app_img_adicionar.resize((25,25))
+app_img_adicionar = ImageTk.PhotoImage(app_img_adicionar)
+app_adicionar = Button(frame_details, image=app_img_adicionar, bg=co1, fg=co4)
+app_adicionar.place(x=5, y=0)
 
 
 
