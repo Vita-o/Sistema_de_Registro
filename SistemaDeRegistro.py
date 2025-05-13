@@ -39,8 +39,7 @@ class SistemaDeRegistro:
         self.c.execute("SELECT * FROM estudantes WHERE id=?", (id,))
         dados = self.c.fetchone()
 
-        print(f'id:{dados[0]} Nome: {dados[1]} | email: {dados[2]} | Tel: {dados[3]} | Sexo: {dados[4]} | Data de nascimento: {dados[5]} | Endereço: {dados[6]} | Curso: {dados[7]} | Imagem: {dados[8]}')
-
+        return dados
 
     def update_student(self, novo_valores):
         query = "UPDATE estudantes SET nome=?, email=?, tel=?, sexo=?, data_nascimento=?, endereco=?, curso=?, picture=? WHERE id=?"
@@ -49,6 +48,7 @@ class SistemaDeRegistro:
 
         # mostando mensagem de sucesso
         messagebox.showinfo('Sucesso', f'Estudante com o ID:{novo_valores[8]} foi atualizado!!')
+        
 
     def delet_student(self, id):
         self.c.execute("DELETE FROM estudantes WHERE id=?", (id,))

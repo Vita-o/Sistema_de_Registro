@@ -107,6 +107,87 @@ def adicionar():
     # Mostrando os valores da tabela
     mostrar_alunos()
 
+# Procurar Aluno
+def procurar():
+    global imagem, imagem_string, l_imagem
+
+    # obtendo id
+    id_aluno = int(e_procurar.get())
+
+    #procurar aluno
+    dados = sistema_de_registro.search_studant(id_aluno)
+
+    # Limpando campo de entrada
+    e_nome.delete(0, END)
+    e_email.delete(0, END)
+    e_tel.delete(0, END)
+    c_sexo.delete(0, END)
+    data_nascimento.delete(0, END)
+    e_endereco.delete(0, END)
+    c_curso.delete(0, END)
+
+    # Limpando campo de entrada
+    e_nome.insert(END, dados[1])
+    e_email.insert(END, dados[2])
+    e_tel.insert(END, dados[3])
+    c_sexo.insert(END, dados[4])
+    data_nascimento.insert(END, dados[5])
+    e_endereco.insert(END, dados[6])
+    c_curso.insert(END, dados[7])
+
+    imagem = dados[8]
+    imagem_string = imagem
+
+    imagem = Image.open(imagem)
+    imagem = imagem.resize((130,130))
+    imagem = ImageTk.PhotoImage(imagem)
+
+    l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
+    l_imagem.place(x=390, y=10)
+
+#  Atualizar 
+def atualizar():
+    global imagem, imagem_string, l_imagem
+
+    # obtendo id
+    id_aluno = int(e_procurar.get())
+
+
+    #obtendo valores
+    nome = e_nome.get()
+    email = e_email.get()
+    tel = e_tel.get()
+    sexo = c_sexo.get()
+    data = data_nascimento.get()
+    endereco = e_endereco.get()
+    curso = c_curso.get()
+    img = imagem_string
+
+    lista = [nome, email, tel, sexo, data, endereco, curso, img]
+
+    # verificando se tem Volar Vazio
+    for i in lista:
+        if i=='':
+            messagebox.showerror("Erro", "Preencha todos os campos")
+            return
+    # registrando os valores
+    sistema_de_registro.update_student(lista)
+
+    # Limpando campo de entrada
+    e_nome.delete(0, END)
+    e_email.delete(0, END)
+    e_tel.delete(0, END)
+    c_sexo.delete(0, END)
+    data_nascimento.delete(0, END)
+    e_endereco.delete(0, END)
+    c_curso.delete(0, END)
+
+    
+    # Mostrando os valores da tabela
+    mostrar_alunos()
+
+
+
 
 # ================================== Campos de Entrada ==================================
 l_nome = Label(frame_details, text="Nome *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
@@ -217,7 +298,7 @@ l_nome.grid(row=0, column=0, pady=10, padx=0, sticky=NSEW)
 e_procurar = Entry(frame_procurar, width=5, justify='center', relief='solid', font=('Ivy 10'))
 e_procurar.grid(row=1, column=0, pady=10, padx=0, sticky=NSEW)
 
-botao_alterar = Button(frame_procurar, text='Procurar', width=9, anchor=CENTER, overrelief=RIDGE, font=('Ivy 7 bold'), bg=co1, fg=co0)
+botao_alterar = Button(frame_procurar, command=procurar, text='Procurar', width=9, anchor=CENTER, overrelief=RIDGE, font=('Ivy 7 bold'), bg=co1, fg=co0)
 botao_alterar.grid(row=1, column=1, pady=10, padx=0, sticky=NSEW)
 
 
@@ -233,7 +314,7 @@ app_adicionar.grid(row=1, column=0, pady=5, padx=10, sticky=NSEW)
 app_img_atualizar = Image.open('Icones/update.png')
 app_img_atualizar = app_img_atualizar.resize((25,25))
 app_img_atualizar = ImageTk.PhotoImage(app_img_atualizar)
-app_atualizar = Button(frame_botoes, image=app_img_atualizar, relief=GROOVE, text=' Atualizar ', width=100, compound=LEFT, overrelief=RIDGE, font=('Ivy 11'), bg=co1, fg=co0)
+app_atualizar = Button(frame_botoes, command=atualizar, image=app_img_atualizar, relief=GROOVE, text=' Atualizar ', width=100, compound=LEFT, overrelief=RIDGE, font=('Ivy 11'), bg=co1, fg=co0)
 app_atualizar.grid(row=2, column=0, pady=5, padx=10, sticky=NSEW)
 
 
