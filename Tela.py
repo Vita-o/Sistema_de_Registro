@@ -165,17 +165,17 @@ def mostrar_alunos():
         # Adicione esta linha para exibir a tabela ao iniciar o programa
         return tree_aluno
 
-# Procurar Aluno
+#================================== Procurar Aluno ==================================
 frame_procurar = Frame(frame_botoes, width=40, height=55, bg=co1, relief=RAISED)
-frame_procurar.grid(row=0, column=0, pady=10, padx=0, sticky=NSEW)
+frame_procurar.grid(row=0, column=0, pady=10, padx=10, sticky=NSEW)
 
 l_nome = Label(frame_procurar, text="Procurar Aluno [Entra ID] *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
 l_nome.grid(row=0, column=0, pady=10, padx=0, sticky=NSEW)
-e_procurar = Entry(frame_procurar, width=5, justify='center', relief='solid', font=('Ivy 7 bold'))
+e_procurar = Entry(frame_procurar, width=5, justify='center', relief='solid', font=('Ivy 10'))
 e_procurar.grid(row=1, column=0, pady=10, padx=0, sticky=NSEW)
 
 botao_alterar = Button(frame_procurar, text='Procurar', width=9, anchor=CENTER, overrelief=RIDGE, font=('Ivy 7 bold'), bg=co1, fg=co0)
-botao_alterar.grid(row=0, column=1, pady=10, padx=0, sticky=NSEW)
+botao_alterar.grid(row=1, column=1, pady=10, padx=0, sticky=NSEW)
 
 
 #================================== Botoes =================================
@@ -183,10 +183,8 @@ botao_alterar.grid(row=0, column=1, pady=10, padx=0, sticky=NSEW)
 app_img_adicionar = Image.open('Icones/Add.png')
 app_img_adicionar = app_img_adicionar.resize((25,25))
 app_img_adicionar = ImageTk.PhotoImage(app_img_adicionar)
-app_adicionar = Button(frame_details, image=app_img_adicionar, text='Procurar', width=9, overrelief=RIDGE, font=('Ivy 11'), bg=co1, fg=co0)
-app_adicionar.grid(row=0, column=0, pady=5, padx=10, sticky=NSEW)
-
-
+app_adicionar = Button(frame_botoes, image=app_img_adicionar, relief=GROOVE, text='Adicionar', width=100, compound=LEFT, overrelief=RIDGE, font=('Ivy 11'), bg=co1, fg=co0)
+app_adicionar.grid(row=1, column=0, pady=5, padx=10, sticky=NSEW)
 
 
 # Chamando a função para criar e exibir a tabela
