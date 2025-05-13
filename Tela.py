@@ -12,6 +12,10 @@ from PIL import ImageTk, Image
 from tkcalendar import Calendar, DateEntry
 from datetime import date
 
+# Importando Sistem De Estudante
+from sistemaderegistro import *
+
+
 # cores
 co0 = "#2e2d2b"  # Preta
 co1 = "#feffff"  # Branca   
@@ -35,7 +39,7 @@ janela.resizable(width=FALSE, height=FALSE)
 style = Style(janela)
 style.theme_use("clam")
 
-# ==================================Criando Frames ==================================
+# ================================== Criando Frames ==================================
 frame_logo = Frame(janela, width=850, height=52, bg=co6)
 frame_logo.grid(row=0, column=0, pady=0, padx=0, sticky=NSEW, columnspan=5)
 
@@ -58,12 +62,37 @@ app_lg = ImageTk.PhotoImage(app_lg)
 app_logo = Label(frame_logo, image=app_lg, text=" Sistema de Registro de Aluno ", width=850, compound=LEFT, anchor=NW, font=('Verdana 15'), bg=co6, fg=co1)
 app_logo.place(x=5, y=0)
 
-#================================== Abrindo Imagem ==================================
-imagem = Image.open('Icones/Logo.png')
+#================================== Abrindo Imagem Aluno ==================================
+imagem = Image.open('Icones/aluno.png')
 imagem = imagem.resize((130,130))
 imagem = ImageTk.PhotoImage(imagem)
 l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
 l_imagem.place(x=390, y=10)
+
+#================================== Criando funçoes para CRUD ==================================
+# Adicionar
+def adicionar():
+    global imagem, imagem_string, l_imagem
+
+    #obtendo valores
+    nome = e_nome.get()
+    email = e_email.get()
+    tel = e_tel.get()
+    sexo = c_sexo.get()
+    data = data_nascimento.get()
+    endereco = e_endereco.get()
+    curso = c_curso.get()
+    img = imagem_string()
+
+    lista = [nome, email, tel, sexo, data, endereco, curso, img]
+
+    # verificando se tem Volar Vazio
+    for i in lista:
+        if i=="":
+            messagebox.showerror("Erro", "Preencha todos os campos")
+            return
+
+
 
 
 # ================================== Campos de Entrada ==================================
@@ -134,7 +163,7 @@ def mostrar_alunos():
     #
     list_header = ['id', 'Nome', 'Email', 'Telefone', 'Sexo', 'Data', 'Endereço', 'Curso']
 
-    df_list = []
+    df_list= sistema_de_registro.view_all_students()
 
     tree_aluno = ttk.Treeview(frame_tabela, selectmode="extended", columns=list_header, show="headings")
 
@@ -161,9 +190,10 @@ def mostrar_alunos():
 
         n+=1
 
-    for item in df_list:           
+    for item in df_list:   
+        tree_aluno.insert('', 'end', values=item)        
         # Adicione esta linha para exibir a tabela ao iniciar o programa
-        return tree_aluno
+    return tree_aluno
 
 #================================== Procurar Aluno ==================================
 frame_procurar = Frame(frame_botoes, width=40, height=55, bg=co1, relief=RAISED)
