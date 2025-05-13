@@ -82,17 +82,30 @@ def adicionar():
     data = data_nascimento.get()
     endereco = e_endereco.get()
     curso = c_curso.get()
-    img = imagem_string()
+    img = imagem_string
 
     lista = [nome, email, tel, sexo, data, endereco, curso, img]
 
     # verificando se tem Volar Vazio
     for i in lista:
-        if i=="":
+        if i=='':
             messagebox.showerror("Erro", "Preencha todos os campos")
             return
+    # registrando os valores
+    sistema_de_registro.register_studant(lista)
 
+    # Limpando campo de entrada
+    e_nome.delete(0, END)
+    e_email.delete(0, END)
+    e_tel.delete(0, END)
+    c_sexo.delete(0, END)
+    data_nascimento.delete(0, END)
+    e_endereco.delete(0, END)
+    c_curso.delete(0, END)
 
+    
+    # Mostrando os valores da tabela
+    mostrar_alunos()
 
 
 # ================================== Campos de Entrada ==================================
@@ -213,7 +226,7 @@ botao_alterar.grid(row=1, column=1, pady=10, padx=0, sticky=NSEW)
 app_img_adicionar = Image.open('Icones/Add.png')
 app_img_adicionar = app_img_adicionar.resize((25,25))
 app_img_adicionar = ImageTk.PhotoImage(app_img_adicionar)
-app_adicionar = Button(frame_botoes, image=app_img_adicionar, relief=GROOVE, text=' Adicionar ', width=100, compound=LEFT, overrelief=RIDGE, font=('Ivy 11'), bg=co1, fg=co0)
+app_adicionar = Button(frame_botoes, command=adicionar, image=app_img_adicionar, relief=GROOVE, text=' Adicionar ', width=100, compound=LEFT, overrelief=RIDGE, font=('Ivy 11'), bg=co1, fg=co0)
 app_adicionar.grid(row=1, column=0, pady=5, padx=10, sticky=NSEW)
 
 
