@@ -201,7 +201,7 @@ app_deletar = Button(frame_botoes, image=app_img_deletar, relief=GROOVE, text=' 
 app_deletar.grid(row=3, column=0, pady=5, padx=10, sticky=NSEW)
 
 # Linha Separatoria
-l_linha = Label(frame_botoes, relief=GROOVE, text='h', width=1, height=123, anchor=NW, font=('Ivy 1'), bg=co0, fg=co0)
+l_linha = Label(frame_botoes, relief=GROOVE, width=1, height=123, anchor=NW, font=('Ivy 1'), bg=co0, fg=co1)
 l_linha.place(x=240, y=15)
 
 # Chamando a função para criar e exibir a tabela
