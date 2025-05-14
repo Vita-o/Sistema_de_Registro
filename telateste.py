@@ -40,17 +40,21 @@ janela.grid_columnconfigure(3, weight=1)
 janela.grid_rowconfigure(0, weight=1)
 janela.grid_rowconfigure(4, weight=1)
 
-frame_loging = Frame(janela, width=300, height=150, bg=co1, relief=SOLID)
-frame_loging.grid(row=3, column=1, pady=10, padx=0, sticky=NSEW)
+frame_logo = Frame(janela, width=300, height=150, bg=co1, relief=SOLID)
+frame_logo.grid(row=3, column=1, pady=10, padx=0, sticky=NSEW)
 
 
+l_usuario = Label(frame_logo, text="Usuario*", anchor=NW, font=('Ivy 8'), bg=co1, fg=co4)
+l_usuario.place(x=75, y=5)
+e_usuario = Entry(frame_logo, width=25, justify='left', relief='solid')
+e_usuario.place(x=75, y=25)
 
+l_senha = Label(frame_logo, text="Senha*", anchor=NW, font=('Ivy 8'), bg=co1, fg=co4)
+l_senha.place(x=75, y=50)
+e_senha = Entry(frame_logo, width=25, justify='left', relief='solid')
+e_senha.place(x=75, y=70)
 
-
-
-
-
-
-
+app_login = Button(frame_logo, width=18, command='', relief=GROOVE, text=' Login ', compound=LEFT, overrelief=RIDGE, font=('Ivy 10'), bg=co0, fg=co1)
+app_login.place(x=75, y=110)
 
 janela.mainloop()
