@@ -12,7 +12,7 @@ class SistemaDeUsuarios:
         self.c.execute('''CREATE TABLE IF NOT EXISTS usuarios (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
                         nome TEXT NOT NULL,
-                        sobrenome TEXT NOT NUL
+                        sobrenome TEXT NOT NULL,
                         email TEXT NOT NULL,
                         tel TEXT NOT NULL,
                         sexo TEXT NOT NULL,
@@ -22,7 +22,7 @@ class SistemaDeUsuarios:
                         picture TEXT NOT NULL,
                         senha TEXT NOT NULL)''')
         
-    def register_studant(self, usuarios):
+    def register_usuario(self, usuarios):
         self.c.execute("INSERT INTO usuarios(nome, sobrenome, email, tel, sexo, data_nascimento, cargo, materia,senha) VALUES (?,?,?,?,?,?,?,?)",
                        (usuarios))
         self.conn.commit()
@@ -30,7 +30,7 @@ class SistemaDeUsuarios:
         # mostando mensagem de sucesso
         messagebox.showinfo('Sucesso', 'Registro feito com sucesso!!')
 
-    def view_all_students(self):
+    def view_all_usuario(self):
         self.c.execute("SELECT * FROM usuarios")    
         dados = self.c.fetchall()
 
@@ -38,13 +38,13 @@ class SistemaDeUsuarios:
         # for i in dados:
         #     print(f'id:{i[0]} Nome: sobrenome, {i[1]} | email: {i[2]} | Tel: {i[3]} | Sexo: {i[4]} | Data de nascimento: {i[5]} | Endereço: {i[6]} | Curso: {i[7]} | Imagem: {i[8]}')
 
-    def search_studant(self, id):
+    def search_usuario(self, id):
         self.c.execute("SELECT * FROM usuarios WHERE id=?", (id,))
         dados = self.c.fetchone()
 
         return dados
 
-    def update_student(self, novo_valores):
+    def update_usuario(self, novo_valores):
         query = "UPDATE usuarios SET nome=?, sobrenome=?, email=?, tel=?, sexo=?, data_nascimento=?, cargo=?, materia=?, senha=? WHERE id=?"
         self.c.execute(query,novo_valores)
         self.conn.commit()
@@ -53,7 +53,7 @@ class SistemaDeUsuarios:
         messagebox.showinfo('Sucesso', f'Usuario com o ID:{novo_valores[8]} foi atualizado!!')
         
 
-    def delet_student(self, id):
+    def delet_usuario(self, id):
         self.c.execute("DELETE FROM usuarios WHERE id=?", (id))
         self.conn.commit()
 
