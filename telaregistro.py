@@ -37,7 +37,7 @@ janela.configure(background=co1)
 janela.resizable(width=FALSE, height=FALSE)
 
 style = Style(janela)
-style.theme_use("clam")
+style.theme_use("alt")
 
 # ================================== Criando Frames ==================================
 frame_logo = Frame(janela, width=850, height=52, bg=co6)
@@ -85,8 +85,6 @@ def adicionar():
     endereco = e_endereco.get()
     curso = c_curso.get()
     img = imagem_string
-
-
     
     lista = [nome, email, tel, sexo, data, endereco, curso, img]
 
