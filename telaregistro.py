@@ -118,36 +118,35 @@ def procurar():
 
     #procurar aluno
     dados = sistema_de_registro.search_studant(id_aluno)
-    if dados == True:
-        # Limpando campo de entrada
-        e_nome.delete(0, END)
-        e_email.delete(0, END)
-        e_tel.delete(0, END)
-        c_sexo.delete(0, END)
-        data_nascimento.delete(0, END)
-        e_endereco.delete(0, END)
-        c_curso.delete(0, END)
 
         # Limpando campo de entrada
-        e_nome.insert(END, dados[1])
-        e_email.insert(END, dados[2])
-        e_tel.insert(END, dados[3])
-        c_sexo.insert(END, dados[4])
-        data_nascimento.insert(END, dados[5])
-        e_endereco.insert(END, dados[6])
-        c_curso.insert(END, dados[7])
+    e_nome.delete(0, END)
+    e_email.delete(0, END)
+    e_tel.delete(0, END)
+    c_sexo.delete(0, END)
+    data_nascimento.delete(0, END)
+    e_endereco.delete(0, END)
+    c_curso.delete(0, END)
 
-        imagem = dados[8]
-        imagem_string = imagem
+        # Limpando campo de entrada
+    e_nome.insert(END, dados[1])
+    e_email.insert(END, dados[2])
+    e_tel.insert(END, dados[3])
+    c_sexo.insert(END, dados[4])
+    data_nascimento.insert(END, dados[5])
+    e_endereco.insert(END, dados[6])
+    c_curso.insert(END, dados[7])
 
-        imagem = Image.open(imagem)
-        imagem = imagem.resize((130,130))
-        imagem = ImageTk.PhotoImage(imagem)
+    imagem = dados[8]
+    imagem_string = imagem
 
-        l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
-        l_imagem.place(x=390, y=10)
-    else:
-        messagebox.showerror("Erro", "ID de Aluno não encontrado")
+    imagem = Image.open(imagem)
+    imagem = imagem.resize((130,130))
+    imagem = ImageTk.PhotoImage(imagem)
+
+    l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
+    l_imagem.place(x=390, y=10)
+
 
 #  Atualizar 
 def atualizar():

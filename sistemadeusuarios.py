@@ -18,11 +18,12 @@ class SistemaDeUsuarios:
                         sexo TEXT NOT NULL,
                         data_nascimento TEXT NOT NULL,
                         cargo TEXT NOT NULL,
+                        materia TEXT,
                         picture TEXT NOT NULL,
                         senha TEXT NOT NULL)''')
         
     def register_studant(self, usuarios):
-        self.c.execute("INSERT INTO usuarios(nome, sobrenome, email, tel, sexo, data_nascimento, cargo, senha) VALUES (?,?,?,?,?,?,?,?)",
+        self.c.execute("INSERT INTO usuarios(nome, sobrenome, email, tel, sexo, data_nascimento, cargo, materia,senha) VALUES (?,?,?,?,?,?,?,?)",
                        (usuarios))
         self.conn.commit()
 
@@ -44,7 +45,7 @@ class SistemaDeUsuarios:
         return dados
 
     def update_student(self, novo_valores):
-        query = "UPDATE usuarios SET nome=?, sobrenome=?, email=?, tel=?, sexo=?, data_nascimento=?, cargo=?, senha=? WHERE id=?"
+        query = "UPDATE usuarios SET nome=?, sobrenome=?, email=?, tel=?, sexo=?, data_nascimento=?, cargo=?, materia=?, senha=? WHERE id=?"
         self.c.execute(query,novo_valores)
         self.conn.commit()
 
