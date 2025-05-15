@@ -81,9 +81,11 @@ def adicionar():
     email = e_email.get()
     tel = e_tel.get()
     sexo = c_sexo.get()
+    cargo = c_cargo.get()
     data = data_nascimento.get()
-    endereco = e_endereco.get()
-    curso = c_curso.get()
+    endereco = c_endereco.get()
+    materia = c_materia.get()
+    senha = c_senha.get()
     img = imagem_string
     
     lista = [nome, email, tel, sexo, data, endereco, curso, img]
@@ -101,9 +103,12 @@ def adicionar():
     e_email.delete(0, END)
     e_tel.delete(0, END)
     c_sexo.delete(0, END)
+    c_cargo.delete(0, END)
     data_nascimento.delete(0, END)
-    e_endereco.delete(0, END)
-    c_curso.delete(0, END)
+    c_endereco.delete(0, END)
+    c_materia.delete(0, END)
+    c_senha.delete(0, END)
+    imagem_string.delete(0, END)
 
     
     # Mostrando os valores da tabela
@@ -124,20 +129,24 @@ def procurar():
     e_email.delete(0, END)
     e_tel.delete(0, END)
     c_sexo.delete(0, END)
+    c_cargo.delete(0, END)
     data_nascimento.delete(0, END)
-    e_endereco.delete(0, END)
-    c_curso.delete(0, END)
+    c_endereco.delete(0, END)
+    c_materia.delete(0, END)
+    c_senha.delete(0, END)
 
         # Limpando campo de entrada
     e_nome.insert(END, dados[1])
     e_email.insert(END, dados[2])
     e_tel.insert(END, dados[3])
     c_sexo.insert(END, dados[4])
-    data_nascimento.insert(END, dados[5])
-    e_endereco.insert(END, dados[6])
-    c_curso.insert(END, dados[7])
+    c_cargo.insert(END, dados[5])
+    data_nascimento.insert(END, dados[6])
+    c_endereco.insert(END, dados[7])
+    c_materia.insert(END, dados[8])
+    c_senha.insert(END,dados[9])
 
-    imagem = dados[8]
+    imagem = dados[10]
     imagem_string = imagem
 
     imagem = Image.open(imagem)
@@ -161,12 +170,14 @@ def atualizar():
     email = e_email.get()
     tel = e_tel.get()
     sexo = c_sexo.get()
+    cargo = c_cargo.get()
     data = data_nascimento.get()
-    endereco = e_endereco.get()
-    curso = c_curso.get()
+    endereco = c_endereco.get()
+    materia = c_materia.get()
+    senha = c_senha.get()
     img = imagem_string
 
-    lista = [nome, email, tel, sexo, data, endereco, curso, img, id_aluno]
+    lista = [nome, email, tel, sexo, cargo, data, endereco, materia, senha, img, id_aluno]
 
     # verificando se tem Volar Vazio
     for i in lista:
@@ -181,9 +192,11 @@ def atualizar():
     e_email.delete(0, END)
     e_tel.delete(0, END)
     c_sexo.delete(0, END)
+    c_cargo.delete(0, END)
     data_nascimento.delete(0, END)
-    e_endereco.delete(0, END)
-    c_curso.delete(0, END)
+    c_endereco.delete(0, END)
+    c_materia.delete(0, END)
+    c_senha.delete(0, END)
 
 # Abrindo A imagem
     imagem = Image.open('Icones/aluno.png')
@@ -211,9 +224,11 @@ def deletar():
     e_email.delete(0, END)
     e_tel.delete(0, END)
     c_sexo.delete(0, END)
+    c_cargo.delete(0, END)
     data_nascimento.delete(0, END)
-    e_endereco.delete(0, END)
-    c_curso.delete(0, END)
+    c_endereco.delete(0, END)
+    c_materia.delete(0, END)
+    c_senha.delete(0, END)
 
 # Abrindo A imagem
     imagem = Image.open('Icones/aluno.png')
@@ -234,26 +249,26 @@ e_nome = Entry(frame_details, width=30, justify='left', relief='solid')
 e_nome.place(x=7, y=35)
 
 l_email = Label(frame_details, text="Email *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
-l_email.place(x=4, y=70)
+l_email.place(x=4, y=60)
 e_email = Entry(frame_details, width=30, justify='left', relief='solid')
-e_email.place(x=7, y=95)
+e_email.place(x=7, y=85)
 
 l_tel = Label(frame_details, text="Telefone *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
-l_tel.place(x=4, y=130)
+l_tel.place(x=4, y=110)
 e_tel = Entry(frame_details, width=18, justify='left', relief='solid')
-e_tel.place(x=7, y=155)
+e_tel.place(x=7, y=135)
 
 l_sexo = Label(frame_details, text="Sexo *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
-l_sexo.place(x=127, y=130)
+l_sexo.place(x=127, y=110)
 c_sexo = ttk.Combobox(frame_details, width=7, font=('Ivy 8'),justify='center')
 c_sexo['values'] = ('MASCULINO', 'FEMININO')
-c_sexo.place(x=130, y=155)
+c_sexo.place(x=130, y=135)
 
 l_carcgo = Label(frame_details, text="Cargo *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
-l_carcgo.place(x=4, y=190)
-c_cargo = ttk.Combobox(frame_details, width=30, font=('Ivy 8'),justify='center')
+l_carcgo.place(x=4, y=160)
+c_cargo = ttk.Combobox(frame_details, width=25, font=('Ivy 8'),justify='center')
 c_cargo['values'] = ('PROFESSOR', 'ADMINISTRATIVO')
-c_cargo.place(x=4, y=215)
+c_cargo.place(x=4, y=185)
 
 l_data_nascimento = Label(frame_details, text="Data De Nascimento *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
 l_data_nascimento.place(x=220, y=10)
@@ -261,23 +276,23 @@ data_nascimento = DateEntry(frame_details, width=11, background='darkblue', fore
 data_nascimento.place(x=224, y=35)
 
 l_endereco = Label(frame_details, text="Endereço *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
-l_endereco.place(x=220, y=70)
-e_endereco = Entry(frame_details, width=20, justify='left', relief='solid')
-e_endereco.place(x=224, y=95)
+l_endereco.place(x=220, y=60)
+c_endereco = Entry(frame_details, width=20, justify='left', relief='solid')
+c_endereco.place(x=224, y=85)
 
 # Criando Cursos
 cursos = ['Engenharia', 'Medicina', 'Administração']
 
 l_materia = Label(frame_details, text="Materia *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
-l_materia.place(x=220, y=130)
+l_materia.place(x=220, y=110)
 c_materia = ttk.Combobox(frame_details, width=20, font=('Ivy 8'),justify='center')
 c_materia['values'] = (cursos)
-c_materia.place(x=224, y=155)
+c_materia.place(x=224, y=135)
 
-l_nome = Label(frame_details, text="Nome *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
-l_nome.place(x=220, y=90)
-e_nome = Entry(frame_details, width=30, justify='left', relief='solid')
-e_nome.place(x=224, y=215)
+l_senha = Label(frame_details, text="Senha *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
+l_senha.place(x=220, y=160)
+c_senha = Entry(frame_details, width=25, justify='left', relief='solid')
+c_senha.place(x=224, y=185)
 
 
 #================================== Função para escolher imagem ==================================
@@ -305,7 +320,7 @@ botao_carregar.place(x=390, y=160)
 def mostrar_alunos():
 
     #
-    list_header = ['id', 'Nome', 'Email', 'Telefone', 'Sexo', 'Data', 'Endereço', 'Curso']
+    list_header = ['id', 'Nome', 'Cargo', 'Telefone', 'Sexo', 'Data', 'Endereço', 'Materia']
 
     df_list= sistema_de_usuario.view_all_usuario()
 

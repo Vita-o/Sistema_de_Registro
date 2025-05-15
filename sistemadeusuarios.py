@@ -15,8 +15,8 @@ class SistemaDeUsuarios:
                         email TEXT NOT NULL,
                         tel TEXT NOT NULL,
                         sexo TEXT NOT NULL,
-                        data_nascimento TEXT NOT NULL,
                         cargo TEXT NOT NULL,
+                        data_nascimento TEXT NOT NULL,
                         materia TEXT,
                         picture TEXT NOT NULL,
                         senha TEXT NOT NULL)''')
