@@ -59,10 +59,10 @@ global imagem, imagem_string, l_imagem
 app_lg = Image.open('Icones/Logo.png')
 app_lg = app_lg.resize((50,50))
 app_lg = ImageTk.PhotoImage(app_lg)
-app_logo = Label(frame_logo, image=app_lg, text=" Sistema de Registro de Aluno ", width=850, compound=LEFT, anchor=NW, font=('Verdana 15'), bg=co6, fg=co1)
+app_logo = Label(frame_logo, image=app_lg, text=" Sistema de Registro de usuario ", width=850, compound=LEFT, anchor=NW, font=('Verdana 15'), bg=co6, fg=co1)
 app_logo.place(x=5, y=0)
 
-#================================== Abrindo Imagem Aluno ==================================
+#================================== Abrindo Imagem usuario ==================================
 imagem = Image.open('Icones/aluno.png')
 imagem = imagem.resize((130,130))
 imagem = ImageTk.PhotoImage(imagem)
@@ -74,7 +74,7 @@ l_imagem.place(x=390, y=10)
 def adicionar():
     
     global imagem, imagem_string, l_imagem
-    imagem_string = ''
+
 
     #obtendo valores
     nome = e_nome.get()
@@ -88,12 +88,12 @@ def adicionar():
     senha = c_senha.get()
     img = imagem_string
     
-    lista = [nome, email, tel, sexo, data, endereco, curso, img]
+    lista = [nome, email, tel, sexo, cargo, data, endereco, materia, senha, img]
 
     # verificando se tem Volar Vazio
     for i in lista:
         if i=='':
-            messagebox.showerror("Erro", "Preencha todos os campos")
+            messagebox.showerror("Erro", f"Preencha todos os campos {lista}")
             return
     # registrando os valores
     sistema_de_usuario.register_usuario(lista)
@@ -108,21 +108,21 @@ def adicionar():
     c_endereco.delete(0, END)
     c_materia.delete(0, END)
     c_senha.delete(0, END)
-    imagem_string.delete(0, END)
+ 
 
     
     # Mostrando os valores da tabela
-    mostrar_alunos()
+    mostrar_usuarios()
 
-# Procurar Aluno
+# Procurar usuario
 def procurar():
     global imagem, imagem_string, l_imagem
 
     # obtendo id
-    id_aluno = int(e_procurar.get())
+    id_usuario = int(e_procurar.get())
 
-    #procurar aluno
-    dados = sistema_de_usuario.search_usuario(id_aluno)
+    #procurar usuario
+    dados = sistema_de_usuario.search_usuario(id_usuario)
 
         # Limpando campo de entrada
     e_nome.delete(0, END)
@@ -162,7 +162,7 @@ def atualizar():
     global imagem, imagem_string, l_imagem
 
     # obtendo id
-    id_aluno = int(e_procurar.get())
+    id_usuario = int(e_procurar.get())
 
 
     #obtendo valores
@@ -177,7 +177,7 @@ def atualizar():
     senha = c_senha.get()
     img = imagem_string
 
-    lista = [nome, email, tel, sexo, cargo, data, endereco, materia, senha, img, id_aluno]
+    lista = [nome, email, tel, sexo, cargo, data, endereco, materia, senha, img, id_usuario]
 
     # verificando se tem Volar Vazio
     for i in lista:
@@ -207,17 +207,17 @@ def atualizar():
     l_imagem.place(x=390, y=10)
 
     # Mostrando os valores da tabela
-    mostrar_alunos()
+    mostrar_usuarios()
 
-# Deletar Aluno
+# Deletar usuario
 def deletar():
     global imagem, imagem_string, l_imagem
 
     # obtendo id
-    id_aluno = int(e_procurar.get())
+    id_usuario = int(e_procurar.get())
 
-    # Deletando aluno
-    sistema_de_usuario.delet_usuario(id_aluno)
+    # Deletando usuario
+    sistema_de_usuario.delet_usuario(id_usuario)
 
     # Limpando campo de entrada
     e_nome.delete(0, END)
@@ -231,7 +231,7 @@ def deletar():
     c_senha.delete(0, END)
 
 # Abrindo A imagem
-    imagem = Image.open('Icones/aluno.png')
+    imagem = Image.open('Icones/usuario.png')
     imagem = imagem.resize((130,130))
     imagem = ImageTk.PhotoImage(imagem)
 
@@ -239,7 +239,7 @@ def deletar():
     l_imagem.place(x=390, y=10)
        
     # Mostrando os valores da tabela
-    mostrar_alunos()
+    mostrar_usuarios()
 
 
 # ================================== Campos de Entrada ==================================
@@ -272,7 +272,7 @@ c_cargo.place(x=4, y=185)
 
 l_data_nascimento = Label(frame_details, text="Data De Nascimento *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
 l_data_nascimento.place(x=220, y=10)
-data_nascimento = DateEntry(frame_details, width=11, background='darkblue', foreground='white', borderwidth=2)
+data_nascimento = DateEntry(frame_details, width=11, background='darkblue', foreground='white', borderwidth=2, date_pattern='dd/mm/yyyy')
 data_nascimento.place(x=224, y=35)
 
 l_endereco = Label(frame_details, text="Endereço *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
@@ -281,13 +281,19 @@ c_endereco = Entry(frame_details, width=20, justify='left', relief='solid')
 c_endereco.place(x=224, y=85)
 
 # Criando Cursos
+
 cursos = ['Engenharia', 'Medicina', 'Administração']
 
 l_materia = Label(frame_details, text="Materia *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
 l_materia.place(x=220, y=110)
 c_materia = ttk.Combobox(frame_details, width=20, font=('Ivy 8'),justify='center')
-c_materia['values'] = (cursos)
-c_materia.place(x=224, y=135)
+
+if c_cargo=='ADMINISTRATIVO':
+    c_materia['values'] = ('FALSO')
+    c_materia.place(x=224, y=135)
+else:  
+    c_materia['values'] = (cursos)
+    c_materia.place(x=224, y=135)
 
 l_senha = Label(frame_details, text="Senha *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
 l_senha.place(x=220, y=160)
@@ -316,23 +322,23 @@ botao_carregar = Button(frame_details,command=escolher_imagem, text='Carregar Fo
 botao_carregar.place(x=390, y=160)
 
 
-# Criando tabelas de alunos Alunos
-def mostrar_alunos():
+# Criando tabelas de usuarios
+def mostrar_usuarios():
 
     #
     list_header = ['id', 'Nome', 'Cargo', 'Telefone', 'Sexo', 'Data', 'Endereço', 'Materia']
 
     df_list= sistema_de_usuario.view_all_usuario()
 
-    tree_aluno = ttk.Treeview(frame_tabela, selectmode="extended", columns=list_header, show="headings")
+    tree_usuario = ttk.Treeview(frame_tabela, selectmode="extended", columns=list_header, show="headings")
 
     # Definindo os cabeçalhos das colunas
-    vsb = ttk.Scrollbar(frame_tabela, orient="vertical", command=tree_aluno.yview)
-    hsb = ttk.Scrollbar(frame_tabela, orient="horizontal", command=tree_aluno.xview)
+    vsb = ttk.Scrollbar(frame_tabela, orient="vertical", command=tree_usuario.yview)
+    hsb = ttk.Scrollbar(frame_tabela, orient="horizontal", command=tree_usuario.xview)
 
-    tree_aluno.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
+    tree_usuario.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
     # Posicionando a Treeview e as barras de rolagem
-    tree_aluno.grid(row=0, column=0, sticky="nsew")
+    tree_usuario.grid(row=0, column=0, sticky="nsew")
     vsb.grid(row=0, column=1, sticky="ns")
     hsb.grid(row=1, column=0, sticky="ew")
 
@@ -344,21 +350,21 @@ def mostrar_alunos():
     n=0
 
     for col in list_header:
-        tree_aluno.heading(col, text=col.title(), anchor=NW)
-        tree_aluno.column(col, width=h[n], anchor=hd[n])
+        tree_usuario.heading(col, text=col.title(), anchor=NW)
+        tree_usuario.column(col, width=h[n], anchor=hd[n])
 
         n+=1
 
     for item in df_list:   
-        tree_aluno.insert('', 'end', values=item)        
+        tree_usuario.insert('', 'end', values=item)        
         # Adicione esta linha para exibir a tabela ao iniciar o programa
-    return tree_aluno
+    return tree_usuario
 
-#================================== Procurar Aluno ==================================
+#================================== Procurar usuario ==================================
 frame_procurar = Frame(frame_botoes, width=40, height=55, bg=co1, relief=RAISED)
 frame_procurar.grid(row=0, column=0, pady=10, padx=10, sticky=NSEW)
 
-l_nome = Label(frame_procurar, text="Procurar Aluno [Entra ID] *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
+l_nome = Label(frame_procurar, text="Procurar usuario [Entra ID] *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
 l_nome.grid(row=0, column=0, pady=10, padx=0, sticky=NSEW)
 e_procurar = Entry(frame_procurar, width=5, justify='center', relief='solid', font=('Ivy 10'))
 e_procurar.grid(row=1, column=0, pady=10, padx=0, sticky=NSEW)
@@ -394,6 +400,7 @@ l_linha = Label(frame_botoes, relief=GROOVE, width=1, height=123, anchor=NW, fon
 l_linha.place(x=240, y=15)
 
 # Chamando a função para criar e exibir a tabela
-mostrar_alunos()
+mostrar_usuarios()
 
 janela.mainloop()
+

@@ -17,12 +17,13 @@ class SistemaDeUsuarios:
                         sexo TEXT NOT NULL,
                         cargo TEXT NOT NULL,
                         data_nascimento TEXT NOT NULL,
+                        endereco TEXT NOT NULL,
                         materia TEXT,
-                        picture TEXT NOT NULL,
-                        senha TEXT NOT NULL)''')
+                        senha TEXT NOT NULL,                   
+                        picture TEXT NOT NULL)''')
         
     def register_usuario(self, usuarios):
-        self.c.execute("INSERT INTO usuarios(nome, email, tel, sexo, data_nascimento, cargo, materia,senha) VALUES (?,?,?,?,?,?,?,?)",
+        self.c.execute("INSERT INTO usuarios(nome, email, tel, sexo, cargo, data_nascimento, endereco, materia, senha, picture) VALUES (?,?,?,?,?,?,?,?,?,?)",
                        (usuarios))
         self.conn.commit()
 
@@ -30,12 +31,12 @@ class SistemaDeUsuarios:
         messagebox.showinfo('Sucesso', 'Registro feito com sucesso!!')
 
     def view_all_usuario(self):
-        self.c.execute("SELECT * FROM usuarios")    
+        self.c.execute("SELECT id, nome, cargo, tel, sexo, data_nascimento, endereco, materia FROM usuarios")    
         dados = self.c.fetchall()
 
         return dados
         # for i in dados:
-        #     print(f'id:{i[0]} Nome, {i[1]} | email: {i[2]} | Tel: {i[3]} | Sexo: {i[4]} | Data de nascimento: {i[5]} | Endereço: {i[6]} | Curso: {i[7]} | Imagem: {i[8]}')
+        #     print(f'id:{i[0]} Nome, {i[1]} | email: {i[2]} | Tel: {i[3]} | Sexo: {i[4]} | Cargo: {i[5]} | Data de nascimento: {i[6]} | endereco: {i[7]} | materia: {i[8]} | Senha: {i[9]} | Imagem: {i[10]}')
 
     def search_usuario(self, id):
         self.c.execute("SELECT * FROM usuarios WHERE id=?", (id,))
@@ -44,12 +45,12 @@ class SistemaDeUsuarios:
         return dados
 
     def update_usuario(self, novo_valores):
-        query = "UPDATE usuarios SET nome=?=?, email=?, tel=?, sexo=?, data_nascimento=?, cargo=?, materia=?, senha=? WHERE id=?"
+        query = "UPDATE usuarios SET nome=?, email=?, tel=?, sexo=?, cargo=?, data_nascimento=?, endereco=?, materia=?, senha=?, picture=? WHERE id=?"
         self.c.execute(query,novo_valores)
         self.conn.commit()
 
         # mostando mensagem de sucesso
-        messagebox.showinfo('Sucesso', f'Usuario com o ID:{novo_valores[8]} foi atualizado!!')
+        messagebox.showinfo('Sucesso', f'Usuario: {novo_valores[0]} com o ID:{novo_valores[10]} foi atualizado!!')
         
 
     def delet_usuario(self, id):
@@ -63,5 +64,7 @@ class SistemaDeUsuarios:
 sistema_de_usuario = SistemaDeUsuarios()   
 
 
+# Ver usuarios
+# todos_alunos = sistema_de_usuario.view_all_students()
 
 
