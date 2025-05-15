@@ -251,28 +251,34 @@ c_sexo.place(x=130, y=155)
 
 l_carcgo = Label(frame_details, text="Cargo *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
 l_carcgo.place(x=4, y=190)
-c_cargo = ttk.Combobox(frame_details, width=7, font=('Ivy 8'),justify='center')
+c_cargo = ttk.Combobox(frame_details, width=30, font=('Ivy 8'),justify='center')
 c_cargo['values'] = ('PROFESSOR', 'ADMINISTRATIVO')
 c_cargo.place(x=4, y=215)
 
 l_data_nascimento = Label(frame_details, text="Data De Nascimento *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
 l_data_nascimento.place(x=220, y=10)
 data_nascimento = DateEntry(frame_details, width=11, background='darkblue', foreground='white', borderwidth=2)
-data_nascimento.place(x=224, y=40)
+data_nascimento.place(x=224, y=35)
 
 l_endereco = Label(frame_details, text="Endereço *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
 l_endereco.place(x=220, y=70)
 e_endereco = Entry(frame_details, width=20, justify='left', relief='solid')
-e_endereco.place(x=224, y=100)
+e_endereco.place(x=224, y=95)
 
 # Criando Cursos
 cursos = ['Engenharia', 'Medicina', 'Administração']
 
-l_curso = Label(frame_details, text="Cursos *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
-l_curso.place(x=220, y=130)
-c_curso = ttk.Combobox(frame_details, width=20, font=('Ivy 8'),justify='center')
-c_curso['values'] = (cursos)
-c_curso.place(x=224, y=160)
+l_materia = Label(frame_details, text="Materia *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
+l_materia.place(x=220, y=130)
+c_materia = ttk.Combobox(frame_details, width=20, font=('Ivy 8'),justify='center')
+c_materia['values'] = (cursos)
+c_materia.place(x=224, y=155)
+
+l_nome = Label(frame_details, text="Nome *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
+l_nome.place(x=220, y=90)
+e_nome = Entry(frame_details, width=30, justify='left', relief='solid')
+e_nome.place(x=224, y=215)
+
 
 #================================== Função para escolher imagem ==================================
 
