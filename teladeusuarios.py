@@ -241,6 +241,18 @@ def deletar():
     # Mostrando os valores da tabela
     mostrar_usuarios()
 
+# Funcao pra Habilita e desabilitar Materia
+def selecionar_cargo(event):
+    cargo_selecionado = c_cargo.get()
+    if cargo_selecionado == "ADMINISTRATIVO":
+        c_materia.config(state=DISABLED)
+        l_materia.config(state=DISABLED)
+        c_materia.set('DESABILITADO')
+    else:
+        c_materia.set('')
+        c_materia.config(state=NORMAL)
+        l_materia.config(state=NORMAL)
+        c_materia['values'] = (cursos)
 
 # ================================== Campos de Entrada ==================================
 l_nome = Label(frame_details, text="Nome *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
@@ -264,11 +276,14 @@ c_sexo = ttk.Combobox(frame_details, width=7, font=('Ivy 8'),justify='center')
 c_sexo['values'] = ('MASCULINO', 'FEMININO')
 c_sexo.place(x=130, y=135)
 
+
 l_carcgo = Label(frame_details, text="Cargo *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
 l_carcgo.place(x=4, y=160)
 c_cargo = ttk.Combobox(frame_details, width=25, font=('Ivy 8'),justify='center')
 c_cargo['values'] = ('PROFESSOR', 'ADMINISTRATIVO')
 c_cargo.place(x=4, y=185)
+c_cargo.bind("<<ComboboxSelected>>", selecionar_cargo)
+
 
 l_data_nascimento = Label(frame_details, text="Data De Nascimento *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
 l_data_nascimento.place(x=220, y=10)
@@ -288,12 +303,8 @@ l_materia = Label(frame_details, text="Materia *", anchor=NW, font=('Ivy 10'), b
 l_materia.place(x=220, y=110)
 c_materia = ttk.Combobox(frame_details, width=20, font=('Ivy 8'),justify='center')
 
-if c_cargo=='ADMINISTRATIVO':
-    c_materia['values'] = ('FALSO')
-    c_materia.place(x=224, y=135)
-else:  
-    c_materia['values'] = (cursos)
-    c_materia.place(x=224, y=135)
+c_materia['values'] = (cursos)
+c_materia.place(x=224, y=135)
 
 l_senha = Label(frame_details, text="Senha *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
 l_senha.place(x=220, y=160)
