@@ -12,7 +12,6 @@ class SistemaDeUsuarios:
         self.c.execute('''CREATE TABLE IF NOT EXISTS usuarios (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
                         nome TEXT NOT NULL,
-                        sobrenome TEXT NOT NULL,
                         email TEXT NOT NULL,
                         tel TEXT NOT NULL,
                         sexo TEXT NOT NULL,
@@ -23,7 +22,7 @@ class SistemaDeUsuarios:
                         senha TEXT NOT NULL)''')
         
     def register_usuario(self, usuarios):
-        self.c.execute("INSERT INTO usuarios(nome, sobrenome, email, tel, sexo, data_nascimento, cargo, materia,senha) VALUES (?,?,?,?,?,?,?,?)",
+        self.c.execute("INSERT INTO usuarios(nome, email, tel, sexo, data_nascimento, cargo, materia,senha) VALUES (?,?,?,?,?,?,?,?)",
                        (usuarios))
         self.conn.commit()
 
@@ -36,7 +35,7 @@ class SistemaDeUsuarios:
 
         return dados
         # for i in dados:
-        #     print(f'id:{i[0]} Nome: sobrenome, {i[1]} | email: {i[2]} | Tel: {i[3]} | Sexo: {i[4]} | Data de nascimento: {i[5]} | Endereço: {i[6]} | Curso: {i[7]} | Imagem: {i[8]}')
+        #     print(f'id:{i[0]} Nome, {i[1]} | email: {i[2]} | Tel: {i[3]} | Sexo: {i[4]} | Data de nascimento: {i[5]} | Endereço: {i[6]} | Curso: {i[7]} | Imagem: {i[8]}')
 
     def search_usuario(self, id):
         self.c.execute("SELECT * FROM usuarios WHERE id=?", (id,))
@@ -45,7 +44,7 @@ class SistemaDeUsuarios:
         return dados
 
     def update_usuario(self, novo_valores):
-        query = "UPDATE usuarios SET nome=?, sobrenome=?, email=?, tel=?, sexo=?, data_nascimento=?, cargo=?, materia=?, senha=? WHERE id=?"
+        query = "UPDATE usuarios SET nome=?=?, email=?, tel=?, sexo=?, data_nascimento=?, cargo=?, materia=?, senha=? WHERE id=?"
         self.c.execute(query,novo_valores)
         self.conn.commit()
 

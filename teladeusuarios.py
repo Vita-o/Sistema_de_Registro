@@ -78,7 +78,6 @@ def adicionar():
 
     #obtendo valores
     nome = e_nome.get()
-    sobrenome = e_sobrenome.get()
     email = e_email.get()
     tel = e_tel.get()
     sexo = c_sexo.get()
@@ -159,7 +158,6 @@ def atualizar():
 
     #obtendo valores
     nome = e_nome.get()
-    sobrenome = e_sobrenome.get()
     email = e_email.get()
     tel = e_tel.get()
     sexo = c_sexo.get()
@@ -233,23 +231,29 @@ def deletar():
 l_nome = Label(frame_details, text="Nome *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
 l_nome.place(x=4, y=10)
 e_nome = Entry(frame_details, width=30, justify='left', relief='solid')
-e_nome.place(x=7, y=40)
+e_nome.place(x=7, y=35)
 
 l_email = Label(frame_details, text="Email *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
 l_email.place(x=4, y=70)
 e_email = Entry(frame_details, width=30, justify='left', relief='solid')
-e_email.place(x=7, y=100)
+e_email.place(x=7, y=95)
 
 l_tel = Label(frame_details, text="Telefone *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
 l_tel.place(x=4, y=130)
 e_tel = Entry(frame_details, width=18, justify='left', relief='solid')
-e_tel.place(x=7, y=160)
+e_tel.place(x=7, y=155)
 
 l_sexo = Label(frame_details, text="Sexo *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
 l_sexo.place(x=127, y=130)
 c_sexo = ttk.Combobox(frame_details, width=7, font=('Ivy 8'),justify='center')
 c_sexo['values'] = ('MASCULINO', 'FEMININO')
-c_sexo.place(x=130, y=160)
+c_sexo.place(x=130, y=155)
+
+l_carcgo = Label(frame_details, text="Cargo *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
+l_carcgo.place(x=4, y=190)
+c_cargo = ttk.Combobox(frame_details, width=7, font=('Ivy 8'),justify='center')
+c_cargo['values'] = ('PROFESSOR', 'ADMINISTRATIVO')
+c_cargo.place(x=4, y=215)
 
 l_data_nascimento = Label(frame_details, text="Data De Nascimento *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
 l_data_nascimento.place(x=220, y=10)
