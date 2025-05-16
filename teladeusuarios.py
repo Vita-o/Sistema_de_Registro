@@ -5,6 +5,7 @@ from tkinter import*
 from tkinter import ttk
 from tkinter import messagebox
 from tkinter import filedialog as fd
+import subprocess
 
 # importando pillow
 from PIL import ImageTk, Image
@@ -32,6 +33,8 @@ co9 = "#e9edf5"   # + verde
 
 #================================== Criando Janela ==================================
 janela = Tk()
+icone = tk.PhotoImage(file='Icones/Logo.png')
+janela.iconphoto(False, icone)
 janela.title("Tela Do Administrador")
 janela.geometry("810x535")
 janela.configure(background=co1)
@@ -41,7 +44,7 @@ style = Style(janela)
 style.theme_use("alt")
 
 # ================================== Criando Frames ==================================
-frame_logo = Frame(janela, width=850, height=52, bg=co6)
+frame_logo = Frame(janela, width=810, height=52, bg=co6)
 frame_logo.grid(row=0, column=0, pady=0, padx=0, sticky=NSEW, columnspan=5)
 
 frame_botoes = Frame(janela, width=100, height=200, bg=co1, relief=RAISED)
@@ -57,11 +60,22 @@ frame_tabela.grid(row=3, column=0, pady=0, padx=10, sticky=NSEW,columnspan=5)
 #================================== Frame Logo ==================================
 global imagem, imagem_string, l_imagem
 
+def sair():
+    janela.destroy()
+
+
 app_lg = Image.open('Icones/Logo.png')
 app_lg = app_lg.resize((50,50))
 app_lg = ImageTk.PhotoImage(app_lg)
-app_logo = Label(frame_logo, image=app_lg, text=" Sistema de Registro de usuario ", width=850, compound=LEFT, anchor=NW, font=('Verdana 15'), bg=co6, fg=co1)
-app_logo.place(x=5, y=0)
+app_logo = Label(frame_logo, image=app_lg, text=" Registro de usuario ", width=600, compound=LEFT, anchor=CENTER, font=('Verdana 15'), bg=co6, fg=co1)
+app_logo.grid(row=0, column=0, pady=0, padx=0, sticky=NSEW) 
+
+b_materia = Button(frame_logo, text='ADICIONAR MATERIA', font=('Ivy 10'), bg=co1, fg=co0)
+b_materia.grid(row=0, column=4, pady=0, padx=2, sticky=NSEW) 
+
+
+b_sair = Button(frame_logo, text='EXIT', command=sair, width= 5, font=('Ivy 10'), bg=co1, fg=co0)
+b_sair.grid(row=0, column=5, pady=0, padx=2, sticky=NSEW) 
 
 #================================== Abrindo Imagem usuario ==================================
 imagem = Image.open('Icones/aluno.png')
@@ -286,6 +300,7 @@ def realizar_acao(event=None):
         print(f"Opção marcada! Realizando ação... {a_caixa.get()}")
     else:
         print(f"Opção desmarcada. {a_caixa.get()}")
+
 
 # ================================== Campos de Entrada ==================================
 l_nome = Label(frame_details, text="Nome *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)

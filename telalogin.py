@@ -4,6 +4,7 @@ from tkinter import*
 from tkinter import ttk
 from tkinter import messagebox
 from tkinter import filedialog as fd
+import subprocess
 
 # importando pillow
 from PIL import ImageTk, Image
@@ -43,13 +44,15 @@ janela.grid_rowconfigure(4, weight=1)
 frame_logo = Frame(janela, width=300, height=150, bg=co1, relief=SOLID)
 frame_logo.grid(row=3, column=1, pady=10, padx=0, sticky=NSEW)
 
+# ================================== Criando Mudança de Tela ==================================
 def confirmarusuario():
     
     usuario = e_usuario.get()
     senha = e_senha.get()
 
     if usuario == 'Admin' and senha == 'Admin':
-        messagebox.showinfo('Sucesso', 'Entrou')
+        janela.destroy()
+        subprocess.Popen(['Python', 'teladeusuarios.py'])
 
 # ================================== Criando Caixas de entraa ==================================
 l_usuario = Label(frame_logo, text="Usuario*", anchor=NW, font=('Ivy 8'), bg=co1, fg=co4)

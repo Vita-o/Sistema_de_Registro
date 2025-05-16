@@ -4,6 +4,7 @@ from tkinter import*
 from tkinter import ttk
 from tkinter import messagebox
 from tkinter import filedialog as fd
+import subprocess
 
 # importando pillow
 from PIL import ImageTk, Image
