@@ -9,6 +9,8 @@ import subprocess
 # importando pillow
 from PIL import ImageTk, Image
 
+
+
 # cores
 co0 = "#2e2d2b"  # Preta
 co1 = "#feffff"  # Branca
@@ -52,7 +54,8 @@ def confirmarusuario():
 
     if usuario == 'Admin' and senha == 'Admin':
         janela.destroy()
-        subprocess.Popen(['Python', 'teladeusuarios.py'])
+        subprocess.Popen(['c:/Users/victor.barbosa/Desktop/Sistema_de_Registro/venv/Scripts/python.exe', 'teladeusuarios.py'])
+
 
 # ================================== Criando Caixas de entraa ==================================
 l_usuario = Label(frame_logo, text="Usuario*", anchor=NW, font=('Ivy 8'), bg=co1, fg=co4)

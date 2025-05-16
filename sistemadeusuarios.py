@@ -61,6 +61,9 @@ class SistemaDeUsuarios:
         # mostando mensagem de sucesso
         messagebox.showinfo('Sucesso', f'Usuario com o ID:{id} foi Deletado!!')
 
+
+        
+
 # Criando uma instancia do sistema do registro
 sistema_de_usuario = SistemaDeUsuarios()   
 
