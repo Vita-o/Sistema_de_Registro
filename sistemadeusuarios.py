@@ -19,11 +19,12 @@ class SistemaDeUsuarios:
                         data_nascimento TEXT NOT NULL,
                         endereco TEXT NOT NULL,
                         materia TEXT,
-                        senha TEXT NOT NULL,                   
+                        senha TEXT NOT NULL,
+                        caixa TEXT NOT NULL,                 
                         picture TEXT NOT NULL)''')
         
     def register_usuario(self, usuarios):
-        self.c.execute("INSERT INTO usuarios(nome, email, tel, sexo, cargo, data_nascimento, endereco, materia, senha, picture) VALUES (?,?,?,?,?,?,?,?,?,?)",
+        self.c.execute("INSERT INTO usuarios(nome, email, tel, sexo, cargo, data_nascimento, endereco, materia, senha, caixa, picture) VALUES (?,?,?,?,?,?,?,?,?,?,?)",
                        (usuarios))
         self.conn.commit()
 
@@ -45,12 +46,12 @@ class SistemaDeUsuarios:
         return dados
 
     def update_usuario(self, novo_valores):
-        query = "UPDATE usuarios SET nome=?, email=?, tel=?, sexo=?, cargo=?, data_nascimento=?, endereco=?, materia=?, senha=?, picture=? WHERE id=?"
+        query = "UPDATE usuarios SET nome=?, email=?, tel=?, sexo=?, cargo=?, data_nascimento=?, endereco=?, materia=?, senha=?, caixa=?, picture=? WHERE id=?"
         self.c.execute(query,novo_valores)
         self.conn.commit()
 
         # mostando mensagem de sucesso
-        messagebox.showinfo('Sucesso', f'Usuario: {novo_valores[0]} com o ID:{novo_valores[10]} foi atualizado!!')
+        messagebox.showinfo('Sucesso', f'Usuario: {novo_valores[0]} com o ID:{novo_valores[11]} foi atualizado!!')
         
 
     def delet_usuario(self, id):

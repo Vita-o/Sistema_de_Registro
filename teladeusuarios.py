@@ -1,4 +1,5 @@
 #importando dependencias do Tkinter
+import tkinter as tk
 from tkinter.ttk import *
 from tkinter import*
 from tkinter import ttk
@@ -31,7 +32,7 @@ co9 = "#e9edf5"   # + verde
 
 #================================== Criando Janela ==================================
 janela = Tk()
-janela.title("")
+janela.title("Tela Do Administrador")
 janela.geometry("810x535")
 janela.configure(background=co1)
 janela.resizable(width=FALSE, height=FALSE)
@@ -73,7 +74,7 @@ l_imagem.place(x=390, y=10)
 # Adicionar
 def adicionar():
     
-    global imagem, imagem_string, l_imagem
+    global imagem, imagem_string, l_imagem, a_caixa
 
 
     #obtendo valores
@@ -86,9 +87,10 @@ def adicionar():
     endereco = c_endereco.get()
     materia = c_materia.get()
     senha = c_senha.get()
+    caixa = a_caixa.get()
     img = imagem_string
     
-    lista = [nome, email, tel, sexo, cargo, data, endereco, materia, senha, img]
+    lista = [nome, email, tel, sexo, cargo, data, endereco, materia, senha, caixa, img]
 
     # verificando se tem Volar Vazio
     for i in lista:
@@ -108,15 +110,24 @@ def adicionar():
     c_endereco.delete(0, END)
     c_materia.delete(0, END)
     c_senha.delete(0, END)
- 
 
+    a_caixa = tk.BooleanVar(value=True)
+    c_caixa = ttk.Checkbutton(frame_details, text="Mudar senha ao Entrar", variable=a_caixa, command=realizar_acao)
+    c_caixa.place(x=224, y=205)
+ 
+    imagem = Image.open('Icones/aluno.png')
+    imagem = imagem.resize((130,130))
+    imagem = ImageTk.PhotoImage(imagem)
+
+    l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
+    l_imagem.place(x=390, y=10)
     
     # Mostrando os valores da tabela
     mostrar_usuarios()
 
 # Procurar usuario
 def procurar():
-    global imagem, imagem_string, l_imagem
+    global imagem, imagem_string, l_imagem, a_caixa
 
     # obtendo id
     id_usuario = int(e_procurar.get())
@@ -135,7 +146,8 @@ def procurar():
     c_materia.delete(0, END)
     c_senha.delete(0, END)
 
-        # Limpando campo de entrada
+
+        # Inserindo Valores Novos
     e_nome.insert(END, dados[1])
     e_email.insert(END, dados[2])
     e_tel.insert(END, dados[3])
@@ -145,8 +157,12 @@ def procurar():
     c_endereco.insert(END, dados[7])
     c_materia.insert(END, dados[8])
     c_senha.insert(END,dados[9])
-
-    imagem = dados[10]
+    
+    a_caixa = tk.BooleanVar(value=dados[10])
+    c_caixa = ttk.Checkbutton(frame_details, text="Mudar senha ao Entrar", variable=a_caixa, command=realizar_acao)
+    c_caixa.place(x=224, y=205)
+    
+    imagem = dados[11]
     imagem_string = imagem
 
     imagem = Image.open(imagem)
@@ -159,7 +175,7 @@ def procurar():
 
 #  Atualizar 
 def atualizar():
-    global imagem, imagem_string, l_imagem
+    global imagem, imagem_string, l_imagem, a_caixa
 
     # obtendo id
     id_usuario = int(e_procurar.get())
@@ -175,9 +191,10 @@ def atualizar():
     endereco = c_endereco.get()
     materia = c_materia.get()
     senha = c_senha.get()
+    caixa = a_caixa.get()
     img = imagem_string
 
-    lista = [nome, email, tel, sexo, cargo, data, endereco, materia, senha, img, id_usuario]
+    lista = [nome, email, tel, sexo, cargo, data, endereco, materia, senha, caixa, img, id_usuario]
 
     # verificando se tem Volar Vazio
     for i in lista:
@@ -197,6 +214,11 @@ def atualizar():
     c_endereco.delete(0, END)
     c_materia.delete(0, END)
     c_senha.delete(0, END)
+    a_caixa.delete(0,END)
+
+    a_caixa = tk.BooleanVar(value=True)
+    c_caixa = ttk.Checkbutton(frame_details, text="Mudar senha ao Entrar", variable=a_caixa, command=realizar_acao)
+    c_caixa.place(x=224, y=205)    
 
 # Abrindo A imagem
     imagem = Image.open('Icones/aluno.png')
@@ -211,7 +233,7 @@ def atualizar():
 
 # Deletar usuario
 def deletar():
-    global imagem, imagem_string, l_imagem
+    global imagem, imagem_string, l_imagem, a_caixa
 
     # obtendo id
     id_usuario = int(e_procurar.get())
@@ -229,6 +251,10 @@ def deletar():
     c_endereco.delete(0, END)
     c_materia.delete(0, END)
     c_senha.delete(0, END)
+
+    a_caixa = tk.BooleanVar(value=True)
+    c_caixa = ttk.Checkbutton(frame_details, text="Mudar senha ao Entrar", variable=a_caixa, command=realizar_acao)
+    c_caixa.place(x=224, y=205)
 
 # Abrindo A imagem
     imagem = Image.open('Icones/usuario.png')
@@ -253,6 +279,13 @@ def selecionar_cargo(event):
         c_materia.config(state=NORMAL)
         l_materia.config(state=NORMAL)
         c_materia['values'] = (cursos)
+
+
+def realizar_acao(event=None):
+    if a_caixa.get() == True:
+        print(f"Opção marcada! Realizando ação... {a_caixa.get()}")
+    else:
+        print(f"Opção desmarcada. {a_caixa.get()}")
 
 # ================================== Campos de Entrada ==================================
 l_nome = Label(frame_details, text="Nome *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
@@ -311,6 +344,9 @@ l_senha.place(x=220, y=160)
 c_senha = Entry(frame_details, width=25, justify='left', relief='solid')
 c_senha.place(x=224, y=185)
 
+a_caixa = tk.BooleanVar(value=True)
+c_caixa = ttk.Checkbutton(frame_details, text="Mudar senha ao Entrar", variable=a_caixa, command=realizar_acao)
+c_caixa.place(x=224, y=205)
 
 #================================== Função para escolher imagem ==================================
 

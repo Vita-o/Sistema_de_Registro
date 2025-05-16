@@ -43,6 +43,14 @@ janela.grid_rowconfigure(4, weight=1)
 frame_logo = Frame(janela, width=300, height=150, bg=co1, relief=SOLID)
 frame_logo.grid(row=3, column=1, pady=10, padx=0, sticky=NSEW)
 
+def confirmarusuario():
+    
+    usuario = e_usuario.get()
+    senha = e_senha.get()
+
+    if usuario == 'Admin' and senha == 'Admin':
+        messagebox.showinfo('Sucesso', 'Entrou')
+
 # ================================== Criando Caixas de entraa ==================================
 l_usuario = Label(frame_logo, text="Usuario*", anchor=NW, font=('Ivy 8'), bg=co1, fg=co4)
 l_usuario.place(x=75, y=5)
@@ -55,7 +63,7 @@ e_senha = Entry(frame_logo, width=25, justify='left', relief='solid')
 e_senha.place(x=75, y=70)
 
 # ================================== Criando Botão ==================================
-app_login = Button(frame_logo, width=18, command='', relief=GROOVE, text=' Login ', compound=LEFT, overrelief=RIDGE, font=('Ivy 10'), bg=co0, fg=co1)
+app_login = Button(frame_logo, width=18, command=confirmarusuario, relief=GROOVE, text=' Login ', compound=LEFT, overrelief=RIDGE, font=('Ivy 10'), bg=co0, fg=co1)
 app_login.place(x=75, y=110)
 
 janela.mainloop()
