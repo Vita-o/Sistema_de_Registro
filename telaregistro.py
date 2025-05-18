@@ -106,7 +106,15 @@ def adicionar():
     e_endereco.delete(0, END)
     c_curso.delete(0, END)
 
-    
+    imagem = dados[8]
+    imagem_string = imagem
+
+    imagem = Image.open(imagem)
+    imagem = imagem.resize((130,130))
+    imagem = ImageTk.PhotoImage(imagem)
+
+    l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
+    l_imagem.place(x=390, y=10)
     # Mostrando os valores da tabela
     mostrar_alunos()
 

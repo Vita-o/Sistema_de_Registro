@@ -49,9 +49,9 @@ frame_logo = Frame(janela, width=300, height=150, bg=co1, relief=SOLID)
 frame_logo.grid(row=3, column=1, pady=10, padx=0, sticky=NSEW)
 
 # ================================== Criando Mudança de Tela ==================================
-import subprocess
 # Assuming sistema_de_usuario is an instance of your user system class
 # and e_usuario and e_senha are your entry widgets
+
 
 def confirmarusuario():
 
@@ -64,14 +64,21 @@ def confirmarusuario():
         janela.destroy()
         subprocess.Popen(['c:/Users/victor.barbosa/Desktop/Sistema_de_Registro/venv/Scripts/python.exe', 'teladeusuarios.py'])
     elif usuario_banco:
-        nome_banco, senha_banco, caixa_banco = usuario_banco
+        nome_banco, senha_banco, caixa_banco, cargo_banco = usuario_banco
 
         if int(caixa_banco) == 1: # Convertemos para inteiro para comparar
             janela.destroy()
-            subprocess.Popen(['c:/Users/victor.barbosa/Desktop/Sistema_de_Registro/venv/Scripts/python.exe', 'telanovasenha.py', usuario_digitado])
-        elif usuario_digitado == nome_banco and senha_digitada == senha_banco:
+            subprocess.Popen(['c:/Users/victor.barbosa/Desktop/Sistema_de_Registro/venv/Scripts/python.exe', 'telanovasenha.py', usuario_digitado, senha_digitada])
+        elif usuario_digitado == nome_banco and senha_digitada == senha_banco and cargo_banco == "ADMINISTRATIVO":
+
+            janela.destroy()
+            subprocess.Popen(['c:/Users/victor.barbosa/Desktop/Sistema_de_Registro/venv/Scripts/python.exe', 'telaregistro.py'])
+
+        elif usuario_digitado == nome_banco and senha_digitada == senha_banco and cargo_banco == "PROVESSOR":
+            
             janela.destroy()
             subprocess.Popen(['c:/Users/victor.barbosa/Desktop/Sistema_de_Registro/venv/Scripts/python.exe', 'teladeusuarios.py'])
+
         else:
             messagebox.showerror("Erro", "Senha incorreta.")
     else:
@@ -90,7 +97,7 @@ e_senha = Entry(frame_logo, width=25, justify='left', relief='solid')
 e_senha.place(x=75, y=70)
 
 # ================================== Criando Botão ==================================
-app_login = Button(frame_logo, width=18, command=confirmarusuario, relief=GROOVE, text=' Login ', compound=LEFT, overrelief=RIDGE, font=('Ivy 10'), bg=co0, fg=co1)
-app_login.place(x=75, y=110)
+b_login = Button(frame_logo, width=18, command=confirmarusuario, relief=GROOVE, text=' Login ', compound=LEFT, overrelief=RIDGE, font=('Ivy 10'), bg=co0, fg=co1)
+b_login.place(x=75, y=110)
 
 janela.mainloop()
