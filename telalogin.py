@@ -74,7 +74,7 @@ def confirmarusuario():
             janela.destroy()
             subprocess.Popen(['c:/Users/victor.barbosa/Desktop/Sistema_de_Registro/venv/Scripts/python.exe', 'telaregistro.py'])
 
-        elif usuario_digitado == nome_banco and senha_digitada == senha_banco and cargo_banco == "PROVESSOR":
+        elif usuario_digitado == nome_banco and senha_digitada == senha_banco and cargo_banco == "PROFESSOR":
             
             janela.destroy()
             subprocess.Popen(['c:/Users/victor.barbosa/Desktop/Sistema_de_Registro/venv/Scripts/python.exe', 'teladeusuarios.py'])
