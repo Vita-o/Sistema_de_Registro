@@ -9,15 +9,17 @@ class SistemaDeRegistro:
 
     def create_table(self):
         self.c.execute('''CREATE TABLE IF NOT EXISTS estudantes (
-                        id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        nome TEXT NOT NULL,
-                        email TEXT NOT NULL,
-                        tel TEXT NOT NULL,
-                        sexo TEXT NOT NULL,
-                        data_nascimento TEXT NOT NULL,
-                        endereco TEXT NULL,
-                        curso TEXT NOT NULL,
-                        picture TEXT NOT NULL)''')
+                                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                nome TEXT NOT NULL,
+                                email TEXT NOT NULL,
+                                tel TEXT NOT NULL,
+                                sexo TEXT NOT NULL,
+                                data_nascimento TEXT NOT NULL,
+                                endereco TEXT NULL,
+                                curso TEXT NOT NULL,
+                                picture TEXT NOT NULL,
+                                faltas INTEGER NOT NULL DEFAULT 0
+                                )''')
         
     def register_studant(self, estudantes):
         self.c.execute("INSERT INTO estudantes(nome, email, tel, sexo, data_nascimento, endereco, curso, picture) VALUES (?,?,?,?,?,?,?,?)",
@@ -56,6 +58,28 @@ class SistemaDeRegistro:
 
         # mostando mensagem de sucesso
         messagebox.showinfo('Sucesso', f'Estudante com o ID:{id} foi Deletado!!')
+
+
+    def get_alunos_por_materia(self, materia_professor):
+        """
+        Retorna os alunos que estão cursando a matéria do professor.
+        Args:
+            materia_professor (str): A matéria do professor.
+        Returns:
+            list: Uma lista de tuplas, onde cada tupla contém (id, nome) dos alunos.
+        """
+        self.c.execute("SELECT id, nome FROM estudantes WHERE curso=?", (materia_professor,))
+        alunos = self.c.fetchall()
+        return alunos
+
+    def atualizar_faltas(self, id_aluno, faltas):
+        """Atualiza o número de faltas de um aluno."""
+        self.c.execute("UPDATE estudantes SET faltas=? WHERE id=?", (faltas, id_aluno))
+        self.conn.commit()
+        messagebox.showinfo("Sucesso", f"Faltas do aluno com ID {id_aluno} atualizadas para {faltas}.")
+
+ 
+
 
 # Criando uma instancia do sistema do registro
 sistema_de_registro = SistemaDeRegistro()

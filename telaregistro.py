@@ -57,12 +57,19 @@ frame_tabela.grid(row=3, column=0, pady=0, padx=10, sticky=NSEW,columnspan=5)
 #================================== Frame Logo ==================================
 global imagem, imagem_string, l_imagem
 
+def sair():
+    janela.destroy()
+
+
 app_lg = Image.open('Icones/Logo.png')
 app_lg = app_lg.resize((50,50))
 app_lg = ImageTk.PhotoImage(app_lg)
-app_logo = Label(frame_logo, image=app_lg, text="  Registro de Aluno ", width=850, compound=LEFT, anchor=NW, font=('Verdana 15'), bg=co6, fg=co1)
-app_logo.place(x=5, y=0)
+app_logo = Label(frame_logo, image=app_lg, text=" Registro de Aluno ", width=740, compound=LEFT, anchor=CENTER, font=('Verdana 15'), bg=co6, fg=co1)
+app_logo.grid(row=0, column=0, pady=0, padx=0, sticky=NSEW) 
 
+
+b_sair = Button(frame_logo, text='EXIT', command=sair, width= 6, font=('Ivy 10'), bg=co1, fg=co0)
+b_sair.grid(row=0, column=5, pady=0, padx=2, sticky=NSEW) 
 #================================== Abrindo Imagem Aluno ==================================
 imagem = Image.open('Icones/aluno.png')
 imagem = imagem.resize((130,130))
@@ -75,7 +82,7 @@ l_imagem.place(x=390, y=10)
 def adicionar():
     
     global imagem, imagem_string, l_imagem
-    imagem_string = ''
+
 
     #obtendo valores
     nome = e_nome.get()
@@ -92,7 +99,8 @@ def adicionar():
     # verificando se tem Volar Vazio
     for i in lista:
         if i=='':
-            messagebox.showerror("Erro", "Preencha todos os campos")
+            print(list)
+            messagebox.showerror("Erro", f"Preencha todos os campos ")
             return
     # registrando os valores
     sistema_de_registro.register_studant(lista)
@@ -106,8 +114,6 @@ def adicionar():
     e_endereco.delete(0, END)
     c_curso.delete(0, END)
 
-    imagem = dados[8]
-    imagem_string = imagem
 
     imagem = Image.open(imagem)
     imagem = imagem.resize((130,130))

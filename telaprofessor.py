@@ -1,5 +1,4 @@
 #importando dependencias do Tkinter
-import tkinter as tk
 from tkinter.ttk import *
 from tkinter import*
 from tkinter import ttk
@@ -15,6 +14,7 @@ from tkcalendar import Calendar, DateEntry
 from datetime import date
 
 # Importando Sistem De Estudante
+from sistemaderegistro import *
 from sistemadeusuarios import *
 
 
@@ -33,9 +33,7 @@ co9 = "#e9edf5"   # + verde
 
 #================================== Criando Janela ==================================
 janela = Tk()
-icone = tk.PhotoImage(file='Icones/Logo.png')
-janela.iconphoto(False, icone)
-janela.title("Registro De Faltas")
+janela.title("")
 janela.geometry("810x535")
 janela.configure(background=co1)
 janela.resizable(width=FALSE, height=FALSE)
@@ -44,7 +42,7 @@ style = Style(janela)
 style.theme_use("alt")
 
 # ================================== Criando Frames ==================================
-frame_logo = Frame(janela, width=810, height=52, bg=co6)
+frame_logo = Frame(janela, width=850, height=52, bg=co6)
 frame_logo.grid(row=0, column=0, pady=0, padx=0, sticky=NSEW, columnspan=5)
 
 frame_botoes = Frame(janela, width=100, height=200, bg=co1, relief=RAISED)
@@ -67,14 +65,13 @@ def sair():
 app_lg = Image.open('Icones/Logo.png')
 app_lg = app_lg.resize((50,50))
 app_lg = ImageTk.PhotoImage(app_lg)
-app_logo = Label(frame_logo, image=app_lg, text=" Registro de Faltas ", width=740, compound=LEFT, anchor=CENTER, font=('Verdana 15'), bg=co6, fg=co1)
+app_logo = Label(frame_logo, image=app_lg, text=" Registro de Aluno ", width=740, compound=LEFT, anchor=CENTER, font=('Verdana 15'), bg=co6, fg=co1)
 app_logo.grid(row=0, column=0, pady=0, padx=0, sticky=NSEW) 
 
 
 b_sair = Button(frame_logo, text='EXIT', command=sair, width= 6, font=('Ivy 10'), bg=co1, fg=co0)
 b_sair.grid(row=0, column=5, pady=0, padx=2, sticky=NSEW) 
-
-#================================== Abrindo Imagem usuario ==================================
+#================================== Abrindo Imagem Aluno ==================================
 imagem = Image.open('Icones/aluno.png')
 imagem = imagem.resize((130,130))
 imagem = ImageTk.PhotoImage(imagem)
@@ -85,95 +82,78 @@ l_imagem.place(x=390, y=10)
 # Adicionar
 def adicionar():
     
-    global imagem, imagem_string, l_imagem, a_caixa
-
+    global imagem, imagem_string, l_imagem
+    imagem_string = ''
 
     #obtendo valores
     nome = e_nome.get()
     email = e_email.get()
     tel = e_tel.get()
     sexo = c_sexo.get()
-    cargo = c_cargo.get()
     data = data_nascimento.get()
-    endereco = c_endereco.get()
-    materia = c_materia.get()
-    senha = c_senha.get()
-    caixa = a_caixa.get()
+    endereco = e_endereco.get()
+    curso = c_curso.get()
     img = imagem_string
     
-    lista = [nome, email, tel, sexo, cargo, data, endereco, materia, senha, caixa, img]
+    lista = [nome, email, tel, sexo, data, endereco, curso, img]
 
     # verificando se tem Volar Vazio
     for i in lista:
         if i=='':
-            messagebox.showerror("Erro", f"Preencha todos os campos {lista}")
+            messagebox.showerror("Erro", "Preencha todos os campos")
             return
     # registrando os valores
-    sistema_de_usuario.register_usuario(lista)
+    sistema_de_registro.register_studant(lista)
 
     # Limpando campo de entrada
     e_nome.delete(0, END)
     e_email.delete(0, END)
     e_tel.delete(0, END)
     c_sexo.delete(0, END)
-    c_cargo.delete(0, END)
     data_nascimento.delete(0, END)
-    c_endereco.delete(0, END)
-    c_materia.delete(0, END)
-    c_senha.delete(0, END)
+    e_endereco.delete(0, END)
+    c_curso.delete(0, END)
 
-    a_caixa = tk.BooleanVar(value=True)
-    c_caixa = ttk.Checkbutton(frame_details, text="Mudar senha ao Entrar", variable=a_caixa, command=realizar_acao)
-    c_caixa.place(x=224, y=205)
- 
-    imagem = Image.open('Icones/aluno.png')
+
+    imagem = Image.open(imagem)
     imagem = imagem.resize((130,130))
     imagem = ImageTk.PhotoImage(imagem)
 
     l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
     l_imagem.place(x=390, y=10)
-    
-    # Mostrando os valores da tabela
-    mostrar_usuarios()
 
-# Procurar usuario
+    # Mostrando os valores da tabela
+    mostrar_alunos()
+
+# Procurar Aluno
 def procurar():
-    global imagem, imagem_string, l_imagem, a_caixa
+    global imagem, imagem_string, l_imagem
 
     # obtendo id
-    id_usuario = int(e_procurar.get())
+    id_aluno = int(e_procurar.get())
 
-    #procurar usuario
-    dados = sistema_de_usuario.search_usuario(id_usuario)
+    #procurar aluno
+    dados = sistema_de_registro.search_studant(id_aluno)
 
         # Limpando campo de entrada
     e_nome.delete(0, END)
     e_email.delete(0, END)
     e_tel.delete(0, END)
     c_sexo.delete(0, END)
-    c_cargo.delete(0, END)
     data_nascimento.delete(0, END)
-    c_endereco.delete(0, END)
-    c_materia.delete(0, END)
-    c_senha.delete(0, END)
+    e_endereco.delete(0, END)
+    c_curso.delete(0, END)
 
-
-        # Inserindo Valores Novos
+        # Limpando campo de entrada
     e_nome.insert(END, dados[1])
     e_email.insert(END, dados[2])
     e_tel.insert(END, dados[3])
     c_sexo.insert(END, dados[4])
-    c_cargo.insert(END, dados[5])
-    data_nascimento.insert(END, dados[6])
-    c_endereco.insert(END, dados[7])
-    c_materia.insert(END, dados[8])
-    c_senha.insert(END,dados[9])
-    
-    a_caixa = tk.BooleanVar(value=dados[10])
-    c_caixa = ttk.Checkbutton(frame_details, text="Mudar senha ao Entrar", variable=a_caixa, command=realizar_acao)
-    c_caixa.place(x=224, y=205)
-    
-    imagem = dados[11]
+    data_nascimento.insert(END, dados[5])
+    e_endereco.insert(END, dados[6])
+    c_curso.insert(END, dados[7])
+
+    imagem = dados[8]
     imagem_string = imagem
 
     imagem = Image.open(imagem)
@@ -186,10 +166,10 @@ def procurar():
 
 #  Atualizar 
 def atualizar():
-    global imagem, imagem_string, l_imagem, a_caixa
+    global imagem, imagem_string, l_imagem
 
     # obtendo id
-    id_usuario = int(e_procurar.get())
+    id_aluno = int(e_procurar.get())
 
 
     #obtendo valores
@@ -197,15 +177,12 @@ def atualizar():
     email = e_email.get()
     tel = e_tel.get()
     sexo = c_sexo.get()
-    cargo = c_cargo.get()
     data = data_nascimento.get()
-    endereco = c_endereco.get()
-    materia = c_materia.get()
-    senha = c_senha.get()
-    caixa = a_caixa.get()
+    endereco = e_endereco.get()
+    curso = c_curso.get()
     img = imagem_string
 
-    lista = [nome, email, tel, sexo, cargo, data, endereco, materia, senha, caixa, img, id_usuario]
+    lista = [nome, email, tel, sexo, data, endereco, curso, img, id_aluno]
 
     # verificando se tem Volar Vazio
     for i in lista:
@@ -213,23 +190,16 @@ def atualizar():
             messagebox.showerror("Erro", "Preencha todos os campos")
             return
     # registrando os valores
-    sistema_de_usuario.update_usuario(lista)
+    sistema_de_registro.update_student(lista)
 
     # Limpando campo de entrada
     e_nome.delete(0, END)
     e_email.delete(0, END)
     e_tel.delete(0, END)
     c_sexo.delete(0, END)
-    c_cargo.delete(0, END)
     data_nascimento.delete(0, END)
-    c_endereco.delete(0, END)
-    c_materia.delete(0, END)
-    c_senha.delete(0, END)
-    a_caixa.delete(0,END)
-
-    a_caixa = tk.BooleanVar(value=True)
-    c_caixa = ttk.Checkbutton(frame_details, text="Mudar senha ao Entrar", variable=a_caixa, command=realizar_acao)
-    c_caixa.place(x=224, y=205)    
+    e_endereco.delete(0, END)
+    c_curso.delete(0, END)
 
 # Abrindo A imagem
     imagem = Image.open('Icones/aluno.png')
@@ -240,35 +210,29 @@ def atualizar():
     l_imagem.place(x=390, y=10)
 
     # Mostrando os valores da tabela
-    mostrar_usuarios()
+    mostrar_alunos()
 
-# Deletar usuario
+# Deletar Aluno
 def deletar():
-    global imagem, imagem_string, l_imagem, a_caixa
+    global imagem, imagem_string, l_imagem
 
     # obtendo id
-    id_usuario = int(e_procurar.get())
+    id_aluno = int(e_procurar.get())
 
-    # Deletando usuario
-    sistema_de_usuario.delet_usuario(id_usuario)
+    # Deletando aluno
+    sistema_de_registro.delet_student(id_aluno)
 
     # Limpando campo de entrada
     e_nome.delete(0, END)
     e_email.delete(0, END)
     e_tel.delete(0, END)
     c_sexo.delete(0, END)
-    c_cargo.delete(0, END)
     data_nascimento.delete(0, END)
-    c_endereco.delete(0, END)
-    c_materia.delete(0, END)
-    c_senha.delete(0, END)
-
-    a_caixa = tk.BooleanVar(value=True)
-    c_caixa = ttk.Checkbutton(frame_details, text="Mudar senha ao Entrar", variable=a_caixa, command=realizar_acao)
-    c_caixa.place(x=224, y=205)
+    e_endereco.delete(0, END)
+    c_curso.delete(0, END)
 
 # Abrindo A imagem
-    imagem = Image.open('Icones/usuario.png')
+    imagem = Image.open('Icones/aluno.png')
     imagem = imagem.resize((130,130))
     imagem = ImageTk.PhotoImage(imagem)
 
@@ -276,89 +240,49 @@ def deletar():
     l_imagem.place(x=390, y=10)
        
     # Mostrando os valores da tabela
-    mostrar_usuarios()
-
-# Funcao pra Habilita e desabilitar Materia
-def selecionar_cargo(event):
-    cargo_selecionado = c_cargo.get()
-    if cargo_selecionado == "ADMINISTRATIVO":
-        c_materia.config(state=DISABLED)
-        l_materia.config(state=DISABLED)
-        c_materia.set('DESABILITADO')
-    else:
-        c_materia.set('')
-        c_materia.config(state=NORMAL)
-        l_materia.config(state=NORMAL)
-        c_materia['values'] = (cursos)
-
-
-def realizar_acao(event=None):
-    if a_caixa.get() == True:
-        print(f"Opção marcada! Realizando ação... {a_caixa.get()}")
-    else:
-        print(f"Opção desmarcada. {a_caixa.get()}")
+    mostrar_alunos()
 
 
 # ================================== Campos de Entrada ==================================
-l_nome = Label(frame_details, text="Nome *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
+l_nome = Label(frame_details, text="Nome Do Aluno Completo*", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
 l_nome.place(x=4, y=10)
 e_nome = Entry(frame_details, width=30, justify='left', relief='solid')
-e_nome.place(x=7, y=35)
+e_nome.place(x=7, y=40)
 
 l_email = Label(frame_details, text="Email *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
-l_email.place(x=4, y=60)
+l_email.place(x=4, y=70)
 e_email = Entry(frame_details, width=30, justify='left', relief='solid')
-e_email.place(x=7, y=85)
+e_email.place(x=7, y=100)
 
 l_tel = Label(frame_details, text="Telefone *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
-l_tel.place(x=4, y=110)
+l_tel.place(x=4, y=130)
 e_tel = Entry(frame_details, width=18, justify='left', relief='solid')
-e_tel.place(x=7, y=135)
+e_tel.place(x=7, y=160)
 
 l_sexo = Label(frame_details, text="Sexo *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
-l_sexo.place(x=127, y=110)
+l_sexo.place(x=127, y=130)
 c_sexo = ttk.Combobox(frame_details, width=7, font=('Ivy 8'),justify='center')
 c_sexo['values'] = ('MASCULINO', 'FEMININO')
-c_sexo.place(x=130, y=135)
-
-
-l_carcgo = Label(frame_details, text="Cargo *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
-l_carcgo.place(x=4, y=160)
-c_cargo = ttk.Combobox(frame_details, width=25, font=('Ivy 8'),justify='center')
-c_cargo['values'] = ('PROFESSOR', 'ADMINISTRATIVO')
-c_cargo.place(x=4, y=185)
-c_cargo.bind("<<ComboboxSelected>>", selecionar_cargo)
-
+c_sexo.place(x=130, y=160)
 
 l_data_nascimento = Label(frame_details, text="Data De Nascimento *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
 l_data_nascimento.place(x=220, y=10)
-data_nascimento = DateEntry(frame_details, width=11, background='darkblue', foreground='white', borderwidth=2, date_pattern='dd/mm/yyyy')
-data_nascimento.place(x=224, y=35)
+data_nascimento = DateEntry(frame_details, width=11, background='darkblue', foreground='white', borderwidth=2)
+data_nascimento.place(x=224, y=40)
 
 l_endereco = Label(frame_details, text="Endereço *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
-l_endereco.place(x=220, y=60)
-c_endereco = Entry(frame_details, width=20, justify='left', relief='solid')
-c_endereco.place(x=224, y=85)
+l_endereco.place(x=220, y=70)
+e_endereco = Entry(frame_details, width=20, justify='left', relief='solid')
+e_endereco.place(x=224, y=100)
 
 # Criando Cursos
-
 cursos = ['Engenharia', 'Medicina', 'Administração']
 
-l_materia = Label(frame_details, text="Materia *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
-l_materia.place(x=220, y=110)
-c_materia = ttk.Combobox(frame_details, width=20, font=('Ivy 8'),justify='center')
-
-c_materia['values'] = (cursos)
-c_materia.place(x=224, y=135)
-
-l_senha = Label(frame_details, text="Senha *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
-l_senha.place(x=220, y=160)
-c_senha = Entry(frame_details, width=25, justify='left', relief='solid')
-c_senha.place(x=224, y=185)
-
-a_caixa = tk.BooleanVar(value=True)
-c_caixa = ttk.Checkbutton(frame_details, text="Mudar senha ao Entrar", variable=a_caixa, command=realizar_acao)
-c_caixa.place(x=224, y=205)
+l_curso = Label(frame_details, text="Cursos *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
+l_curso.place(x=220, y=130)
+c_curso = ttk.Combobox(frame_details, width=20, font=('Ivy 8'),justify='center')
+c_curso['values'] = (cursos)
+c_curso.place(x=224, y=160)
 
 #================================== Função para escolher imagem ==================================
 
@@ -381,49 +305,89 @@ botao_carregar = Button(frame_details,command=escolher_imagem, text='Carregar Fo
 botao_carregar.place(x=390, y=160)
 
 
-# Criando tabelas de usuarios
-def mostrar_usuarios():
+frame_tabela = Frame(janela, relief=SOLID) # Crie o frame_tabela onde a Treeview será colocada
+frame_tabela.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+frame_tabela.grid_rowconfigure(0, weight=1)
+frame_tabela.grid_columnconfigure(0, weight=1)
 
-    #
-    list_header = ['id', 'Nome', 'Cargo', 'Telefone', 'Sexo', 'Data', 'Endereço', 'Materia']
+tree_alunos = None  # Variável global para a Treeview
+estados_checkboxes = {} # Dicionário para guardar o estado dos checkboxes
 
-    df_list= sistema_de_usuario.view_all_usuario()
 
-    tree_usuario = ttk.Treeview(frame_tabela, selectmode="extended", columns=list_header, show="headings")
 
-    # Definindo os cabeçalhos das colunas
-    vsb = ttk.Scrollbar(frame_tabela, orient="vertical", command=tree_usuario.yview)
-    hsb = ttk.Scrollbar(frame_tabela, orient="horizontal", command=tree_usuario.xview)
+def obter_materia_professor(professor_id):
+    """Obtém a matéria do professor logado."""
+    dados_professor = sistema_de_usuario.search_usuario(professor_id)
+    if dados_professor and len(dados_professor) > 8: # Verifica se a matéria existe
+        return dados_professor[8] # A matéria está na nona posição (índice 8)
+    return None
 
-    tree_usuario.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
-    # Posicionando a Treeview e as barras de rolagem
-    tree_usuario.grid(row=0, column=0, sticky="nsew")
+def mostrar_alunos():
+    global tree_alunos, estados_checkboxes, materia_professor, professor_logado_id
+
+    materia_professor = obter_materia_professor(professor_logado_id)
+
+    if not materia_professor:
+        messagebox.showerror("Erro", "Não foi possível obter a matéria do professor.")
+        return
+
+    list_header = ['ID', 'Nome'] + [f'Dia {i+1}' for i in range(25)]
+
+    if tree_alunos:
+        tree_alunos.destroy()
+        estados_checkboxes = {} # Limpar os estados ao mostrar novamente
+
+    tree_alunos = ttk.Treeview(frame_tabela, selectmode="extended", columns=list_header, show="headings")
+
+    # Definindo os cabeçalhos
+    tree_alunos.heading('ID', text='ID', anchor='center')
+    tree_alunos.column('ID', width=40, anchor='center')
+    tree_alunos.heading('Nome', text='Nome', anchor='nw')
+    tree_alunos.column('Nome', width=150, anchor='nw')
+    for i in range(25):
+        tree_alunos.heading(f'Dia {i+1}', text='', anchor='center')
+        tree_alunos.column(f'Dia {i+1}', width=30, anchor='center')
+
+    # Adicionando barras de rolagem
+    vsb = ttk.Scrollbar(frame_tabela, orient="vertical", command=tree_alunos.yview)
+    hsb = ttk.Scrollbar(frame_tabela, orient="horizontal", command=tree_alunos.xview)
+    tree_alunos.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
+    tree_alunos.grid(row=0, column=0, sticky="nsew")
     vsb.grid(row=0, column=1, sticky="ns")
     hsb.grid(row=1, column=0, sticky="ew")
 
-    # Configurando o peso das linhas e colunas do frame para que a Treeview se expanda
-    frame_tabela.grid_rowconfigure(0, weight=12)
+    # Inserir dados
+    alunos_da_materia = sistema_de_registro.get_alunos_por_materia(materia_professor)
 
-    hd=["nw", "nw", "nw", 'center', 'center', 'center', 'center', 'center']
-    h=[40,150,150,70,70,70,120,100,100]
-    n=0
+    for aluno in alunos_da_materia:
+        aluno_id = aluno[0]
+        nome_aluno = aluno[1]
+        values = [aluno_id, nome_aluno] + ['[ ]' for _ in range(25)]
+        tree_alunos.insert('', 'end', values=values)
+        estados_checkboxes[aluno_id] = [False] * 25 # Inicializa o estado dos checkboxes
 
-    for col in list_header:
-        tree_usuario.heading(col, text=col.title(), anchor=NW)
-        tree_usuario.column(col, width=h[n], anchor=hd[n])
+    tree_alunos.bind('<Button-1>', on_treeview_click)
+    return tree_alunos
 
-        n+=1
+def on_treeview_click(event):
+    global tree_alunos, estados_checkboxes
+    item_id = tree_alunos.identify_row(event.y)
+    column_id = tree_alunos.identify_column(event.x)
 
-    for item in df_list:   
-        tree_usuario.insert('', 'end', values=item)        
-        # Adicione esta linha para exibir a tabela ao iniciar o programa
-    return tree_usuario
+    if item_id and column_id not in ('#0', '#1'):  # Ignora a coluna de ID e Nome
+        col_index = int(column_id[1:]) - 2  # Ajusta o índice para corresponder à lista de estados
+        aluno_id = tree_alunos.item(item_id, 'values')[0]
 
-#================================== Procurar usuario ==================================
+        if aluno_id in estados_checkboxes:
+            current_state = estados_checkboxes[aluno_id][col_index]
+            estados_checkboxes[aluno_id][col_index] = not current_state
+            novo_marcador = '[X]' if estados_checkboxes[aluno_id][col_index] else '[ ]'
+            tree_alunos.set(item_id, column_id, novo_marcador)
+#================================== Procurar Aluno ==================================
 frame_procurar = Frame(frame_botoes, width=40, height=55, bg=co1, relief=RAISED)
 frame_procurar.grid(row=0, column=0, pady=10, padx=10, sticky=NSEW)
 
-l_nome = Label(frame_procurar, text="Procurar usuario [Entra ID] *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
+l_nome = Label(frame_procurar, text="Procurar Aluno [Entra ID] *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
 l_nome.grid(row=0, column=0, pady=10, padx=0, sticky=NSEW)
 e_procurar = Entry(frame_procurar, width=5, justify='center', relief='solid', font=('Ivy 10'))
 e_procurar.grid(row=1, column=0, pady=10, padx=0, sticky=NSEW)
@@ -459,7 +423,6 @@ l_linha = Label(frame_botoes, relief=GROOVE, width=1, height=123, anchor=NW, fon
 l_linha.place(x=240, y=15)
 
 # Chamando a função para criar e exibir a tabela
-mostrar_usuarios()
+mostrar_alunos()
 
 janela.mainloop()
-
