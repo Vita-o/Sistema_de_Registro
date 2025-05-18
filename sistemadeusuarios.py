@@ -61,8 +61,14 @@ class SistemaDeUsuarios:
         # mostando mensagem de sucesso
         messagebox.showinfo('Sucesso', f'Usuario com o ID:{id} foi Deletado!!')
 
+    def confirmar_usuario(self, nome_usuario):
+        self.c.execute("SELECT nome, senha, caixa FROM usuarios WHERE nome = ?", (nome_usuario,))
+        usuario_confirmar = self.c.fetchone()
+        return usuario_confirmar
 
-        
+    def atualizar_senha(self, nome_usuario, nova_senha):
+        self.c.execute("UPDATE usuarios SET senha = ?, caixa = 0 WHERE nome = ?", (nova_senha, nome_usuario,))
+        self.conn.commit()
 
 # Criando uma instancia do sistema do registro
 sistema_de_usuario = SistemaDeUsuarios()   

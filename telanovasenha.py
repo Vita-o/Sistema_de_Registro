@@ -44,6 +44,15 @@ janela.grid_rowconfigure(4, weight=1)
 frame_logo = Frame(janela, width=300, height=240, bg=co1, relief=SOLID)
 frame_logo.grid(row=3, column=1, pady=10, padx=0, sticky=NSEW)
 
+# ================================== Criando Funções ==================================
+
+
+
+
+
+
+
+
 # ================================== Criando Caixas de entraa ==================================
 l_usuario = Label(frame_logo, text="Nome do Usuario*", justify='left', anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
 l_usuario.place(x=90, y=10)

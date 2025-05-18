@@ -10,6 +10,8 @@ import subprocess
 from PIL import ImageTk, Image
 
 
+# importando sistema de usuari
+from sistemadeusuarios import sistema_de_usuario
 
 # cores
 co0 = "#2e2d2b"  # Preta
@@ -47,14 +49,72 @@ frame_logo = Frame(janela, width=300, height=150, bg=co1, relief=SOLID)
 frame_logo.grid(row=3, column=1, pady=10, padx=0, sticky=NSEW)
 
 # ================================== Criando Mudança de Tela ==================================
-def confirmarusuario():
-    
-    usuario = e_usuario.get()
-    senha = e_senha.get()
+import subprocess
+# Assuming sistema_de_usuario is an instance of your user system class
+# and e_usuario and e_senha are your entry widgets
 
-    if usuario == 'Admin' and senha == 'Admin':
+def salva():
+        # ================================== Criando Frames ==================================
+
+    # Configurando pesos para as colunas e linhas da janela para centralizar
+    janela.grid_columnconfigure(0, weight=1)
+    janela.grid_columnconfigure(3, weight=1)
+    janela.grid_rowconfigure(0, weight=1)
+    janela.grid_rowconfigure(4, weight=1)
+
+    frame_logo = Frame(janela, width=300, height=240, bg=co1, relief=SOLID)
+    frame_logo.grid(row=3, column=1, pady=10, padx=0, sticky=NSEW)
+
+    # ================================== Criando Caixas de entraa ==================================
+    l_usuario = Label(frame_logo, text="Nome do Usuario*", justify='left', anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
+    l_usuario.place(x=90, y=10)
+
+    l_senha = Label(frame_logo, text="Senha Antiga*", justify='left', anchor=NW, font=('Ivy 8'), bg=co1, fg=co4)
+    l_senha.place(x=75, y=40)
+    e_senha = Entry(frame_logo, width=25, justify='left', relief='solid')
+    e_senha.place(x=75, y=60)
+
+    l_senha = Label(frame_logo, text="Nova Senha*", justify='left', anchor=NW, font=('Ivy 8'), bg=co1, fg=co4)
+    l_senha.place(x=75, y=90)
+    e_senha = Entry(frame_logo, width=25, justify='left', relief='solid')
+    e_senha.place(x=75, y=110)
+
+    l_senha = Label(frame_logo, text="Confirmar Senha*", justify='left', anchor=NW, font=('Ivy 8'), bg=co1, fg=co4)
+    l_senha.place(x=75, y=140)
+    e_senha = Entry(frame_logo, width=25, justify='left', relief='solid')
+    e_senha.place(x=75, y=160)
+
+
+    # ================================== Criando Botão ==================================
+    app_login = Button(frame_logo, width=18, command='', relief=GROOVE, text=' Login ', compound=LEFT, overrelief=RIDGE, font=('Ivy 10'), bg=co0, fg=co1)
+    app_login.place(x=75, y=200)
+
+    janela.mainloop()
+
+
+def confirmarusuario():
+
+    usuario_digitado = e_usuario.get()
+    senha_digitada = e_senha.get()
+
+    usuario_banco = sistema_de_usuario.confirmar_usuario(usuario_digitado)
+
+    if usuario_digitado == 'Admin' and senha_digitada == 'Admin':
         janela.destroy()
         subprocess.Popen(['c:/Users/victor.barbosa/Desktop/Sistema_de_Registro/venv/Scripts/python.exe', 'teladeusuarios.py'])
+    elif usuario_banco:
+        nome_banco, senha_banco, caixa_banco = usuario_banco
+
+        if int(caixa_banco) == 1: # Convertemos para inteiro para comparar
+            janela.destroy()
+            subprocess.Popen(['c:/Users/victor.barbosa/Desktop/Sistema_de_Registro/venv/Scripts/python.exe', 'telanovasenha.py', usuario_digitado])
+        elif usuario_digitado == nome_banco and senha_digitada == senha_banco:
+            janela.destroy()
+            subprocess.Popen(['c:/Users/victor.barbosa/Desktop/Sistema_de_Registro/venv/Scripts/python.exe', 'teladeusuarios.py'])
+        else:
+            messagebox.showerror("Erro", "Senha incorreta.")
+    else:
+        messagebox.showerror("Erro", "Usuário não encontrado.") # Replace with proper GUI error handling
 
 
 # ================================== Criando Caixas de entraa ==================================
