@@ -5,6 +5,7 @@ from tkinter import ttk
 from tkinter import messagebox
 from tkinter import filedialog as fd
 import subprocess
+import sys
 
 # importando pillow
 from PIL import ImageTk, Image
@@ -52,9 +53,28 @@ frame_details = Frame(janela, width=800, height=100, bg=co1, relief=SOLID)
 frame_details.grid(row=1, column=1, pady=1, padx=10, sticky=NSEW)
 
 frame_tabela = Frame(janela, width=800, height=100, bg=co1, relief=SOLID)
-frame_tabela.grid(row=3, column=0, pady=0, padx=10, sticky=NSEW,columnspan=5)
+frame_tabela.grid(row=3, column=0, pady=0, padx=10,columnspan=5)
 
+# configurando tamanho da tabela fixo
+frame_tabela.grid_rowconfigure(0, weight=1)
+frame_tabela.grid_columnconfigure(0, weight=1)
 
+tree_alunos = None
+estados_checkboxes = {}
+professor_logado_id = None # Inicializa como None
+
+# Verifique se um ID de professor foi passado como argumento
+if len(sys.argv) > 1:
+    try:
+        professor_logado_id = int(sys.argv[1])
+    except ValueError:
+        messagebox.showerror("Erro", "ID do professor inválido.")
+        janela.destroy()
+        sys.exit()
+else:
+    messagebox.showerror("Erro", "ID do professor não fornecido.")
+    janela.destroy()
+    sys.exit()
 #================================== Frame Logo ==================================
 global imagem, imagem_string, l_imagem
 
@@ -305,10 +325,6 @@ botao_carregar = Button(frame_details,command=escolher_imagem, text='Carregar Fo
 botao_carregar.place(x=390, y=160)
 
 
-frame_tabela = Frame(janela, relief=SOLID) # Crie o frame_tabela onde a Treeview será colocada
-frame_tabela.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
-frame_tabela.grid_rowconfigure(0, weight=1)
-frame_tabela.grid_columnconfigure(0, weight=1)
 
 tree_alunos = None  # Variável global para a Treeview
 estados_checkboxes = {} # Dicionário para guardar o estado dos checkboxes
@@ -338,7 +354,7 @@ def mostrar_alunos():
         estados_checkboxes = {} # Limpar os estados ao mostrar novamente
 
     tree_alunos = ttk.Treeview(frame_tabela, selectmode="extended", columns=list_header, show="headings")
-
+    tree_alunos.grid(row=0, column=0, sticky="nsew")
     # Definindo os cabeçalhos
     tree_alunos.heading('ID', text='ID', anchor='center')
     tree_alunos.column('ID', width=40, anchor='center')
@@ -355,6 +371,16 @@ def mostrar_alunos():
     tree_alunos.grid(row=0, column=0, sticky="nsew")
     vsb.grid(row=0, column=1, sticky="ns")
     hsb.grid(row=1, column=0, sticky="ew")
+
+    # Definindo os cabeçalhos
+    tree_alunos.heading('ID', text='ID', anchor='center')
+    tree_alunos.column('ID', width=50, anchor='center', stretch=NO)
+    tree_alunos.heading('Nome', text='Nome', anchor='nw')
+    tree_alunos.column('Nome', width=150, anchor='nw', stretch=NO)
+    for i in range(25):
+        tree_alunos.heading(f'Dia {i+1}', text='', anchor='center')
+        tree_alunos.column(f'Dia {i+1}', width=30, anchor='center', stretch=NO)
+
 
     # Inserir dados
     alunos_da_materia = sistema_de_registro.get_alunos_por_materia(materia_professor)

@@ -71,6 +71,13 @@ class SistemaDeUsuarios:
         messagebox.showinfo("SUCESSO","Senha Atuazada com Sucesso!!")
         self.conn.commit()
 
+    def get_id_por_nome(self, nome):
+        self.c.execute("SELECT id FROM usuarios WHERE nome = ?", (nome,))
+        resultado = self.c.fetchone()
+        if resultado:
+            return resultado[0]
+        return None
+
 # Criando uma instancia do sistema do registro
 sistema_de_usuario = SistemaDeUsuarios()   
 

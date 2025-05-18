@@ -9,6 +9,10 @@ import subprocess
 # importando pillow
 from PIL import ImageTk, Image
 
+# Importando Sistem De Estudante
+from sistemaderegistro import *
+from sistemadeusuarios import *
+
 
 # importando sistema de usuari
 from sistemadeusuarios import sistema_de_usuario
@@ -126,9 +130,7 @@ def redefiniir_senha(usuario_digitado, senha_digitada):
 
 
 
-
 def confirmarusuario():
-
     usuario_digitado = e_usuario.get()
     senha_digitada = e_senha.get()
 
@@ -140,26 +142,23 @@ def confirmarusuario():
     elif usuario_banco:
         nome_banco, senha_banco, caixa_banco, cargo_banco = usuario_banco
 
-        if int(caixa_banco) == 1: # Convertemos para inteiro para comparar
-           
+        if int(caixa_banco) == 1:
             redefiniir_senha(usuario_digitado, senha_digitada)
-
         elif usuario_digitado == nome_banco and senha_digitada == senha_banco and cargo_banco == "ADMINISTRATIVO":
-
             janela.destroy()
             subprocess.Popen(['c:/Users/victor.barbosa/Desktop/Sistema_de_Registro/venv/Scripts/python.exe', 'telaregistro.py'])
-
         elif usuario_digitado == nome_banco and senha_digitada == senha_banco and cargo_banco == "PROFESSOR":
-            
-            janela.destroy()
-            subprocess.Popen(['c:/Users/victor.barbosa/Desktop/Sistema_de_Registro/venv/Scripts/python.exe', 'telaprofessor.py'])
-
+            # Recuperar o ID do professor
+            professor_id = sistema_de_usuario.get_id_por_nome(usuario_digitado)
+            if professor_id:
+                janela.destroy()
+                subprocess.Popen(['c:/Users/victor.barbosa/Desktop/Sistema_de_Registro/venv/Scripts/python.exe', 'telaprofessor.py', str(professor_id)]) # Passa o ID como argumento
+            else:
+                messagebox.showerror("Erro", "Erro ao obter ID do professor.")
         else:
             messagebox.showerror("Erro", "Senha incorreta.")
     else:
-        messagebox.showerror("Erro", "Usuário não encontrado.") # Replace with proper GUI error handling
-
-
+        messagebox.showerror("Erro", "Usuário não encontrado.")
 
 # ================================== Criando Botão ==================================
 b_login = Button(frame_logo, width=18, command=confirmarusuario, relief=GROOVE, text=' Login ', compound=LEFT, overrelief=RIDGE, font=('Ivy 10'), bg=co0, fg=co1)

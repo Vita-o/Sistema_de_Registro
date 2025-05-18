@@ -99,7 +99,6 @@ def adicionar():
     # verificando se tem Volar Vazio
     for i in lista:
         if i=='':
-            print(list)
             messagebox.showerror("Erro", f"Preencha todos os campos ")
             return
     # registrando os valores
@@ -114,13 +113,14 @@ def adicionar():
     e_endereco.delete(0, END)
     c_curso.delete(0, END)
 
-
-    imagem = Image.open(imagem)
+# Abrindo A imagem
+    imagem = Image.open('Icones/aluno.png')
     imagem = imagem.resize((130,130))
     imagem = ImageTk.PhotoImage(imagem)
 
     l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
     l_imagem.place(x=390, y=10)
+    
     # Mostrando os valores da tabela
     mostrar_alunos()
 
