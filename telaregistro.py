@@ -60,7 +60,7 @@ global imagem, imagem_string, l_imagem
 app_lg = Image.open('Icones/Logo.png')
 app_lg = app_lg.resize((50,50))
 app_lg = ImageTk.PhotoImage(app_lg)
-app_logo = Label(frame_logo, image=app_lg, text=" Sistema de Registro de Aluno ", width=850, compound=LEFT, anchor=NW, font=('Verdana 15'), bg=co6, fg=co1)
+app_logo = Label(frame_logo, image=app_lg, text="  Registro de Aluno ", width=850, compound=LEFT, anchor=NW, font=('Verdana 15'), bg=co6, fg=co1)
 app_logo.place(x=5, y=0)
 
 #================================== Abrindo Imagem Aluno ==================================
@@ -237,7 +237,7 @@ def deletar():
 
 
 # ================================== Campos de Entrada ==================================
-l_nome = Label(frame_details, text="Nome *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
+l_nome = Label(frame_details, text="Nome Do Aluno Completo*", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
 l_nome.place(x=4, y=10)
 e_nome = Entry(frame_details, width=30, justify='left', relief='solid')
 e_nome.place(x=7, y=40)

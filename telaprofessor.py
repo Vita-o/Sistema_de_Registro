@@ -35,7 +35,7 @@ co9 = "#e9edf5"   # + verde
 janela = Tk()
 icone = tk.PhotoImage(file='Icones/Logo.png')
 janela.iconphoto(False, icone)
-janela.title("Tela Do Administrador")
+janela.title("Registro De Faltas")
 janela.geometry("810x535")
 janela.configure(background=co1)
 janela.resizable(width=FALSE, height=FALSE)
@@ -67,7 +67,7 @@ def sair():
 app_lg = Image.open('Icones/Logo.png')
 app_lg = app_lg.resize((50,50))
 app_lg = ImageTk.PhotoImage(app_lg)
-app_logo = Label(frame_logo, image=app_lg, text=" Registro de usuario ", width=740, compound=LEFT, anchor=CENTER, font=('Verdana 15'), bg=co6, fg=co1)
+app_logo = Label(frame_logo, image=app_lg, text=" Registro de Faltas ", width=740, compound=LEFT, anchor=CENTER, font=('Verdana 15'), bg=co6, fg=co1)
 app_logo.grid(row=0, column=0, pady=0, padx=0, sticky=NSEW) 
 
 

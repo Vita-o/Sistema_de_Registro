@@ -225,7 +225,7 @@ def atualizar():
     c_endereco.delete(0, END)
     c_materia.delete(0, END)
     c_senha.delete(0, END)
-    a_caixa.delete(0,END)
+
 
     a_caixa = tk.BooleanVar(value=True)
     c_caixa = ttk.Checkbutton(frame_details, text="Mudar senha ao Entrar", variable=a_caixa, command=realizar_acao)
