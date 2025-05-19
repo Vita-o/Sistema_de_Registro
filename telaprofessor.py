@@ -71,17 +71,17 @@ estados_checkboxes = {}
 professor_logado_id = None # Inicializa como None
 
 # Verifique se um ID de professor foi passado como argumento
-if len(sys.argv) > 1:
-    try:
-        professor_logado_id = int(sys.argv[1])
-    except ValueError:
-        messagebox.showerror("Erro", "ID do professor inválido.")
-        janela.destroy()
-        sys.exit()
-else:
-    messagebox.showerror("Erro", "ID do professor não fornecido.")
-    janela.destroy()
-    sys.exit()
+# if len(sys.argv) > 1:
+#     try:
+#         professor_logado_id = int(sys.argv[1])
+#     except ValueError:
+#         messagebox.showerror("Erro", "ID do professor inválido.")
+#         janela.destroy()
+#         sys.exit()
+# else:
+#     messagebox.showerror("Erro", "ID do professor não fornecido.")
+#     janela.destroy()
+#     sys.exit()
 #================================== Frame Logo ==================================
 global imagem, imagem_string, l_imagem
 
@@ -106,52 +106,18 @@ l_imagem = Label(frame_details, image=imagem, bg=co6, fg=co4)
 l_imagem.grid(row=0, column=4, rowspan=3, pady=10, padx=0, sticky=NSEW)
 
 #================================== Criando funçoes para CRUD ==================================
-# Adicionar
-def adicionar():
-    
-    global imagem, imagem_string, l_imagem
-    imagem_string = ''
 
-    #obtendo valores
-    nome = e_nome.get()
-    email = e_email.get()
-    tel = e_tel.get()
-    curso = c_curso.get()
-    img = imagem_string
-    
-    lista = [nome, email, tel, curso, img]
-
-    # verificando se tem Volar Vazio
-    for i in lista:
-        if i=='':
-            messagebox.showerror("Erro", "Preencha todos os campos")
-            return
-    # registrando os valores
-    sistema_de_registro.register_studant(lista)
-
-    # Limpando campo de entrada
-    e_nome.delete(0, END)
-    e_email.delete(0, END)
-    e_tel.delete(0, END)
-    c_curso.delete(0, END)
-
-
-    imagem = Image.open(imagem)
-    imagem = imagem.resize((130,130))
-    imagem = ImageTk.PhotoImage(imagem)
-
-    l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
-    
-
-    # Mostrando os valores da tabela
-    mostrar_alunos()
 
 # Procurar Aluno
 def procurar():
     global imagem, imagem_string, l_imagem
-    
+
+# Habilitando as caixas para pegar os valores da tabela
     e_nome.config(state='normal')
     l_nome.config(state='normal')
+
+    e_faltas.config(state='normal')
+    l_faltas.config(state='normal')
 
     # obtendo id
     id_aluno = int(e_procurar.get())
@@ -161,15 +127,17 @@ def procurar():
 
         # Limpando campo de entrada
     e_nome.delete(0, END)
-    e_email.delete(0, END)
-    e_tel.delete(0, END)
+    # e_email.delete(0, END)
+    # e_tel.delete(0, END)
     c_curso.delete(0, END)
+    e_faltas.delete(0, END)
 
         # Limpando campo de entrada
     e_nome.insert(END, dados[1])
-    e_email.insert(END, dados[2])
-    e_tel.insert(END, dados[3])
+    # e_email.insert(END, dados[2])
+    # e_tel.insert(END, dados[3])
     c_curso.insert(END, dados[7])
+    e_faltas.insert(END ,dados[9])
 
     imagem = dados[8]
     imagem_string = imagem
@@ -181,8 +149,12 @@ def procurar():
     l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
     l_imagem.grid(row=0, column=4, rowspan=3, pady=10, padx=0, sticky=NSEW)
 
+# Desabilitando Caiaxas
     e_nome.config(state=DISABLED)
     l_nome.config(state=DISABLED)
+
+    e_faltas.config(state=DISABLED)
+    l_faltas.config(state=DISABLED)
 
 
 #  Atualizar 
@@ -195,12 +167,12 @@ def atualizar():
 
     #obtendo valores
     nome = e_nome.get()
-    email = e_email.get()
-    tel = e_tel.get()
+    # email = e_email.get()
+    # tel = e_tel.get()
     curso = c_curso.get()
     img = imagem_string
 
-    lista = [nome, email, tel, curso, img, id_aluno]
+    lista = [nome, curso, img, id_aluno]
 
     # verificando se tem Volar Vazio
     for i in lista:
@@ -212,8 +184,8 @@ def atualizar():
 
     # Limpando campo de entrada
     e_nome.delete(0, END)
-    e_email.delete(0, END)
-    e_tel.delete(0, END)
+    # e_email.delete(0, END)
+    # e_tel.delete(0, END)
     c_curso.delete(0, END)
 
 # Abrindo A imagem
@@ -226,34 +198,6 @@ def atualizar():
 
     # Mostrando os valores da tabela
     mostrar_alunos()
-
-# Deletar Aluno
-def deletar():
-    global imagem, imagem_string, l_imagem
-
-    # obtendo id
-    id_aluno = int(e_procurar.get())
-
-    # Deletando aluno
-    sistema_de_registro.delet_student(id_aluno)
-
-    # Limpando campo de entrada
-    e_nome.delete(0, END)
-    e_email.delete(0, END)
-    e_tel.delete(0, END)
-    c_curso.delete(0, END)
-
-# Abrindo A imagem
-    imagem = Image.open('Icones/aluno.png')
-    imagem = imagem.resize((130,130))
-    imagem = ImageTk.PhotoImage(imagem)
-
-    l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
-    l_imagem.grid(row=0, column=4, rowspan=3, pady=10, padx=0, sticky=NSEW)
-       
-    # Mostrando os valores da tabela
-    mostrar_alunos()
-
 
 # ================================== Campos de Entrada ==================================
 l_nome = Label(frame_details, text="Nome Do Aluno", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
@@ -264,47 +208,47 @@ e_nome.grid(row=0, column=0, columnspan=2, pady=12, padx=20)
 e_nome.config(state=DISABLED)
 l_nome.config(state=DISABLED)
 
-l_email = Label(frame_details, text="Email *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
-l_email.grid(row=4, column=0, pady=6, padx=0, sticky=NSEW)
-e_email = Entry(frame_details, width=18, justify='left', relief='solid')
-e_email.grid(row=5, column=0, pady=6, padx=0, sticky=NSEW)
+l_nota1 = Label(frame_details, text="Nota1 *",justify='center', anchor=NW, font=('Ivy 10'), bg=co6, fg=co4)
+l_nota1.grid(row=1, column=0, pady=0, padx=25, sticky=NSEW)
+e_nota1 = Entry(frame_details, width=20, justify='center', relief='solid')
+e_nota1.grid(row=1, column=0, pady=12, padx=20, sticky='w')
 
-l_tel = Label(frame_details, text="Telefone *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
-l_tel.grid(row=2, column=1, pady=6, padx=0, sticky=NSEW)
-e_tel = Entry(frame_details, width=18, justify='left', relief='solid')
-e_tel.grid(row=3, column=1, pady=6, padx=0, sticky=NSEW)
+l_nota2 = Label(frame_details, text="Nota2 *",justify='center', anchor=NW, font=('Ivy 10'), bg=co6, fg=co4)
+l_nota2.grid(row=1, column=1, pady=0, padx=25, sticky=NSEW)
+e_nota2 = Entry(frame_details, width=20, justify='center', relief='solid')
+e_nota2.grid(row=1, column=1, pady=12, padx=20, sticky='w')
+
+l_nota3 = Label(frame_details, text="Nota3 *",justify='center', anchor=NW, font=('Ivy 10'), bg=co6, fg=co4)
+l_nota3.grid(row=2, column=0, pady=0, padx=25, sticky=NSEW)
+e_nota3 = Entry(frame_details, width=20, justify='center', relief='solid')
+e_nota3.grid(row=2, column=0, pady=12, padx=20, sticky='w')
+
+l_nota4 = Label(frame_details, text="Nota4 *",justify='center', anchor=NW, font=('Ivy 10'), bg=co6, fg=co4)
+l_nota4.grid(row=2, column=1, pady=0, padx=25, sticky=NSEW)
+e_nota4 = Entry(frame_details, width=20, justify='center', relief='solid')
+e_nota4.grid(row=2, column=1, pady=12, padx=20, sticky='w')
 
 
 # Criando Cursos
-cursos = ['Engenharia', 'Medicina', 'Administração']
 
-l_curso = Label(frame_details, text="Cursos *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
-l_curso.grid(row=4, column=1, pady=10, padx=0, sticky=NSEW)
-c_curso = ttk.Combobox(frame_details, width=20, font=('Ivy 8'),justify='center')
-c_curso['values'] = (cursos)
-c_curso.grid(row=5, column=1, pady=10, padx=0, sticky=NSEW)
+l_media = Label(frame_details, text="MEDIA DO ALUNO", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
+l_media.grid(row=4, column=0,  columnspan=2, pady=0, padx=20, sticky=NSEW)
+e_media = Entry(frame_details, width=40, justify='center', relief='solid')
+e_media.grid(row=5, column=0, columnspan=2, pady=12, padx=20)
+
+e_media.config(state=DISABLED)
+l_media.config(state=DISABLED)
+
 
 #================================== Função para escolher imagem ==================================
 
-def escolher_imagem():
-    global imagem, imagem_string, l_imagem
+l_faltas = Label(frame_details, text="faltas *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
+l_faltas.grid(row=5, column=4, pady=0, padx=0, sticky=NSEW)
+e_faltas = Entry(frame_details, width=5, justify='left', relief='solid')
+e_faltas.grid(row=5, column=4, pady=0, padx=0)
 
-    imagem = fd.askopenfilename()
-    imagem_string = imagem
-
-
-    imagem = Image.open(imagem)
-    imagem = imagem.resize((130,130))
-    imagem = ImageTk.PhotoImage(imagem)
-    l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
-    l_imagem.grid(row=0, column=2, pady=10, padx=0, sticky=NSEW)
-
-    botao_carregar['text'] = 'Trocar De Foto'
-
-
-botao_carregar = Button(frame_details,command=escolher_imagem, text='Carregar Foto'.upper(), width=20, compound=CENTER, anchor=CENTER, overrelief=RIDGE, font=('Ivy 7 bold'), bg=co1, fg=co0)
-botao_carregar.grid(row=4, column=4, pady=10, padx=0, sticky=NSEW)
-
+e_faltas.config(state=DISABLED)
+l_faltas.config(state=DISABLED)
 
 tree_alunos = None  # Variável global para a Treeview
 estados_checkboxes = {} # Dicionário para guardar o estado dos checkboxes
