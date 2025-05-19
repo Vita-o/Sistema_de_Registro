@@ -127,16 +127,18 @@ def procurar():
 
         # Limpando campo de entrada
     e_nome.delete(0, END)
-    # e_email.delete(0, END)
-    # e_tel.delete(0, END)
-    # c_curso.delete(0, END)
+    e_nota1.delete(0, END)
+    e_nota2.delete(0, END)
+    e_nota3.delete(0, END)
+    e_nota4.delete(0, END)
     e_faltas.delete(0, END)
 
-        # Limpando campo de entrada
+        # Inserindo valores no campo de entrada
     e_nome.insert(END, dados[1])
-    # e_email.insert(END, dados[2])
-    # e_tel.insert(END, dados[3])
-    # c_curso.insert(END, dados[7])
+    e_nota1.insert(END,dados[10])
+    e_nota2.insert(END,dados[11])
+    e_nota3.insert(END,dados[12])
+    e_nota4.insert(END,dados[13])
     e_faltas.insert(END ,dados[9])
 
     imagem = dados[8]
@@ -148,6 +150,10 @@ def procurar():
 
     l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
     l_imagem.grid(row=0, column=4, rowspan=3, pady=10, padx=0, sticky=NSEW)
+
+    # Gerando media altomatica
+
+
 
 # Desabilitando Caiaxas
     e_nome.config(state=DISABLED)
@@ -166,27 +172,20 @@ def atualizar():
 
 
     #obtendo valores
-    nome = e_nome.get()
-    # email = e_email.get()
-    # tel = e_tel.get()
-    # curso = c_curso.get()
-    img = imagem_string
+    nota1 = e_nota1.get()
+    nota2 = e_nota2.get()
+    nota3 = e_nota3.get()
+    nota4 = e_nota4.get()
 
-    lista = [nome, img, id_aluno]
+
+    lista = [ nota1, nota2, nota3, nota4, id_aluno]
 
     # verificando se tem Volar Vazio
-    for i in lista:
-        if i=='':
-            messagebox.showerror("Erro", "Preencha todos os campos")
-            return
+
     # registrando os valores
     sistema_de_registro.update_student(lista)
 
-    # Limpando campo de entrada
-    e_nome.delete(0, END)
-    # e_email.delete(0, END)
-    # e_tel.delete(0, END)
-    # c_curso.delete(0, END)
+
 
 # Abrindo A imagem
     imagem = Image.open('Icones/aluno.png')

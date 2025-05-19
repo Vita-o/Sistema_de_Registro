@@ -75,7 +75,7 @@ class SistemaDeRegistro:
         self.conn.commit()
         messagebox.showinfo("Sucesso", f"Faltas do aluno com ID {id_aluno} atualizadas para {faltas}.")
 
- 
+    
 
 
 # Criando uma instancia do sistema do registro
