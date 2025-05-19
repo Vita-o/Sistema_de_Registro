@@ -102,8 +102,8 @@ b_sair.grid(row=0, column=5, pady=0, padx=2, sticky=NSEW)
 imagem = Image.open('Icones/aluno.png')
 imagem = imagem.resize((130,130))
 imagem = ImageTk.PhotoImage(imagem)
-l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
-l_imagem.place(x=390, y=10)
+l_imagem = Label(frame_details, image=imagem, bg=co6, fg=co4)
+l_imagem.grid(row=0, column=4, rowspan=3, pady=10, padx=0, sticky=NSEW)
 
 #================================== Criando funçoes para CRUD ==================================
 # Adicionar
@@ -116,11 +116,10 @@ def adicionar():
     nome = e_nome.get()
     email = e_email.get()
     tel = e_tel.get()
-    endereco = e_endereco.get()
     curso = c_curso.get()
     img = imagem_string
     
-    lista = [nome, email, tel, endereco, curso, img]
+    lista = [nome, email, tel, curso, img]
 
     # verificando se tem Volar Vazio
     for i in lista:
@@ -134,7 +133,6 @@ def adicionar():
     e_nome.delete(0, END)
     e_email.delete(0, END)
     e_tel.delete(0, END)
-    e_endereco.delete(0, END)
     c_curso.delete(0, END)
 
 
@@ -143,7 +141,7 @@ def adicionar():
     imagem = ImageTk.PhotoImage(imagem)
 
     l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
-    l_imagem.place(x=390, y=10)
+    
 
     # Mostrando os valores da tabela
     mostrar_alunos()
@@ -151,6 +149,9 @@ def adicionar():
 # Procurar Aluno
 def procurar():
     global imagem, imagem_string, l_imagem
+    
+    e_nome.config(state='normal')
+    l_nome.config(state='normal')
 
     # obtendo id
     id_aluno = int(e_procurar.get())
@@ -162,14 +163,12 @@ def procurar():
     e_nome.delete(0, END)
     e_email.delete(0, END)
     e_tel.delete(0, END)
-    e_endereco.delete(0, END)
     c_curso.delete(0, END)
 
         # Limpando campo de entrada
     e_nome.insert(END, dados[1])
     e_email.insert(END, dados[2])
     e_tel.insert(END, dados[3])
-    e_endereco.insert(END, dados[6])
     c_curso.insert(END, dados[7])
 
     imagem = dados[8]
@@ -180,7 +179,10 @@ def procurar():
     imagem = ImageTk.PhotoImage(imagem)
 
     l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
-    l_imagem.place(x=390, y=10)
+    l_imagem.grid(row=0, column=4, rowspan=3, pady=10, padx=0, sticky=NSEW)
+
+    e_nome.config(state=DISABLED)
+    l_nome.config(state=DISABLED)
 
 
 #  Atualizar 
@@ -195,11 +197,10 @@ def atualizar():
     nome = e_nome.get()
     email = e_email.get()
     tel = e_tel.get()
-    endereco = e_endereco.get()
     curso = c_curso.get()
     img = imagem_string
 
-    lista = [nome, email, tel, endereco, curso, img, id_aluno]
+    lista = [nome, email, tel, curso, img, id_aluno]
 
     # verificando se tem Volar Vazio
     for i in lista:
@@ -213,7 +214,6 @@ def atualizar():
     e_nome.delete(0, END)
     e_email.delete(0, END)
     e_tel.delete(0, END)
-    e_endereco.delete(0, END)
     c_curso.delete(0, END)
 
 # Abrindo A imagem
@@ -222,7 +222,7 @@ def atualizar():
     imagem = ImageTk.PhotoImage(imagem)
 
     l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
-    l_imagem.place(x=390, y=10)
+    l_imagem.grid(row=0, column=4, rowspan=3, pady=10, padx=0, sticky=NSEW)
 
     # Mostrando os valores da tabela
     mostrar_alunos()
@@ -241,7 +241,6 @@ def deletar():
     e_nome.delete(0, END)
     e_email.delete(0, END)
     e_tel.delete(0, END)
-    e_endereco.delete(0, END)
     c_curso.delete(0, END)
 
 # Abrindo A imagem
@@ -250,57 +249,40 @@ def deletar():
     imagem = ImageTk.PhotoImage(imagem)
 
     l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
-    l_imagem.place(x=390, y=10)
+    l_imagem.grid(row=0, column=4, rowspan=3, pady=10, padx=0, sticky=NSEW)
        
     # Mostrando os valores da tabela
     mostrar_alunos()
 
 
 # ================================== Campos de Entrada ==================================
-l_nome = Label(frame_details, text="Nome Do Aluno", anchor='nw', font=('Ivy 10'), bg='white', fg='black') # Adapte as cores
-l_nome.grid(row=0, column=0, sticky='nw', padx=4, pady=10)
+l_nome = Label(frame_details, text="Nome Do Aluno", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
+l_nome.grid(row=0, column=0, pady=0, padx=20, sticky=NSEW)
+e_nome = Entry(frame_details, width=60, justify='left', relief='solid')
+e_nome.grid(row=0, column=0, columnspan=2, pady=12, padx=20)
 
-e_nome = Label(frame_details, text="", anchor='nw', font=('Ivy 10'), bg='white', fg='black') # Se for apenas exibição
-# Se e_nome for para entrada, use tk.Entry
-# e_nome = tk.Entry(frame_details, font=('Ivy 10'))
-e_nome.grid(row=1, column=0, sticky='w', padx=7, pady=0)
+e_nome.config(state=DISABLED)
+l_nome.config(state=DISABLED)
 
-l_email = Label(frame_details, text="Email *", anchor='nw', font=('Ivy 10'), bg='white', fg='black')
-l_email.grid(row=2, column=0, sticky='nw', padx=4, pady=10)
+l_email = Label(frame_details, text="Email *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
+l_email.grid(row=4, column=0, pady=6, padx=0, sticky=NSEW)
+e_email = Entry(frame_details, width=18, justify='left', relief='solid')
+e_email.grid(row=5, column=0, pady=6, padx=0, sticky=NSEW)
 
-e_email = Entry(frame_details, width=30, justify='left', relief='solid')
-e_email.grid(row=3, column=0, sticky='w', padx=7, pady=0)
-
-l_tel = Label(frame_details, text="Telefone *", anchor='nw', font=('Ivy 10'), bg='white', fg='black')
-l_tel.grid(row=4, column=0, sticky='nw', padx=4, pady=10)
-
+l_tel = Label(frame_details, text="Telefone *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
+l_tel.grid(row=2, column=1, pady=6, padx=0, sticky=NSEW)
 e_tel = Entry(frame_details, width=18, justify='left', relief='solid')
-e_tel.grid(row=5, column=0, sticky='w', padx=7, pady=0)
+e_tel.grid(row=3, column=1, pady=6, padx=0, sticky=NSEW)
 
-l_sexo = Label(frame_details, text="Sexo *", anchor='nw', font=('Ivy 10'), bg='white', fg='black')
-l_sexo.grid(row=4, column=1, sticky='nw', padx=127 - 4, pady=10) # Usa padx para deslocar
-
-
-
-# Para que as colunas se comportem de maneira semelhante ao place,
-# você pode precisar usar columnconfigure para dar pesos.
-# Por exemplo, para que a primeira coluna expanda com a janela:
-frame_details.columnconfigure(0, weight=1)
-
-
-l_endereco = Label(frame_details, text="Endereço *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
-l_endereco.place(x=220, y=70)
-e_endereco = Entry(frame_details, width=20, justify='left', relief='solid')
-e_endereco.place(x=224, y=100)
 
 # Criando Cursos
 cursos = ['Engenharia', 'Medicina', 'Administração']
 
 l_curso = Label(frame_details, text="Cursos *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
-l_curso.place(x=220, y=130)
+l_curso.grid(row=4, column=1, pady=10, padx=0, sticky=NSEW)
 c_curso = ttk.Combobox(frame_details, width=20, font=('Ivy 8'),justify='center')
 c_curso['values'] = (cursos)
-c_curso.place(x=224, y=160)
+c_curso.grid(row=5, column=1, pady=10, padx=0, sticky=NSEW)
 
 #================================== Função para escolher imagem ==================================
 
@@ -310,24 +292,24 @@ def escolher_imagem():
     imagem = fd.askopenfilename()
     imagem_string = imagem
 
+
     imagem = Image.open(imagem)
     imagem = imagem.resize((130,130))
     imagem = ImageTk.PhotoImage(imagem)
     l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
-    l_imagem.place(x=390, y=10)
+    l_imagem.grid(row=0, column=2, pady=10, padx=0, sticky=NSEW)
 
     botao_carregar['text'] = 'Trocar De Foto'
 
 
 botao_carregar = Button(frame_details,command=escolher_imagem, text='Carregar Foto'.upper(), width=20, compound=CENTER, anchor=CENTER, overrelief=RIDGE, font=('Ivy 7 bold'), bg=co1, fg=co0)
-botao_carregar.place(x=390, y=160)
-
+botao_carregar.grid(row=4, column=4, pady=10, padx=0, sticky=NSEW)
 
 
 tree_alunos = None  # Variável global para a Treeview
 estados_checkboxes = {} # Dicionário para guardar o estado dos checkboxes
 
-
+# ================================== Pegando a Materia do professor ==================================
 
 def obter_materia_professor(professor_id):
     """Obtém a matéria do professor logado."""
@@ -336,30 +318,10 @@ def obter_materia_professor(professor_id):
         return dados_professor[8] # A matéria está na nona posição (índice 8)
     return None
 
-def on_treeview_click(event):
-    print("Clique na Treeview detectado!")
-    global tree_alunos, estados_checkboxes
-    item_id = tree_alunos.identify_row(event.y)
-    column_id = tree_alunos.identify_column(event.x)
-    print(f"Clique em: item_id={item_id}, column_id={column_id}")
 
-    if item_id and column_id not in ('#0', '#1'):  # Ignora a coluna de ID e Nome
-        col_index = int(column_id[1:]) - 2  # Ajusta o índice para corresponder à lista de estados
-        print(f"col_index={col_index}")
-        aluno_id_str = tree_alunos.item(item_id, 'values')[0]
-        try:
-            aluno_id = int(aluno_id_str) # Converte para inteiro
-            print(f"aluno_id={aluno_id}, tipo={type(aluno_id)}")
-            print(f"estados_checkboxes.get(aluno_id)={estados_checkboxes.get(aluno_id)}")
 
-            if aluno_id in estados_checkboxes:
-                current_state = estados_checkboxes[aluno_id][col_index]
-                estados_checkboxes[aluno_id][col_index] = not current_state
-                novo_marcador = '[X]' if estados_checkboxes[aluno_id][col_index] else '[ ]'
-                tree_alunos.set(item_id, column_id, novo_marcador)
-                print(f"Novo marcador para aluno {aluno_id}, dia {col_index + 1}: {novo_marcador}")
-        except ValueError:
-            print(f"Erro ao converter aluno_id para inteiro: {aluno_id_str}")
+
+# ======================= Mosrando alunos que tem a memsa materia do professor =======================
 
 def mostrar_alunos():
     global tree_alunos, estados_checkboxes, materia_professor, professor_logado_id
@@ -372,11 +334,11 @@ def mostrar_alunos():
 
     list_header = ['ID', 'Nome'] + [f'Dia {i+1}' for i in range(25)]
     alunos_da_materia = sistema_de_registro.get_alunos_por_materia(materia_professor)
-    estados_anteriores = estados_checkboxes.copy() # Salva o estado anterior
+    estados_checkboxes = {}
 
     if tree_alunos:
         tree_alunos.destroy()
-        estados_checkboxes = {} # Limpa para recriar com os estados
+
 
     tree_alunos = ttk.Treeview(frame_tabela, selectmode="extended", columns=list_header, show="headings")
 
@@ -397,18 +359,49 @@ def mostrar_alunos():
     vsb.grid(row=0, column=1, sticky="ns")
     hsb.grid(row=1, column=0, sticky="ew")
 
-    # Inserir dados na tabela e restaurar estados
+# Inserir dados na tabela e restaurar estados
     for aluno in alunos_da_materia:
         aluno_id = aluno[0]
         nome_aluno = aluno[1]
-        estados_aluno = estados_anteriores.get(aluno_id, [False] * 25) # Pega o estado anterior ou cria um novo
+        total_faltas = aluno[2] if len(aluno) > 2 else 0 # Pega o valor de 'faltas' (índice 9)
+        estados_aluno = [False] * 25 # Inicializa todos como presente
+
+        # Marca os primeiros 'total_faltas' dias como falta
+        for i in range(total_faltas):
+            if i < 25:
+                estados_aluno[i] = True
+
         values = [aluno_id, nome_aluno] + ['[X]' if estado else '[ ]' for estado in estados_aluno]
         tree_alunos.insert('', 'end', values=values)
-        estados_checkboxes[aluno_id] = list(estados_aluno) # Garante que estamos trabalhando com uma lista mutável
+        estados_checkboxes[aluno_id] = list(estados_aluno)
 
-    print("Conteúdo de estados_checkboxes após mostrar_alunos():", estados_checkboxes) # ADICIONE ESTE LOG
     tree_alunos.bind('<Button-1>', on_treeview_click)
     return tree_alunos
+# ================================== Marcando caixas de faltas ==================================
+
+def on_treeview_click(event):
+    global tree_alunos, estados_checkboxes, sistema_de_registro
+    item_id = tree_alunos.identify_row(event.y)
+    column_id = tree_alunos.identify_column(event.x)
+
+    if item_id and column_id not in ('#0', '#1'):
+        col_index = int(column_id[1:]) - 2
+        aluno_id_str = tree_alunos.item(item_id, 'values')[0]
+        try:
+            aluno_id = int(aluno_id_str)
+
+            if aluno_id in estados_checkboxes:
+                current_state = estados_checkboxes[aluno_id][col_index]
+                estados_checkboxes[aluno_id][col_index] = not current_state
+                novo_marcador = '[X]' if estados_checkboxes[aluno_id][col_index] else '[ ]'
+                tree_alunos.set(item_id, column_id, novo_marcador)
+
+                # Calcular o total de faltas com base nos checkboxes
+                total_faltas = sum(1 for estado in estados_checkboxes[aluno_id] if estado)
+                sistema_de_registro.atualizar_faltas(aluno_id, total_faltas)
+
+        except ValueError:
+            print(f"Erro ao converter aluno_id para inteiro: {aluno_id_str}")
 #================================== Procurar Aluno ==================================
 frame_procurar = Frame(frame_botoes, width=40, height=55, bg=co1, relief=RAISED)
 frame_procurar.grid(row=0, column=0, pady=10, padx=10, sticky=NSEW)

@@ -61,14 +61,7 @@ class SistemaDeRegistro:
 
 
     def get_alunos_por_materia(self, materia_professor):
-        """
-        Retorna os alunos que estão cursando a matéria do professor.
-        Args:
-            materia_professor (str): A matéria do professor.
-        Returns:
-            list: Uma lista de tuplas, onde cada tupla contém (id, nome) dos alunos.
-        """
-        self.c.execute("SELECT id, nome FROM estudantes WHERE curso=?", (materia_professor,))
+        self.c.execute("SELECT id, nome, faltas FROM estudantes WHERE curso=?", (materia_professor,))
         alunos = self.c.fetchall()
         return alunos
 
