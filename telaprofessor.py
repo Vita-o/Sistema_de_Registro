@@ -71,17 +71,17 @@ estados_checkboxes = {}
 professor_logado_id = None # Inicializa como None
 
 # Verifique se um ID de professor foi passado como argumento
-# if len(sys.argv) > 1:
-#     try:
-#         professor_logado_id = int(sys.argv[1])
-#     except ValueError:
-#         messagebox.showerror("Erro", "ID do professor inválido.")
-#         janela.destroy()
-#         sys.exit()
-# else:
-#     messagebox.showerror("Erro", "ID do professor não fornecido.")
-#     janela.destroy()
-#     sys.exit()
+if len(sys.argv) > 1:
+    try:
+        professor_logado_id = int(sys.argv[1])
+    except ValueError:
+        messagebox.showerror("Erro", "ID do professor inválido.")
+        janela.destroy()
+        sys.exit()
+else:
+    messagebox.showerror("Erro", "ID do professor não fornecido.")
+    janela.destroy()
+    sys.exit()
 #================================== Frame Logo ==================================
 global imagem, imagem_string, l_imagem
 
@@ -129,14 +129,14 @@ def procurar():
     e_nome.delete(0, END)
     # e_email.delete(0, END)
     # e_tel.delete(0, END)
-    c_curso.delete(0, END)
+    # c_curso.delete(0, END)
     e_faltas.delete(0, END)
 
         # Limpando campo de entrada
     e_nome.insert(END, dados[1])
     # e_email.insert(END, dados[2])
     # e_tel.insert(END, dados[3])
-    c_curso.insert(END, dados[7])
+    # c_curso.insert(END, dados[7])
     e_faltas.insert(END ,dados[9])
 
     imagem = dados[8]
@@ -169,10 +169,10 @@ def atualizar():
     nome = e_nome.get()
     # email = e_email.get()
     # tel = e_tel.get()
-    curso = c_curso.get()
+    # curso = c_curso.get()
     img = imagem_string
 
-    lista = [nome, curso, img, id_aluno]
+    lista = [nome, img, id_aluno]
 
     # verificando se tem Volar Vazio
     for i in lista:
@@ -186,7 +186,7 @@ def atualizar():
     e_nome.delete(0, END)
     # e_email.delete(0, END)
     # e_tel.delete(0, END)
-    c_curso.delete(0, END)
+    # c_curso.delete(0, END)
 
 # Abrindo A imagem
     imagem = Image.open('Icones/aluno.png')
@@ -203,38 +203,38 @@ def atualizar():
 l_nome = Label(frame_details, text="Nome Do Aluno", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
 l_nome.grid(row=0, column=0, pady=0, padx=20, sticky=NSEW)
 e_nome = Entry(frame_details, width=60, justify='left', relief='solid')
-e_nome.grid(row=0, column=0, columnspan=2, pady=12, padx=20)
+e_nome.grid(row=0, column=0, columnspan=2, pady=15, padx=20)
 
 e_nome.config(state=DISABLED)
 l_nome.config(state=DISABLED)
 
-l_nota1 = Label(frame_details, text="Nota1 *",justify='center', anchor=NW, font=('Ivy 10'), bg=co6, fg=co4)
+l_nota1 = Label(frame_details, text="Nota1 *",justify='center', anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
 l_nota1.grid(row=1, column=0, pady=0, padx=25, sticky=NSEW)
 e_nota1 = Entry(frame_details, width=20, justify='center', relief='solid')
-e_nota1.grid(row=1, column=0, pady=12, padx=20, sticky='w')
+e_nota1.grid(row=1, column=0, pady=15, padx=20, sticky='w')
 
-l_nota2 = Label(frame_details, text="Nota2 *",justify='center', anchor=NW, font=('Ivy 10'), bg=co6, fg=co4)
+l_nota2 = Label(frame_details, text="Nota2 *",justify='center', anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
 l_nota2.grid(row=1, column=1, pady=0, padx=25, sticky=NSEW)
 e_nota2 = Entry(frame_details, width=20, justify='center', relief='solid')
-e_nota2.grid(row=1, column=1, pady=12, padx=20, sticky='w')
+e_nota2.grid(row=1, column=1, pady=15, padx=20, sticky='w')
 
-l_nota3 = Label(frame_details, text="Nota3 *",justify='center', anchor=NW, font=('Ivy 10'), bg=co6, fg=co4)
+l_nota3 = Label(frame_details, text="Nota3 *",justify='center', anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
 l_nota3.grid(row=2, column=0, pady=0, padx=25, sticky=NSEW)
 e_nota3 = Entry(frame_details, width=20, justify='center', relief='solid')
-e_nota3.grid(row=2, column=0, pady=12, padx=20, sticky='w')
+e_nota3.grid(row=2, column=0, pady=15, padx=20, sticky='w')
 
-l_nota4 = Label(frame_details, text="Nota4 *",justify='center', anchor=NW, font=('Ivy 10'), bg=co6, fg=co4)
+l_nota4 = Label(frame_details, text="Nota4 *",justify='center', anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
 l_nota4.grid(row=2, column=1, pady=0, padx=25, sticky=NSEW)
 e_nota4 = Entry(frame_details, width=20, justify='center', relief='solid')
-e_nota4.grid(row=2, column=1, pady=12, padx=20, sticky='w')
+e_nota4.grid(row=2, column=1, pady=15, padx=20, sticky='w')
 
 
 # Criando Cursos
 
-l_media = Label(frame_details, text="MEDIA DO ALUNO", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
-l_media.grid(row=4, column=0,  columnspan=2, pady=0, padx=20, sticky=NSEW)
+l_media = Label(frame_details, text="MEDIA DO ALUNO", anchor=CENTER, font=('Ivy 10'), bg=co1, fg=co4)
+l_media.grid(row=4, column=0,   columnspan=2, pady=0, padx=0, sticky=NSEW)
 e_media = Entry(frame_details, width=40, justify='center', relief='solid')
-e_media.grid(row=5, column=0, columnspan=2, pady=12, padx=20)
+e_media.grid(row=5, column=0, columnspan=2, pady=0, padx=0)
 
 e_media.config(state=DISABLED)
 l_media.config(state=DISABLED)

@@ -18,7 +18,11 @@ class SistemaDeRegistro:
                                 endereco TEXT NULL,
                                 curso TEXT NOT NULL,
                                 picture TEXT NOT NULL,
-                                faltas INTEGER NOT NULL DEFAULT 0
+                                faltas INTEGER NOT NULL DEFAULT 0,
+                                nota1 INTEGER NOT NULL DEFAULT 0,
+                                nota2 INTEGER NOT NULL DEFAULT 0,
+                                nota3 INTEGER NOT NULL DEFAULT 0,
+                                nota4 INTEGER NOT NULL DEFAULT 0
                                 )''')
         
     def register_studant(self, estudantes):
