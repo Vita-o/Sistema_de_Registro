@@ -40,7 +40,6 @@ janela.resizable(width=TRUE, height=TRUE)
 style = Style(janela)
 style.theme_use("classic")
 
-
 # ================================== Criando Frames ==================================
 
 # Configurando pesos para as colunas e linhas da janela para centralizar
@@ -52,6 +51,30 @@ janela.grid_rowconfigure(4, weight=1)
 frame_logo = Frame(janela, width=300, height=150, bg=co1, relief=SOLID)
 frame_logo.grid(row=3, column=1, pady=10, padx=0, sticky=NSEW)
 
+
+def mostar_senha():
+    global img_mostrarsenha, b_mostar_senha
+
+    if e_senha.cget('show') == '*': 
+        e_senha.config(show='')  
+
+        img_mostrarsenha = Image.open('Icones/visible.png')
+        img_mostrarsenha = img_mostrarsenha.resize((15,15))
+        img_mostrarsenha = ImageTk.PhotoImage(img_mostrarsenha)
+        b_mostar_senha = Button(frame_logo, command=mostar_senha, image=img_mostrarsenha, relief=GROOVE, compound=LEFT, overrelief=RIDGE, font=('Ivy 11'), bg=co1, fg=co0)
+        b_mostar_senha.place(x=230, y=70)
+
+    else:                 
+        e_senha.config(show='*') 
+
+        img_mostrarsenha = Image.open('Icones/invisible.png')
+        img_mostrarsenha = img_mostrarsenha.resize((15,15))
+        img_mostrarsenha = ImageTk.PhotoImage(img_mostrarsenha)
+        b_mostar_senha = Button(frame_logo, command=mostar_senha, image=img_mostrarsenha, relief=GROOVE, compound=LEFT, overrelief=RIDGE, font=('Ivy 11'), bg=co1, fg=co0)
+        b_mostar_senha.place(x=230, y=70)
+
+    
+
 # ================================== Criando Caixas de entraa ==================================
 l_usuario = Label(frame_logo, text="Usuario*", anchor=NW, font=('Ivy 8'), bg=co1, fg=co4)
 l_usuario.place(x=75, y=5)
@@ -62,7 +85,11 @@ l_senha = Label(frame_logo, text="Senha*", anchor=NW, font=('Ivy 8'), bg=co1, fg
 l_senha.place(x=75, y=50)
 e_senha = Entry(frame_logo, width=25, justify='left', relief='solid', show="*")
 e_senha.place(x=75, y=70)
-
+img_mostrarsenha = Image.open('Icones/invisible.png')
+img_mostrarsenha = img_mostrarsenha.resize((15,15))
+img_mostrarsenha = ImageTk.PhotoImage(img_mostrarsenha)
+b_mostar_senha = Button(frame_logo, command=mostar_senha, image=img_mostrarsenha, relief=GROOVE, compound=LEFT, overrelief=RIDGE, font=('Ivy 11'), bg=co1, fg=co0)
+b_mostar_senha.place(x=230, y=70)
 
 # ================================== Criando Mudança de Tela ==================================
 # Assuming sistema_de_usuario is an instance of your user system class
@@ -94,7 +121,7 @@ def redefiniir_senha(usuario_digitado, senha_digitada):
                 subprocess.Popen(['c:/Users/victor.barbosa/Desktop/Sistema_de_Registro/venv/Scripts/python.exe', 'telalogin.py'])
 
             else:
-                messagebox.showinfo("ERRO", "SENHA NÃO SÃO IGUAIS")
+                messagebox.showinfo("ERRO", "SENHAS NÃO SÃO IGUAIS")
         else:
             messagebox.showinfo("ERRO","Senha Antiga não confere")
 
@@ -111,12 +138,12 @@ def redefiniir_senha(usuario_digitado, senha_digitada):
 
     l_senha1 = Label(frame_mudar_senha, text="Nova Senha*", justify='left', anchor=NW, font=('Ivy 8'), bg=co1, fg=co4)
     l_senha1.place(x=75, y=90)
-    e_senha1 = Entry(frame_mudar_senha, width=25, justify='left', relief='solid')
+    e_senha1 = Entry(frame_mudar_senha, width=25, justify='left', show="*", relief='solid')
     e_senha1.place(x=75, y=110)
 
     l_senha2 = Label(frame_mudar_senha, text="Confirmar Senha*", justify='left', anchor=NW, font=('Ivy 8'), bg=co1, fg=co4)
     l_senha2.place(x=75, y=140)
-    e_senha2 = Entry(frame_mudar_senha, width=25, justify='left', relief='solid')
+    e_senha2 = Entry(frame_mudar_senha, width=25, justify='left', show="*", relief='solid')
     e_senha2.place(x=75, y=160)
 
 
