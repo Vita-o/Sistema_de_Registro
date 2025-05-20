@@ -1,4 +1,5 @@
 #importando dependencias do Tkinter
+import tkinter as tk
 from tkinter.ttk import *
 from tkinter import*
 from tkinter import ttk
@@ -85,8 +86,10 @@ else:
 #================================== Frame Logo ==================================
 global imagem, imagem_string, l_imagem
 
+
 def sair():
-    janela.destroy()
+        janela.destroy()
+        subprocess.Popen(['c:/Users/victor.barbosa/Desktop/Sistema_de_Registro/venv/Scripts/python.exe', 'telalogin.py'])
 
 
 app_lg = Image.open('Icones/Logo.png')
@@ -107,12 +110,29 @@ l_imagem.grid(row=0, column=4, rowspan=3, pady=10, padx=0, sticky=NSEW)
 
 #================================== Criando funçoes para CRUD ==================================
 
+def calcular_media(*args):
+    try:
+        nota1 = float(e_nota1.get()) if e_nota1.get() else 0.0
+        nota2 = float(e_nota2.get()) if e_nota2.get() else 0.0
+        nota3 = float(e_nota3.get()) if e_nota3.get() else 0.0
+        nota4 = float(e_nota4.get()) if e_nota4.get() else 0.0
+        media = (nota1 + nota2 + nota3 + nota4) / 4
+        e_media.config(state=NORMAL)
+        e_media.delete(0, tk.END)
+        e_media.insert(tk.END, media)
+        e_media.config(state=DISABLED)
+        print(media)
+    except ValueError:
+        e_media.config(state=NORMAL)
+        e_media.delete(0, tk.END)
+        e_media.insert(tk.END, "---")
+        e_media.config(state=DISABLED)
 
 # Procurar Aluno
 def procurar():
     global imagem, imagem_string, l_imagem
 
-# Habilitando as caixas para pegar os valores da tabela
+    # Habilitando as caixas para pegar os valores da tabela
     e_nome.config(state='normal')
     l_nome.config(state='normal')
 
@@ -122,38 +142,47 @@ def procurar():
     # obtendo id
     id_aluno = int(e_procurar.get())
 
-    #procurar aluno
+    # procurar aluno
     dados = sistema_de_registro.search_studant(id_aluno)
 
-        # Limpando campo de entrada
+    # Limpando campo de entrada
     e_nome.delete(0, END)
     e_nota1.delete(0, END)
     e_nota2.delete(0, END)
     e_nota3.delete(0, END)
     e_nota4.delete(0, END)
     e_faltas.delete(0, END)
+    e_media.delete(0, END)  # Also clear the media field
 
-        # Inserindo valores no campo de entrada
+    # Inserindo valores no campo de entrada
     e_nome.insert(END, dados[1])
-    e_nota1.insert(END,dados[10])
-    e_nota2.insert(END,dados[11])
-    e_nota3.insert(END,dados[12])
-    e_nota4.insert(END,dados[13])
-    e_faltas.insert(END ,dados[9])
+    e_nota1.insert(END, dados[10])
+    e_nota2.insert(END, dados[11])
+    e_nota3.insert(END, dados[12])
+    e_nota4.insert(END, dados[13])
+    e_faltas.insert(END, dados[9])
 
     imagem = dados[8]
     imagem_string = imagem
 
     imagem = Image.open(imagem)
-    imagem = imagem.resize((130,130))
+    imagem = imagem.resize((130, 130))
     imagem = ImageTk.PhotoImage(imagem)
 
     l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
     l_imagem.grid(row=0, column=4, rowspan=3, pady=10, padx=0, sticky=NSEW)
 
-    # Gerando media altomatica
+    # Obtendo valores APÓS inserting them into the entry fields
+    
+    nota1 = float(e_nota1.get())
+    nota2 = float(e_nota2.get())
+    nota3 = float(e_nota3.get())
+    nota4 = float(e_nota4.get())
 
-
+        # Gerando media automatica
+    media = (nota1 + nota2 + nota3 + nota4) / 4
+    media_str = str(media)
+    e_media.insert(END, media_str)
 
 # Desabilitando Caiaxas
     e_nome.config(state=DISABLED)
@@ -183,7 +212,7 @@ def atualizar():
     # verificando se tem Volar Vazio
 
     # registrando os valores
-    sistema_de_registro.update_student(lista)
+    sistema_de_registro.notas_studante(lista)
 
 
 
@@ -356,6 +385,9 @@ e_procurar.grid(row=1, column=0, pady=10, padx=0, sticky=NSEW)
 
 botao_alterar = Button(frame_procurar, command=procurar, text='Procurar', width=9, anchor=CENTER, overrelief=RIDGE, font=('Ivy 7 bold'), bg=co1, fg=co0)
 botao_alterar.grid(row=1, column=1, pady=10, padx=0, sticky=NSEW)
+
+botao_alterar = Button(frame_procurar, command=calcular_media, text='MEDIA', width=9, anchor=CENTER, overrelief=RIDGE, font=('Ivy 7 bold'), bg=co1, fg=co0)
+botao_alterar.grid(row=2, column=1, pady=10, padx=0, sticky=NSEW)
 
 
 #================================== Botoes =================================

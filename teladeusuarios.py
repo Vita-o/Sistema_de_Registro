@@ -61,7 +61,9 @@ frame_tabela.grid(row=3, column=0, pady=0, padx=10, sticky=NSEW,columnspan=5)
 global imagem, imagem_string, l_imagem
 
 def sair():
-    janela.destroy()
+        janela.destroy()
+        subprocess.Popen(['c:/Users/victor.barbosa/Desktop/Sistema_de_Registro/venv/Scripts/python.exe', 'telalogin.py'])
+
 
 
 app_lg = Image.open('Icones/Logo.png')
@@ -267,8 +269,7 @@ def deletar():
     c_caixa = ttk.Checkbutton(frame_details, text="Mudar senha ao Entrar", variable=a_caixa, command=realizar_acao)
     c_caixa.place(x=224, y=205)
 
-# Abrindo A imagem
-    imagem = Image.open('Icones/usuario.png')
+    imagem = Image.open('Icones/aluno.png')
     imagem = imagem.resize((130,130))
     imagem = ImageTk.PhotoImage(imagem)
 

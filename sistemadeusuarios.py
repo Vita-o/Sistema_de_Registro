@@ -55,7 +55,7 @@ class SistemaDeUsuarios:
         
 
     def delet_usuario(self, id):
-        self.c.execute("DELETE FROM usuarios WHERE id=?", (id))
+        self.c.execute("DELETE FROM usuarios WHERE id=?", (id,))
         self.conn.commit()
 
         # mostando mensagem de sucesso

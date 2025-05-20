@@ -5,6 +5,7 @@ from tkinter import ttk
 from tkinter import messagebox
 from tkinter import filedialog as fd
 import subprocess
+import sys
 
 # importando pillow
 from PIL import ImageTk, Image
@@ -57,8 +58,11 @@ frame_tabela.grid(row=3, column=0, pady=0, padx=10, sticky=NSEW,columnspan=5)
 #================================== Frame Logo ==================================
 global imagem, imagem_string, l_imagem
 
+
 def sair():
-    janela.destroy()
+        janela.destroy()
+        subprocess.Popen(['c:/Users/victor.barbosa/Desktop/Sistema_de_Registro/venv/Scripts/python.exe', 'telalogin.py'])
+
 
 
 app_lg = Image.open('Icones/Logo.png')
@@ -70,6 +74,19 @@ app_logo.grid(row=0, column=0, pady=0, padx=0, sticky=NSEW)
 
 b_sair = Button(frame_logo, text='EXIT', command=sair, width= 6, font=('Ivy 10'), bg=co1, fg=co0)
 b_sair.grid(row=0, column=5, pady=0, padx=2, sticky=NSEW) 
+
+# Verifique se um ID de professor foi passado como argumento
+# if len(sys.argv) > 1:
+#     try:
+#         professor_logado_id = int(sys.argv[1])
+#     except ValueError:
+#         messagebox.showerror("Erro", "ID do professor inválido.")
+#         janela.destroy()
+#         sys.exit()
+# else:
+#     messagebox.showerror("Erro", "ID do professor não fornecido.")
+#     janela.destroy()
+#     sys.exit()
 #================================== Abrindo Imagem Aluno ==================================
 imagem = Image.open('Icones/aluno.png')
 imagem = imagem.resize((130,130))

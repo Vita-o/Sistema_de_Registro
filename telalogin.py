@@ -145,6 +145,7 @@ def confirmarusuario():
         if int(caixa_banco) == 1:
             redefiniir_senha(usuario_digitado, senha_digitada)
         elif usuario_digitado == nome_banco and senha_digitada == senha_banco and cargo_banco == "ADMINISTRATIVO":
+            administratio_id = sistema_de_usuario.get_id_por_nome(usuario_digitado)
             janela.destroy()
             subprocess.Popen(['c:/Users/victor.barbosa/Desktop/Sistema_de_Registro/venv/Scripts/python.exe', 'telaregistro.py'])
         elif usuario_digitado == nome_banco and senha_digitada == senha_banco and cargo_banco == "PROFESSOR":

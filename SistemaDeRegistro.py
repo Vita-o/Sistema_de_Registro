@@ -48,7 +48,7 @@ class SistemaDeRegistro:
         return dados
 
     def update_student(self, novo_valores):
-        query = "UPDATE estudantes SET nome=?, email=?, tel=?, sexo=?, data_nascimento=?, endereco=?, curso=?, picture=? WHERE id=?"
+        query = "UPDATE estudantes SET nome=?, email=?, tel=?, sexo=?, data_nascimento=?, endereco=?, curso=?, picture=?, nota1=?, nota2=?, nota3=?, nota4= WHERE id=?"
         self.c.execute(query,novo_valores)
         self.conn.commit()
 
@@ -75,7 +75,13 @@ class SistemaDeRegistro:
         self.conn.commit()
         messagebox.showinfo("Sucesso", f"Faltas do aluno com ID {id_aluno} atualizadas para {faltas}.")
 
-    
+    def notas_studante(self, novo_valores):
+        query = "UPDATE estudantes SET  nota1=?, nota2=?, nota3=?, nota4=? WHERE id=?"
+        self.c.execute(query,novo_valores)
+        self.conn.commit()
+
+        # mostando mensagem de sucesso
+        messagebox.showinfo('Sucesso', f'Estudante com o ID:{novo_valores[4]} foi atualizado!!')  
 
 
 # Criando uma instancia do sistema do registro
