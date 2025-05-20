@@ -60,10 +60,8 @@ e_usuario.place(x=75, y=25)
 
 l_senha = Label(frame_logo, text="Senha*", anchor=NW, font=('Ivy 8'), bg=co1, fg=co4)
 l_senha.place(x=75, y=50)
-e_senha = Entry(frame_logo, width=25, justify='left', relief='solid')
+e_senha = Entry(frame_logo, width=25, justify='left', relief='solid', show="*")
 e_senha.place(x=75, y=70)
-
-
 
 
 # ================================== Criando Mudança de Tela ==================================

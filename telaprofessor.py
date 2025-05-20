@@ -392,8 +392,6 @@ botao_alterar.grid(row=2, column=1, pady=10, padx=0, sticky=NSEW)
 
 #================================== Botoes =================================
 
-
-
 app_img_atualizar = Image.open('Icones/update.png')
 app_img_atualizar = app_img_atualizar.resize((25,25))
 app_img_atualizar = ImageTk.PhotoImage(app_img_atualizar)
