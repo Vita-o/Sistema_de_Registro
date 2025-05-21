@@ -41,6 +41,13 @@ janela.resizable(width=FALSE, height=FALSE)
 style = Style(janela)
 style.theme_use("alt")
 
+if len(sys.argv) > 1:
+    pass
+
+else:
+    janela.destroy()
+    messagebox.showerror("Erro", "Usuario nao Logado.")
+    sys.exit()
 # ================================== Criando Frames ==================================
 frame_logo = Frame(janela, width=850, height=52, bg=co6)
 frame_logo.grid(row=0, column=0, pady=0, padx=0, sticky=NSEW, columnspan=5)
@@ -178,6 +185,7 @@ def procurar():
 
     l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
     l_imagem.place(x=390, y=10)
+    botao_carregar['text'] = 'Trocar De Foto'
 
 
 #  Atualizar 
@@ -283,7 +291,7 @@ c_sexo.place(x=130, y=160)
 
 l_data_nascimento = Label(frame_details, text="Data De Nascimento *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
 l_data_nascimento.place(x=220, y=10)
-data_nascimento = DateEntry(frame_details, width=11, background='darkblue', foreground='white', borderwidth=2)
+data_nascimento = DateEntry(frame_details, width=11, background='darkblue', foreground='white', borderwidth=2, date_pattern='dd/mm/yyyy')
 data_nascimento.place(x=224, y=40)
 
 l_endereco = Label(frame_details, text="Endereço *", anchor=NW, font=('Ivy 10'), bg=co1, fg=co4)
@@ -305,16 +313,17 @@ c_curso.place(x=224, y=160)
 def escolher_imagem():
     global imagem, imagem_string, l_imagem
 
-    imagem = fd.askopenfilename()
-    imagem_string = imagem
+    nova_imagem_caminho = fd.askopenfilename()
 
-    imagem = Image.open(imagem)
-    imagem = imagem.resize((130,130))
-    imagem = ImageTk.PhotoImage(imagem)
-    l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
-    l_imagem.place(x=390, y=10)
+    if nova_imagem_caminho:
+        imagem_string = nova_imagem_caminho 
+        temp_imagem = Image.open(nova_imagem_caminho)
+        temp_imagem = temp_imagem.resize((130,130))
+        imagem = ImageTk.PhotoImage(temp_imagem)
+        l_imagem.config(image=imagem)
+        l_imagem.image = imagem 
+        botao_carregar['text'] = 'Trocar De Foto'
 
-    botao_carregar['text'] = 'Trocar De Foto'
 
 
 botao_carregar = Button(frame_details,command=escolher_imagem, text='Carregar Foto'.upper(), width=20, compound=CENTER, anchor=CENTER, overrelief=RIDGE, font=('Ivy 7 bold'), bg=co1, fg=co0)

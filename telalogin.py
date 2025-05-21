@@ -125,7 +125,26 @@ def redefiniir_senha(usuario_digitado, senha_digitada):
         else:
             messagebox.showinfo("ERRO","Senha Antiga não confere")
 
+    def mostar_senha():
+        global img_mostrarsenha, b_mostar_senha
 
+        if e_senha2.cget('show') == '*': 
+            e_senha2.config(show='')  
+
+            img_mostrarsenha = Image.open('Icones/visible.png')
+            img_mostrarsenha = img_mostrarsenha.resize((15,15))
+            img_mostrarsenha = ImageTk.PhotoImage(img_mostrarsenha)
+            b_mostar_senha = Button(frame_logo, command=mostar_senha, image=img_mostrarsenha, relief=GROOVE, compound=LEFT, overrelief=RIDGE, font=('Ivy 11'), bg=co1, fg=co0)
+            b_mostar_senha.place(x=230, y=70)
+
+        else:                 
+            e_senha2.config(show='*') 
+
+            img_mostrarsenha = Image.open('Icones/invisible.png')
+            img_mostrarsenha = img_mostrarsenha.resize((15,15))
+            img_mostrarsenha = ImageTk.PhotoImage(img_mostrarsenha)
+            b_mostar_senha = Button(frame_logo, command=mostar_senha, image=img_mostrarsenha, relief=GROOVE, compound=LEFT, overrelief=RIDGE, font=('Ivy 11'), bg=co1, fg=co0)
+            b_mostar_senha.place(x=230, y=70)
 
     # ================================== Criando Caixas de entraa ==================================
     l_usuario = Label(frame_mudar_senha, text=f"{usuario_digitado}", justify='center', anchor=CENTER, font=('Ivy 10'), bg=co1, fg=co4)
@@ -133,7 +152,7 @@ def redefiniir_senha(usuario_digitado, senha_digitada):
 
     l_senha_ant = Label(frame_mudar_senha, text="Senha Antiga*", justify='left', anchor=NW, font=('Ivy 8'), bg=co1, fg=co4)
     l_senha_ant.place(x=75, y=40)
-    e_senha_ant = Entry(frame_mudar_senha , width=25, justify='left', relief='solid')
+    e_senha_ant = Entry(frame_mudar_senha , width=25, justify='left',show="*", relief='solid')
     e_senha_ant.place(x=75, y=60)
 
     l_senha1 = Label(frame_mudar_senha, text="Nova Senha*", justify='left', anchor=NW, font=('Ivy 8'), bg=co1, fg=co4)
@@ -145,6 +164,13 @@ def redefiniir_senha(usuario_digitado, senha_digitada):
     l_senha2.place(x=75, y=140)
     e_senha2 = Entry(frame_mudar_senha, width=25, justify='left', show="*", relief='solid')
     e_senha2.place(x=75, y=160)
+ 
+
+    img_mostrarsenha = Image.open('Icones/invisible.png')
+    img_mostrarsenha = img_mostrarsenha.resize((15,15))
+    img_mostrarsenha = ImageTk.PhotoImage(img_mostrarsenha)
+    b_mostar_senha = Button(frame_mudar_senha, command=mostar_senha, image=img_mostrarsenha, relief=GROOVE, compound=LEFT, overrelief=RIDGE, font=('Ivy 11'), bg=co1, fg=co0)
+    b_mostar_senha.place(x=230, y=160)
 
 
     # ================================== Criando Botão ==================================
@@ -163,7 +189,8 @@ def confirmarusuario():
 
     if usuario_digitado == 'Admin' and senha_digitada == 'Admin':
         janela.destroy()
-        subprocess.Popen(['c:/Users/victor.barbosa/Desktop/Sistema_de_Registro/venv/Scripts/python.exe', 'teladeusuarios.py'])
+        subprocess.Popen(['c:/Users/victor.barbosa/Desktop/Sistema_de_Registro/venv/Scripts/python.exe', 'teladeusuarios.py',str(usuario_digitado)])
+
     elif usuario_banco:
         nome_banco, senha_banco, caixa_banco, cargo_banco = usuario_banco
 
@@ -172,7 +199,8 @@ def confirmarusuario():
         elif usuario_digitado == nome_banco and senha_digitada == senha_banco and cargo_banco == "ADMINISTRATIVO":
             administratio_id = sistema_de_usuario.get_id_por_nome(usuario_digitado)
             janela.destroy()
-            subprocess.Popen(['c:/Users/victor.barbosa/Desktop/Sistema_de_Registro/venv/Scripts/python.exe', 'telaregistro.py'])
+            subprocess.Popen(['c:/Users/victor.barbosa/Desktop/Sistema_de_Registro/venv/Scripts/python.exe', 'telaregistro.py', str(usuario_digitado)])
+
         elif usuario_digitado == nome_banco and senha_digitada == senha_banco and cargo_banco == "PROFESSOR":
             # Recuperar o ID do professor
             professor_id = sistema_de_usuario.get_id_por_nome(usuario_digitado)

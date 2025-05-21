@@ -6,6 +6,7 @@ from tkinter import ttk
 from tkinter import messagebox
 from tkinter import filedialog as fd
 import subprocess
+import sys
 
 # importando pillow
 from PIL import ImageTk, Image
@@ -42,6 +43,14 @@ janela.resizable(width=FALSE, height=FALSE)
 
 style = Style(janela)
 style.theme_use("alt")
+
+if len(sys.argv) > 1:
+    pass
+
+else:
+    janela.destroy()
+    messagebox.showerror("Erro", "Usuario nao Logado.")
+    sys.exit()
 
 # ================================== Criando Frames ==================================
 frame_logo = Frame(janela, width=810, height=52, bg=co6)
@@ -142,48 +151,76 @@ def adicionar():
 def procurar():
     global imagem, imagem_string, l_imagem, a_caixa
 
-    # obtendo id
-    id_usuario = int(e_procurar.get())
+    id_usuario = None
 
-    #procurar usuario
-    dados = sistema_de_usuario.search_usuario(id_usuario)
+    try:
+        id_usuario = int(e_procurar.get())
+    except ValueError:
 
+        print("Erro: ID inválido. Por favor, digite um número.")
+        id_usuario = None
+
+    if id_usuario == 'None':
         # Limpando campo de entrada
-    e_nome.delete(0, END)
-    e_email.delete(0, END)
-    e_tel.delete(0, END)
-    c_sexo.delete(0, END)
-    c_cargo.delete(0, END)
-    data_nascimento.delete(0, END)
-    c_endereco.delete(0, END)
-    c_materia.delete(0, END)
-    c_senha.delete(0, END)
+        e_nome.delete(0, END)
+        e_email.delete(0, END)
+        e_tel.delete(0, END)
+        c_sexo.delete(0, END)
+        c_cargo.delete(0, END)
+        data_nascimento.delete(0, END)
+        c_endereco.delete(0, END)
+        c_materia.delete(0, END)
+        c_senha.delete(0, END)
+
+        imagem = Image.open('Icones/aluno.png')
+        imagem = imagem.resize((130,130))
+        imagem = ImageTk.PhotoImage(imagem)
+
+        l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
+        l_imagem.place(x=390, y=10)
 
 
-        # Inserindo Valores Novos
-    e_nome.insert(END, dados[1])
-    e_email.insert(END, dados[2])
-    e_tel.insert(END, dados[3])
-    c_sexo.insert(END, dados[4])
-    c_cargo.insert(END, dados[5])
-    data_nascimento.insert(END, dados[6])
-    c_endereco.insert(END, dados[7])
-    c_materia.insert(END, dados[8])
-    c_senha.insert(END,dados[9])
-    
-    a_caixa = tk.BooleanVar(value=dados[10])
-    c_caixa = ttk.Checkbutton(frame_details, text="Mudar senha ao Entrar", variable=a_caixa, command=realizar_acao)
-    c_caixa.place(x=224, y=205)
-    
-    imagem = dados[11]
-    imagem_string = imagem
+    else:
 
-    imagem = Image.open(imagem)
-    imagem = imagem.resize((130,130))
-    imagem = ImageTk.PhotoImage(imagem)
+        #procurar usuario
+        dados = sistema_de_usuario.search_usuario(id_usuario)
 
-    l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
-    l_imagem.place(x=390, y=10)
+            # Limpando campo de entrada
+        e_nome.delete(0, END)
+        e_email.delete(0, END)
+        e_tel.delete(0, END)
+        c_sexo.delete(0, END)
+        c_cargo.delete(0, END)
+        data_nascimento.delete(0, END)
+        c_endereco.delete(0, END)
+        c_materia.delete(0, END)
+        c_senha.delete(0, END)
+
+
+            # Inserindo Valores Novos
+        e_nome.insert(END, dados[1])
+        e_email.insert(END, dados[2])
+        e_tel.insert(END, dados[3])
+        c_sexo.insert(END, dados[4])
+        c_cargo.insert(END, dados[5])
+        data_nascimento.insert(END, dados[6])
+        c_endereco.insert(END, dados[7])
+        c_materia.insert(END, dados[8])
+        c_senha.insert(END,dados[9])
+        
+        a_caixa = tk.BooleanVar(value=dados[10])
+        c_caixa = ttk.Checkbutton(frame_details, text="Mudar senha ao Entrar", variable=a_caixa, command=realizar_acao)
+        c_caixa.place(x=224, y=205)
+        
+        imagem = dados[11]
+        imagem_string = imagem
+
+        imagem = Image.open(imagem)
+        imagem = imagem.resize((130,130))
+        imagem = ImageTk.PhotoImage(imagem)
+
+        l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
+        l_imagem.place(x=390, y=10)
 
 
 #  Atualizar 
@@ -366,16 +403,17 @@ c_caixa.place(x=224, y=205)
 def escolher_imagem():
     global imagem, imagem_string, l_imagem
 
-    imagem = fd.askopenfilename()
-    imagem_string = imagem
+    nova_imagem_caminho = fd.askopenfilename()
 
-    imagem = Image.open(imagem)
-    imagem = imagem.resize((130,130))
-    imagem = ImageTk.PhotoImage(imagem)
-    l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
-    l_imagem.place(x=390, y=10)
+    if nova_imagem_caminho:
+        imagem_string = nova_imagem_caminho 
+        temp_imagem = Image.open(nova_imagem_caminho)
+        temp_imagem = temp_imagem.resize((130,130))
+        imagem = ImageTk.PhotoImage(temp_imagem)
+        l_imagem.config(image=imagem)
+        l_imagem.image = imagem 
+        botao_carregar['text'] = 'Trocar De Foto'
 
-    botao_carregar['text'] = 'Trocar De Foto'
 
 
 botao_carregar = Button(frame_details,command=escolher_imagem, text='Carregar Foto'.upper(), width=20, compound=CENTER, anchor=CENTER, overrelief=RIDGE, font=('Ivy 7 bold'), bg=co1, fg=co0)

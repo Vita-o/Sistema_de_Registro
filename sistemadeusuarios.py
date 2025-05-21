@@ -43,7 +43,14 @@ class SistemaDeUsuarios:
         self.c.execute("SELECT * FROM usuarios WHERE id=?", (id,))
         dados = self.c.fetchone()
 
-        return dados
+        # Check if dados is None. If so, return an empty tuple or a list of Nones
+        if dados is None:
+
+            messagebox.showerror('Erro', 'Id do Usuário nao Encontrado')
+
+    
+        else:
+            return dados
 
     def update_usuario(self, novo_valores):
         query = "UPDATE usuarios SET nome=?, email=?, tel=?, sexo=?, cargo=?, data_nascimento=?, endereco=?, materia=?, senha=?, caixa=?, picture=? WHERE id=?"
