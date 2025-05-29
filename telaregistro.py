@@ -150,43 +150,117 @@ def adicionar():
 
 # Procurar Aluno
 def procurar():
-    global imagem, imagem_string, l_imagem
+    global imagem, imagem_string, l_imagem # Assume que essas variáveis estão definidas globalmente
 
-    # obtendo id
-    id_aluno = int(e_procurar.get())
+    id_aluno = None # Inicializa id_aluno como None
+    dados = None    # Inicializa 'dados' como None para garantir que sempre exista
 
-    #procurar aluno
-    dados = sistema_de_registro.search_studant(id_aluno)
+    # 1. Tenta obter e converter o ID do aluno da entrada
+    try:
+        # Pega o texto do campo de entrada e remove espaços em branco extras
+        id_input = e_procurar.get().strip() 
+        if id_input: # Se o campo não estiver vazio
+            id_aluno = int(id_input) # Tenta converter para inteiro
+        # Se o campo estiver vazio, id_aluno permanecerá None
+            
+    except ValueError:
+        # Se a conversão para int falhar (ex: digitou texto)
+        print("Erro: ID de aluno inválido. Por favor, digite um número.")
+        # id_aluno permanece None, o que fará com que o bloco 'else' final seja executado
+        
+    # 2. Se um ID numérico válido foi obtido, tenta buscar o aluno
+    if id_aluno is not None:
+        # Sua função real de busca por aluno.
+        # É CRUCIAL que search_studant retorne 'None' se o aluno não for encontrado!
+        dados = sistema_de_registro.search_studant(id_aluno) 
 
-        # Limpando campo de entrada
-    e_nome.delete(0, END)
-    e_email.delete(0, END)
-    e_tel.delete(0, END)
-    c_sexo.delete(0, END)
-    data_nascimento.delete(0, END)
-    e_endereco.delete(0, END)
-    c_curso.delete(0, END)
+    # 3. Processa o resultado: Aluno Encontrado OU Não Encontrado / Entrada Inválida
+    if dados: # Este bloco é executado APENAS SE 'dados' NÃO FOR 'None' (ou seja, aluno encontrado)
+        print(f"Aluno encontrado para ID: {id_aluno}")
+        
+        # Limpa TODOS os campos antes de preencher com os novos dados
+        e_nome.delete(0, END)
+        e_email.delete(0, END)
+        e_tel.delete(0, END)
+        c_sexo.delete(0, END)
+        data_nascimento.delete(0, END)
+        e_endereco.delete(0, END)
+        c_curso.delete(0, END)
 
-        # Limpando campo de entrada
-    e_nome.insert(END, dados[1])
-    e_email.insert(END, dados[2])
-    e_tel.insert(END, dados[3])
-    c_sexo.insert(END, dados[4])
-    data_nascimento.insert(END, dados[5])
-    e_endereco.insert(END, dados[6])
-    c_curso.insert(END, dados[7])
+        # Insere os valores nos campos.
+        # ATENÇÃO: Verifique se os índices (dados[1], dados[2]...) correspondem
+        # à ordem das colunas retornadas pela sua query SQL em `search_studant`!
+        e_nome.insert(END, dados[1])
+        e_email.insert(END, dados[2])
+        e_tel.insert(END, dados[3])
+        c_sexo.insert(END, dados[4])
+        data_nascimento.insert(END, dados[5])
+        e_endereco.insert(END, dados[6])
+        c_curso.insert(END, dados[7])
 
-    imagem = dados[8]
-    imagem_string = imagem
+        # Carrega a imagem específica do aluno
+        imagem_caminho = dados[8] # Assume que dados[8] contém o caminho da imagem
+        imagem_string = imagem_caminho # Atualiza a variável global 'imagem_string' se necessário
 
-    imagem = Image.open(imagem)
-    imagem = imagem.resize((130,130))
-    imagem = ImageTk.PhotoImage(imagem)
+        try:
+            temp_imagem = Image.open(imagem_caminho)
+            temp_imagem = temp_imagem.resize((130,130))
+            imagem = ImageTk.PhotoImage(temp_imagem) # Atualiza a variável global 'imagem'
 
-    l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
-    l_imagem.place(x=390, y=10)
-    botao_carregar['text'] = 'Trocar De Foto'
+            # Atualiza o label da imagem existente ou o cria se for a primeira vez
+            if l_imagem:
+                l_imagem.config(image=imagem)
+            else:
+                l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
+                l_imagem.place(x=390, y=10)
+            
+            # Se você tiver um botão 'Trocar De Foto', atualize o texto aqui
+            # Garanta que 'botao_carregar' está definido globalmente ou acessível.
+            if 'botao_carregar' in globals(): # Verifica se o botão existe antes de tentar acessá-lo
+                botao_carregar['text'] = 'Trocar De Foto'
 
+        except FileNotFoundError:
+            print(f"Erro: Imagem do aluno '{imagem_caminho}' não encontrada. Carregando imagem padrão.")
+            # Se a imagem específica não for encontrada, o fluxo cairá no 'else' abaixo.
+        except Exception as e:
+            print(f"Ocorreu um erro ao carregar a imagem do aluno: {e}. Carregando imagem padrão.")
+            # Mesma lógica que FileNotFoundError.
+            
+    else: # Este bloco é executado SE 'dados' é 'None' (aluno não encontrado) OU se 'id_aluno' era 'None' (entrada inválida/vazia)
+        print("Nenhum aluno encontrado para o ID fornecido ou entrada inválida. Limpando campos e carregando imagem padrão.")
+        
+        # Limpa TODOS os campos
+        e_nome.delete(0, END)
+        e_email.delete(0, END)
+        e_tel.delete(0, END)
+        c_sexo.delete(0, END)
+        data_nascimento.delete(0, END)
+        e_endereco.delete(0, END)
+        c_curso.delete(0, END)
+
+        # Carrega a imagem padrão (aluno.png)
+        try:
+            temp_imagem = Image.open('Icones/aluno.png') # Certifique-se de que o caminho está correto
+            temp_imagem = temp_imagem.resize((130,130))
+            imagem = ImageTk.PhotoImage(temp_imagem) # Atualiza a variável global 'imagem'
+
+            if l_imagem: # Se o label da imagem já existe, apenas o configura
+                l_imagem.config(image=imagem)
+            else: # Senão, cria o label pela primeira vez
+                l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
+                l_imagem.place(x=390, y=10)
+            
+            # Atualiza o texto do botão para indicar o estado padrão
+            if 'botao_carregar' in globals():
+                botao_carregar['text'] = 'Carregar Foto' # Ou outro texto apropriado para o estado padrão
+
+        except FileNotFoundError:
+            print("Erro: Imagem 'Icones/aluno.png' não encontrada. Verifique o caminho.")
+        except Exception as e:
+            print(f"Ocorreu um erro ao carregar a imagem padrão: {e}")
+            
+    # Sempre limpa o campo de entrada do ID após a operação e coloca o foco de volta 
+    e_procurar.focus_set()
 
 #  Atualizar 
 def atualizar():

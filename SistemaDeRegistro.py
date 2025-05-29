@@ -46,14 +46,13 @@ class SistemaDeRegistro:
         dados = self.c.fetchone()
 
         if dados is None:
-
-            messagebox.showerror('Erro', 'Id do Usuário nao Encontrado')
-
+            messagebox.showerror('Erro', 'ID do Usuário não Encontrado')
+            return None 
         else:
             return dados
 
     def update_student(self, novo_valores):
-        query = "UPDATE estudantes SET nome=?, email=?, tel=?, sexo=?, data_nascimento=?, endereco=?, curso=?, picture=?, nota1=?, nota2=?, nota3=?, nota4= WHERE id=?"
+        query = "UPDATE estudantes SET nome=?, email=?, tel=?, sexo=?, data_nascimento=?, endereco=?, curso=?, picture=?, nota1=?, nota2=?, nota3=?, nota4=? WHERE id=?"
         self.c.execute(query,novo_valores)
         self.conn.commit()
 

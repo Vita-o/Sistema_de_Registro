@@ -151,31 +151,29 @@ def adicionar():
 def procurar():
     global imagem, imagem_string, l_imagem, a_caixa
 
-    id_usuario = None # Começa com None para entradas inválidas ou vazias
-    dados = None      # Inicializa 'dados' como None para garantir que sempre exista
+    print("--- Início da função procurar() ---") # Add this
+    id_usuario = None
+    dados = None
 
-    # 1. Tenta obter o ID do campo de entrada
     try:
-        # Pega o texto do campo e remove espaços em branco extras
         id_input = e_procurar.get().strip()
-        if id_input: # Se o campo não estiver vazio
-            id_usuario = int(id_input) # Tenta converter para inteiro
-        # Se o campo estiver vazio, 'id_usuario' permanecerá 'None', o que é o comportamento desejado
+        if id_input:
+            id_usuario = int(id_input)
+            print(f"ID lido da entrada: {id_usuario}") # Add this
+        else:
+            print("Entrada de ID vazia.") # Add this
             
     except ValueError:
-        # Se a conversão falhar (ex: digitou texto), 'id_usuario' permanecerá 'None'
-        print("Erro: ID inválido. Por favor, digite um número.")
+        print("Erro: ID inválido (não numérico).") # Add this
         
-    # 2. Se um ID numérico válido foi obtido, tenta buscar o usuário no sistema
     if id_usuario is not None:
-        # Sua função de busca REAL. Ela deve retornar os dados ou 'None' se não encontrar.
+        print(f"Chamando search_usuario para ID: {id_usuario}") # Add this
         dados = sistema_de_usuario.search_usuario(id_usuario) 
+        print(f"Resultado de search_usuario: {dados}") # Add this
 
-    # 3. Processa o resultado: Usuário Encontrado OU Não Encontrado/Entrada Inválida
-    if dados: # Este bloco é executado APENAS SE 'dados' NÃO FOR 'None' (ou seja, usuário encontrado)
-        print(f"Usuário encontrado para ID: {id_usuario}")
-        
-        # Limpa TODOS os campos antes de preencher com os novos dados
+    if dados:
+        print("Caminho: DADOS ENCONTRADOS") # Add this
+        # ... (seu código para limpar e preencher campos, e carregar imagem do usuário) ...
         e_nome.delete(0, END)
         e_email.delete(0, END)
         e_tel.delete(0, END)
@@ -186,9 +184,6 @@ def procurar():
         c_materia.delete(0, END)
         c_senha.delete(0, END)
 
-        # Insere os valores nos campos.
-        # ATENÇÃO: Verifique se os índices (dados[1], dados[2], etc.) correspondem
-        # à ordem das colunas retornadas pela sua query SQL em `search_usuario`!
         e_nome.insert(END, dados[1])
         e_email.insert(END, dados[2])
         e_tel.insert(END, dados[3])
@@ -199,38 +194,30 @@ def procurar():
         c_materia.insert(END, dados[8])
         c_senha.insert(END,dados[9])
         
-        # Atualiza o Checkbutton
-        # Certifique-se de que 'a_caixa' é uma tk.BooleanVar já inicializada antes.
-        a_caixa.set(value=dados[10]) 
-        # Se você recria 'c_caixa' a cada busca, ele deveria ser recriado aqui.
-        # c_caixa = ttk.Checkbutton(frame_details, text="Mudar senha ao Entrar", variable=a_caixa, command=realizar_acao)
-        # c_caixa.place(x=224, y=205)
+        a_caixa.set(value=dados[10])
         
-        # Carrega a imagem específica do usuário
-        imagem_caminho = dados[11] # Assume que dados[11] contém o caminho da imagem
-        imagem_string = imagem_caminho # Atualiza a variável global 'imagem_string' se necessário
+        imagem_caminho = dados[11]
+        imagem_string = imagem_caminho
 
         try:
             temp_imagem = Image.open(imagem_caminho)
             temp_imagem = temp_imagem.resize((130,130))
-            imagem = ImageTk.PhotoImage(temp_imagem) # Atualiza a variável global 'imagem'
+            imagem = ImageTk.PhotoImage(temp_imagem)
 
-            if l_imagem: # Se o label da imagem já existe, apenas o configura
+            if l_imagem:
                 l_imagem.config(image=imagem)
-            else: # Senão, cria o label pela primeira vez
+            else:
                 l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
                 l_imagem.place(x=390, y=10)
-        except FileNotFoundError:
-            print(f"Erro: Imagem do usuário '{imagem_caminho}' não encontrada. Carregando imagem padrão.")
-            # Se a imagem específica do usuário não for encontrada, o fluxo vai cair no 'else' abaixo.
         except Exception as e:
-            print(f"Ocorreu um erro ao carregar a imagem do usuário: {e}. Carregando imagem padrão.")
-            # Mesma lógica que FileNotFoundError.
-            
-    else: # Este bloco é executado SE 'dados' é 'None' (usuário não encontrado) OU se 'id_usuario' era 'None' (entrada inválida/vazia)
-        print("Nenhum usuário encontrado para o ID fornecido ou entrada inválida. Limpando campos e carregando imagem padrão.")
-        
-        # Limpa TODOS os campos (repetido para garantir que sempre aconteça)
+            print(f"Erro ao carregar imagem do usuário: {e}. Cairá no else.") # Modified message
+            # No explicit else branch here, it will fall through to the final else
+            # because 'dados' will remain None for the image path not found case,
+            # or it might have already been handled by a previous print.
+
+    else:
+        print("Caminho: DADOS NÃO ENCONTRADOS / ENTRADA INVÁLIDA") # Add this
+        # Limpa TODOS os campos
         e_nome.delete(0, END)
         e_email.delete(0, END)
         e_tel.delete(0, END)
@@ -241,24 +228,20 @@ def procurar():
         c_materia.delete(0, END)
         c_senha.delete(0, END)
 
-        # Carrega a imagem padrão (aluno.png)
+        # Carrega a imagem padrão
         try:
             temp_imagem = Image.open('Icones/aluno.png')
             temp_imagem = temp_imagem.resize((130,130))
-            imagem = ImageTk.PhotoImage(temp_imagem) # Atualiza a variável global 'imagem'
+            imagem = ImageTk.PhotoImage(temp_imagem)
 
-            if l_imagem: # Se o label da imagem já existe, apenas o configura
+            if l_imagem:
                 l_imagem.config(image=imagem)
-            else: # Senão, cria o label pela primeira vez
+            else:
                 l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
                 l_imagem.place(x=390, y=10)
-        except FileNotFoundError:
-            print("Erro: Imagem 'Icones/aluno.png' não encontrada. Verifique o caminho.")
         except Exception as e:
-            print(f"Ocorreu um erro ao carregar a imagem padrão: {e}")
-            
-    # Sempre limpa o campo de entrada do ID após a operação e coloca o foco de volta
-    e_procurar.delete(0, END) 
+            print(f"Erro ao carregar imagem padrão: {e}")
+             
     e_procurar.focus_set()
 
 

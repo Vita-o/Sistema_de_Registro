@@ -105,7 +105,7 @@ b_sair.grid(row=0, column=5, pady=0, padx=2, sticky=NSEW)
 imagem = Image.open('Icones/aluno.png')
 imagem = imagem.resize((130,130))
 imagem = ImageTk.PhotoImage(imagem)
-l_imagem = Label(frame_details, image=imagem, bg=co6, fg=co4)
+l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
 l_imagem.grid(row=0, column=4, rowspan=3, pady=10, padx=0, sticky=NSEW)
 
 #================================== Criando funçoes para CRUD ==================================
@@ -132,97 +132,175 @@ def calcular_media(*args):
 def procurar():
     global imagem, imagem_string, l_imagem
 
-    # Habilitando as caixas para pegar os valores da tabela
     e_nome.config(state='normal')
-    l_nome.config(state='normal')
+    # l_nome.config(state='normal') 
 
     e_faltas.config(state='normal')
-    l_faltas.config(state='normal')
+    # l_faltas.config(state='normal') 
 
-    # obtendo id
-    id_aluno = int(e_procurar.get())
+    id_aluno = None 
+    dados = None    
 
-    # procurar aluno
-    dados = sistema_de_registro.search_studant(id_aluno)
+    try:
+        id_input = e_procurar.get().strip() 
+        if id_input: 
+            id_aluno = int(id_input)
+            
+    except ValueError:
+        print("Erro: ID de aluno inválido. Por favor, digite um número.")
+        
+    if id_aluno is not None:
+        dados = sistema_de_registro.search_studant(id_aluno) 
 
-    # Limpando campo de entrada
-    e_nome.delete(0, END)
-    e_nota1.delete(0, END)
-    e_nota2.delete(0, END)
-    e_nota3.delete(0, END)
-    e_nota4.delete(0, END)
-    e_faltas.delete(0, END)
-    e_media.delete(0, END)  # Also clear the media field
+    if dados: 
+        print(f"Aluno encontrado para ID: {id_aluno}")
+        
+        e_nome.delete(0, END)
+        e_nota1.delete(0, END)
+        e_nota2.delete(0, END)
+        e_nota3.delete(0, END)
+        e_nota4.delete(0, END)
+        e_faltas.delete(0, END)
+        e_media.delete(0, END) 
 
-    # Inserindo valores no campo de entrada
-    e_nome.insert(END, dados[1])
-    e_nota1.insert(END, dados[10])
-    e_nota2.insert(END, dados[11])
-    e_nota3.insert(END, dados[12])
-    e_nota4.insert(END, dados[13])
-    e_faltas.insert(END, dados[9])
+        e_nome.insert(END, dados[1])    
+        e_nota1.insert(END, dados[10])   
+        e_nota2.insert(END, dados[11])   
+        e_nota3.insert(END, dados[12])   
+        e_nota4.insert(END, dados[13])   
+        e_faltas.insert(END, dados[9])   
 
-    imagem = dados[8]
-    imagem_string = imagem
+        imagem_caminho = dados[8] 
+        imagem_string = imagem_caminho 
 
-    imagem = Image.open(imagem)
-    imagem = imagem.resize((130, 130))
-    imagem = ImageTk.PhotoImage(imagem)
+        try:
+            temp_imagem = Image.open(imagem_caminho)
+            temp_imagem = temp_imagem.resize((130, 130))
+            imagem = ImageTk.PhotoImage(temp_imagem) 
 
-    l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
-    l_imagem.grid(row=0, column=4, rowspan=3, pady=10, padx=0, sticky=NSEW)
+            if l_imagem:
+                l_imagem.config(image=imagem)
+            else:
+                l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
+                l_imagem.grid(row=0, column=4, rowspan=3, pady=10, padx=0, sticky=NSEW)
+            
 
-    # Obtendo valores APÓS inserting them into the entry fields
-    
-    nota1 = float(e_nota1.get())
-    nota2 = float(e_nota2.get())
-    nota3 = float(e_nota3.get())
-    nota4 = float(e_nota4.get())
+        except FileNotFoundError:
+            print(f"Erro: Imagem do aluno '{imagem_caminho}' não encontrada. Carregando imagem padrão.")
+        except Exception as e:
+            print(f"Ocorreu um erro ao carregar a imagem do aluno: {e}. Carregando imagem padrão.")
 
-        # Gerando media automatica
-    media = (nota1 + nota2 + nota3 + nota4) / 4
-    media_str = str(media)
-    e_media.insert(END, media_str)
+        try:
+            nota1 = float(e_nota1.get())
+            nota2 = float(e_nota2.get())
+            nota3 = float(e_nota3.get())
+            nota4 = float(e_nota4.get())
+            
+            media = (nota1 + nota2 + nota3 + nota4) / 4
+            e_media.insert(END, str(media))
+        except ValueError:
+            print("Erro ao calcular média: Notas não são números válidos.")
+            e_media.delete(0, END) 
+        except Exception as e:
+            print(f"Erro inesperado ao calcular média: {e}")
+            e_media.delete(0, END) 
 
-# Desabilitando Caiaxas
-    e_nome.config(state=DISABLED)
-    l_nome.config(state=DISABLED)
+    else: 
+        print("Nenhum aluno encontrado para o ID fornecido ou entrada inválida. Limpando campos e carregando imagem padrão.")
+        
+        e_nome.delete(0, END)
+        e_nota1.delete(0, END)
+        e_nota2.delete(0, END)
+        e_nota3.delete(0, END)
+        e_nota4.delete(0, END)
+        e_faltas.delete(0, END)
+        e_media.delete(0, END) 
 
-    e_faltas.config(state=DISABLED)
-    l_faltas.config(state=DISABLED)
+        try:
+            temp_imagem = Image.open('Icones/aluno.png') 
+            temp_imagem = temp_imagem.resize((130, 130))
+            imagem = ImageTk.PhotoImage(temp_imagem) 
 
+            if l_imagem:
+                l_imagem.config(image=imagem)
+            else:
+                l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
+                l_imagem.grid(row=0, column=4, rowspan=3, pady=10, padx=0, sticky=NSEW)
+            
 
+        except FileNotFoundError:
+            print("Erro: Imagem 'Icones/aluno.png' não encontrada. Verifique o caminho.")
+        except Exception as e:
+            print(f"Ocorreu um erro ao carregar a imagem padrão: {e}")
+            
+
+    e_procurar.focus_set()
+
+    e_nome.config(state='disabled') 
+   
+
+    e_faltas.config(state='disabled') 
+   
 #  Atualizar 
 def atualizar():
     global imagem, imagem_string, l_imagem
 
-    # obtendo id
-    id_aluno = int(e_procurar.get())
+    id_aluno = None 
+    try:
+        id_input = e_procurar.get().strip() 
+        if id_input: 
+            id_aluno = int(id_input)
+        else:
+            messagebox.showwarning('Aviso', 'Por favor, digite o ID do aluno a ser atualizado.')
+            e_procurar.delete(0, END) 
+            e_procurar.focus_set() 
+            return 
+            
+    except ValueError:
+        messagebox.showerror('Erro', 'ID inválido. Por favor, digite um número.')
+        e_procurar.delete(0, END) 
+        e_procurar.focus_set() 
+        return 
+
+    try:
+        nota1 = int(e_nota1.get())
+        nota2 = int(e_nota2.get())
+        nota3 = int(e_nota3.get())
+        nota4 = int(e_nota4.get())
+    except ValueError:
+        messagebox.showerror('Erro', 'As notas devem ser números inteiros válidos.')
+        return 
+
+    lista = [nota1, nota2, nota3, nota4, id_aluno]
+
+    status_atualizacao = sistema_de_registro.notas_studante(lista)
+
+    if status_atualizacao:
+        messagebox.showinfo('Sucesso', 'Notas do aluno atualizadas com sucesso!')
+        print(f"Notas do aluno com ID {id_aluno} atualizadas.")
+        # procurar() 
 
 
-    #obtendo valores
-    nota1 = e_nota1.get()
-    nota2 = e_nota2.get()
-    nota3 = e_nota3.get()
-    nota4 = e_nota4.get()
+    e_procurar.focus_set()
+    
+    mostrar_alunos()
 
-
-    lista = [ nota1, nota2, nota3, nota4, id_aluno]
-
-    # verificando se tem Volar Vazio
-
-    # registrando os valores
-    sistema_de_registro.notas_studante(lista)
-
-
-
-# Abrindo A imagem
-    imagem = Image.open('Icones/aluno.png')
-    imagem = imagem.resize((130,130))
-    imagem = ImageTk.PhotoImage(imagem)
-
-    l_imagem = Label(frame_details, image=imagem, bg=co1, fg=co4)
-    l_imagem.grid(row=0, column=4, rowspan=3, pady=10, padx=0, sticky=NSEW)
+    try:
+        nota1 = float(e_nota1.get()) if e_nota1.get() else 0.0
+        nota2 = float(e_nota2.get()) if e_nota2.get() else 0.0
+        nota3 = float(e_nota3.get()) if e_nota3.get() else 0.0
+        nota4 = float(e_nota4.get()) if e_nota4.get() else 0.0
+        media = (nota1 + nota2 + nota3 + nota4) / 4
+        e_media.config(state=NORMAL)
+        e_media.delete(0, tk.END)
+        e_media.insert(tk.END, media)
+        e_media.config(state=DISABLED)
+        print(media)
+    except ValueError:
+        e_media.config(state=NORMAL)
+        e_media.delete(0, tk.END)
+        e_media.insert(tk.END, "---")
+        e_media.config(state=DISABLED)
 
     # Mostrando os valores da tabela
     mostrar_alunos()
