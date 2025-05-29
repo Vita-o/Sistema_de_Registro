@@ -43,12 +43,9 @@ class SistemaDeUsuarios:
         self.c.execute("SELECT * FROM usuarios WHERE id=?", (id,))
         dados = self.c.fetchone()
 
-        # Check if dados is None. If so, return an empty tuple or a list of Nones
         if dados is None:
-
-            messagebox.showerror('Erro', 'Id do Usuário nao Encontrado')
-
-    
+            messagebox.showerror('Erro', 'ID do Usuário não Encontrado')
+            return None 
         else:
             return dados
 
